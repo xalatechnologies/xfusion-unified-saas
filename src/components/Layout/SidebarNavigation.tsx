@@ -15,10 +15,10 @@ export function SidebarNavigation() {
   const location = useLocation();
 
   return (
-    <SidebarContent className="px-4 py-6 bg-white">
+    <SidebarContent className="px-4 py-4 bg-white">
       {Object.entries(groupedItems).map(([group, items]) => (
-        <SidebarGroup key={group} className="mb-8">
-          <SidebarGroupLabel className="text-gray-500 uppercase text-xs font-bold tracking-widest mb-4 px-2">
+        <SidebarGroup key={group} className="mb-4">
+          <SidebarGroupLabel className="text-gray-500 uppercase text-xs font-bold tracking-widest mb-3 px-2">
             {group}
           </SidebarGroupLabel>
           <SidebarGroupContent>
