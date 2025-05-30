@@ -36,6 +36,7 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
   // Update form data when organization data loads
   useEffect(() => {
     if (currentOrganization) {
+      console.log("Loading organization data:", currentOrganization);
       setFormData({
         name: currentOrganization.name || "",
         website: currentOrganization.website || "",
@@ -50,7 +51,20 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
 
   const handleSave = async () => {
     try {
-      await updateOrganization.mutateAsync({
+      console.log("Saving organization data:", {
+        id: organizationId,
+        updates: {
+          name: formData.name,
+          website: formData.website,
+          address: formData.address,
+          contact_email: formData.email,
+          contact_phone: formData.phone,
+          contact_fax: formData.fax,
+          default_language: formData.defaultLanguage,
+        },
+      });
+
+      const result = await updateOrganization.mutateAsync({
         id: organizationId,
         updates: {
           name: formData.name,
@@ -63,18 +77,29 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
         },
       });
       
+      console.log("Update result:", result);
+      
       toast({
         title: "Settings Updated",
         description: "Your organization settings have been saved successfully.",
       });
     } catch (error) {
+      console.error("Error updating organization:", error);
       toast({
         title: "Error",
-        description: "Failed to update organization settings.",
+        description: "Failed to update organization settings. Please try again.",
         variant: "destructive",
       });
     }
   };
+
+  if (!currentOrganization) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg">Loading organization settings...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
