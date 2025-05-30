@@ -45,7 +45,7 @@ export const databaseApi = {
       .from("organization_members")
       .select(`
         *,
-        user:user_id(email)
+        users!organization_members_user_id_fkey(email)
       `)
       .eq("organization_id", organizationId)
       .order("created_at", { ascending: false });

@@ -118,12 +118,12 @@ export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps
                 <div className="flex items-center space-x-3">
                   <Avatar>
                     <AvatarFallback>
-                      {member.user?.email?.substring(0, 2).toUpperCase() || "??"}
+                      {member.users?.email?.substring(0, 2).toUpperCase() || "??"}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-medium">{member.user?.email || "Unknown User"}</p>
-                    <p className="text-sm text-gray-600">{member.user?.email}</p>
+                    <p className="font-medium">{member.users?.email || "Unknown User"}</p>
+                    <p className="text-sm text-gray-600">{member.users?.email}</p>
                   </div>
                 </div>
                 
