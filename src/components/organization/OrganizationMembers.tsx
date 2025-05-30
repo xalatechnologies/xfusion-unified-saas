@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +11,7 @@ import { useState } from "react";
 import { useOrganizationMembers, useInviteOrganizationMember } from "@/hooks/useOrganizations";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import type { Database } from "@/integrations/supabase/types";
 
 interface OrganizationMembersProps {
   organizationId: string;
@@ -19,7 +19,7 @@ interface OrganizationMembersProps {
 
 export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps) => {
   const [inviteEmail, setInviteEmail] = useState("");
-  const [inviteRole, setInviteRole] = useState<"admin" | "manager" | "member">("member");
+  const [inviteRole, setInviteRole] = useState<Database["public"]["Enums"]["organization_role"]>("viewer");
   const { toast } = useToast();
   const { user } = useAuth();
   
@@ -38,7 +38,7 @@ export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps
       });
       
       setInviteEmail("");
-      setInviteRole("member");
+      setInviteRole("viewer");
       
       toast({
         title: "Invitation sent",
@@ -137,13 +137,16 @@ export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps
               <Label className="text-sm font-medium text-gray-700">
                 Role
               </Label>
-              <Select value={inviteRole} onValueChange={(value: "admin" | "manager" | "member") => setInviteRole(value)}>
+              <Select value={inviteRole} onValueChange={(value: Database["public"]["Enums"]["organization_role"]) => setInviteRole(value)}>
                 <SelectTrigger className="h-10">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="member">Member</SelectItem>
-                  <SelectItem value="manager">Manager</SelectItem>
+                  <SelectItem value="viewer">Viewer</SelectItem>
+                  <SelectItem value="technician">Technician</SelectItem>
+                  <SelectItem value="engineer">Engineer</SelectItem>
+                  <SelectItem value="maintenance_manager">Maintenance Manager</SelectItem>
+                  <SelectItem value="operations_manager">Operations Manager</SelectItem>
                   <SelectItem value="admin">Admin</SelectItem>
                 </SelectContent>
               </Select>
@@ -219,7 +222,7 @@ export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps
                       </TableCell>
                       <TableCell>
                         <Badge className={`border ${getRoleBadgeColor(member.role)}`}>
-                          {member.role.charAt(0).toUpperCase() + member.role.slice(1)}
+                          {member.role.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -292,7 +295,7 @@ export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <Shield className="w-5 h-5 text-blue-600" />
-                <h4 className="font-medium text-gray-900">Manager</h4>
+                <h4 className="font-medium text-gray-900">Operations Manager</h4>
               </div>
               <ul className="text-sm text-muted-foreground space-y-1">
                 <li>• Manage work orders</li>
@@ -305,10 +308,10 @@ export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <Users className="w-5 h-5 text-gray-600" />
-                <h4 className="font-medium text-gray-900">Member</h4>
+                <h4 className="font-medium text-gray-900">Viewer</h4>
               </div>
               <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Create work orders</li>
+                <li>• View work orders</li>
                 <li>• View assigned tasks</li>
                 <li>• Basic reporting</li>
                 <li>• Profile management</li>
