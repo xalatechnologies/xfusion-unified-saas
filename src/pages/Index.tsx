@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Check, Zap, Shield, TrendingUp } from "lucide-react";
@@ -12,7 +11,7 @@ const Index = () => {
       title: "Work Orders",
       description: "Streamline maintenance requests and execution with intelligent routing",
       icon: "🔧",
-      gradient: "from-blue-500 to-cyan-500"
+      gradient: "from-blue-500 to-indigo-500"
     },
     {
       title: "Smart Inventory",
@@ -64,13 +63,6 @@ const Index = () => {
     }
   ];
 
-  const stats = [
-    { value: "40%", label: "Reduction in Downtime" },
-    { value: "60%", label: "Faster Work Orders" },
-    { value: "25%", label: "Cost Savings" },
-    { value: "99.9%", label: "Uptime Guarantee" }
-  ];
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -108,13 +100,13 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <motion.header 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="border-b border-gray-200/50 bg-white/80 backdrop-blur-lg sticky top-0 z-50"
+        className="border-b border-slate-200 bg-white/95 backdrop-blur-lg sticky top-0 z-50"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -125,7 +117,7 @@ const Index = () => {
             >
               <div className="relative">
                 <motion.div 
-                  className="w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center"
+                  className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg"
                   animate={{ rotate: [0, 360] }}
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 >
@@ -137,7 +129,7 @@ const Index = () => {
                   transition={{ duration: 2, repeat: Infinity }}
                 />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+              <span className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
                 SupplyMantix
               </span>
             </motion.div>
@@ -149,14 +141,14 @@ const Index = () => {
             >
               <Link to="/login">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button variant="ghost" className="text-gray-600 hover:text-gray-900 font-medium">
+                  <Button variant="ghost" className="text-slate-600 hover:text-slate-900 font-medium">
                     Log In
                   </Button>
                 </motion.div>
               </Link>
               <Link to="/signup">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-lg hover:shadow-xl transition-all duration-200">
+                  <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200">
                     Get Started Free
                   </Button>
                 </motion.div>
@@ -166,11 +158,11 @@ const Index = () => {
         </div>
       </motion.header>
 
-      {/* Hero Section - Using new 3D Hero */}
+      {/* Hero Section */}
       <Hero3D />
 
       {/* Features Grid */}
-      <section id="features" className="py-24 bg-gradient-to-br from-white via-gray-50/50 to-white">
+      <section id="features" className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             className="text-center mb-20"
@@ -180,15 +172,15 @@ const Index = () => {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
                 Everything You Need
               </span>
               <br />
-              <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 In One Platform
               </span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
               Powerful modules that work together seamlessly to optimize your entire operation
             </p>
           </motion.div>
@@ -208,7 +200,7 @@ const Index = () => {
                 initial="rest"
               >
                 <motion.div variants={cardHoverVariants}>
-                  <Card className="group border-0 shadow-xl hover:shadow-2xl transition-all duration-300 bg-white/80 backdrop-blur-sm h-full">
+                  <Card className="group border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white h-full">
                     <CardContent className="p-8 text-center relative overflow-hidden">
                       <motion.div 
                         className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
@@ -224,10 +216,10 @@ const Index = () => {
                       >
                         {feature.icon}
                       </motion.div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                      <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
                         {feature.title}
                       </h3>
-                      <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                      <p className="text-slate-600 leading-relaxed">{feature.description}</p>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -238,7 +230,7 @@ const Index = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white relative overflow-hidden">
         <motion.div 
           className="absolute inset-0 opacity-20"
           animate={{ 
@@ -287,7 +279,7 @@ const Index = () => {
                   transition={{ type: "spring", stiffness: 400 }}
                 >
                   <motion.div 
-                    className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center shadow-2xl"
+                    className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center shadow-2xl"
                     whileHover={{ 
                       rotate: [0, -5, 5, 0],
                       scale: 1.1
@@ -311,7 +303,7 @@ const Index = () => {
                   </motion.div>
                 </motion.div>
                 <motion.h3 
-                  className="text-2xl font-bold mb-4 group-hover:text-cyan-300 transition-colors"
+                  className="text-2xl font-bold mb-4 group-hover:text-blue-300 transition-colors"
                   whileHover={{ scale: 1.05 }}
                 >
                   {benefit.title}
@@ -327,7 +319,7 @@ const Index = () => {
 
       {/* CTA Section */}
       <motion.section 
-        className="py-24 bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 text-white relative overflow-hidden"
+        className="py-24 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 text-white relative overflow-hidden"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -386,7 +378,7 @@ const Index = () => {
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400 }}
               >
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 px-10 py-4 text-lg font-bold shadow-2xl hover:shadow-3xl transition-all duration-300 group">
+                <Button size="lg" className="bg-white text-blue-600 hover:bg-slate-50 px-10 py-4 text-lg font-bold shadow-2xl hover:shadow-3xl transition-all duration-300 group">
                   Start Your Free Trial
                   <motion.div
                     animate={{ x: [0, 5, 0] }}
@@ -464,7 +456,7 @@ const Index = () => {
               transition={{ type: "spring", stiffness: 400 }}
             >
               <motion.div 
-                className="w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center"
+                className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center"
                 animate={{ rotate: [0, 360] }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               >

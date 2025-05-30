@@ -1,3 +1,4 @@
+
 "use client";
 
 import { motion } from "framer-motion";
@@ -6,10 +7,7 @@ import { Link } from "react-router-dom";
 export default function Hero() {
   return (
     <section
-      className="relative w-full overflow-hidden bg-[#0a0613] pb-10 pt-32 font-light text-white antialiased md:pb-16 md:pt-20"
-      style={{
-        background: "linear-gradient(135deg, #0a0613 0%, #150d27 100%)",
-      }}
+      className="relative w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 pb-10 pt-32 font-light text-white antialiased md:pb-16 md:pt-20"
     >
       <div
         className="absolute right-0 top-0 h-1/2 w-1/2"
@@ -32,14 +30,14 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <span className="mb-6 inline-block rounded-full border border-blue-500/30 px-3 py-1 text-xs text-blue-400">
+          <span className="mb-6 inline-block rounded-full border border-blue-400/30 bg-blue-500/10 backdrop-blur-sm px-4 py-2 text-sm font-medium text-blue-300">
             NEXT GENERATION MAINTENANCE & SUPPLY CHAIN
           </span>
           <h1 className="mx-auto mb-6 max-w-4xl text-4xl font-light md:text-5xl lg:text-7xl">
             Transform Operations with{" "}
             <span className="text-blue-400">AI-Powered</span> Platform
           </h1>
-          <p className="mx-auto mb-10 max-w-2xl text-lg text-white/60 md:text-xl">
+          <p className="mx-auto mb-10 max-w-2xl text-lg text-blue-100/80 md:text-xl">
             SupplyMantix combines artificial intelligence with streamlined workflows
             to help you reduce downtime by 40% and optimize your entire operation
             with precision and ease.
@@ -48,13 +46,13 @@ export default function Hero() {
           <div className="mb-10 sm:mb-0 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               to="/signup"
-              className="neumorphic-button hover:shadow-[0_0_20px_rgba(59, 130, 246, 0.5)] relative w-full overflow-hidden rounded-full border border-white/10 bg-gradient-to-b from-white/10 to-white/5 px-8 py-4 text-white shadow-lg transition-all duration-300 hover:border-blue-500/30 sm:w-auto"
+              className="relative w-full overflow-hidden rounded-xl border border-blue-400/20 bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-4 text-white shadow-xl transition-all duration-300 hover:from-blue-500 hover:to-indigo-500 hover:shadow-2xl hover:shadow-blue-500/25 sm:w-auto"
             >
               Start Free Trial
             </Link>
             <a
               href="#features"
-              className="flex w-full items-center justify-center gap-2 text-white/70 transition-colors hover:text-white sm:w-auto"
+              className="flex w-full items-center justify-center gap-2 text-blue-200 transition-colors hover:text-white sm:w-auto"
             >
               <span>See how it works</span>
               <svg
@@ -80,18 +78,18 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
         >
-          <div className="w-full flex h-40 md:h-64 relative overflow-hidden mb-2">
+          <div className="w-full flex h-32 md:h-48 relative overflow-hidden mb-4">
             <img
               src="https://blocks.mvp-subha.me/assets/earth.png"
               alt="Global Operations"
-              className="absolute px-4 top-0 left-1/2 -translate-x-1/2 mx-auto -z-10 opacity-80"
+              className="absolute px-4 top-0 left-1/2 -translate-x-1/2 mx-auto -z-10 opacity-60"
             />
           </div>
-          <div className="relative z-10 mx-auto max-w-5xl overflow-hidden rounded-lg shadow-[0_0_50px_rgba(59,130,246,0.2)]">
+          <div className="relative z-10 mx-auto max-w-5xl overflow-hidden rounded-xl shadow-2xl shadow-blue-500/20 border border-blue-400/20">
             <img
               src="/lovable-uploads/74528ea3-af78-4d04-b707-15daf4860450.png"
               alt="SupplyMantix Dashboard - Work Orders Management"
-              className="h-auto w-full rounded-lg border border-white/10"
+              className="h-auto w-full rounded-xl"
             />
           </div>
         </motion.div>
