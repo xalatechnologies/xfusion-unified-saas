@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Check, Zap, Shield, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Hero } from "@/components/ui/animated-hero";
+import Hero3D from "@/components/ui/hero";
 
 const Index = () => {
   const features = [
@@ -102,11 +102,11 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero Section - Now using animated hero */}
-      <Hero />
+      {/* Hero Section - Using new 3D Hero */}
+      <Hero3D />
 
       {/* Features Grid */}
-      <section className="py-24 bg-gradient-to-br from-white via-gray-50/50 to-white">
+      <section id="features" className="py-24 bg-gradient-to-br from-white via-gray-50/50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">

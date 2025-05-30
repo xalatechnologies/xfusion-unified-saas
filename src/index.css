@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -97,5 +98,16 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .neumorphic-button::after {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300 bg-gradient-to-br from-blue-500/20 to-transparent rounded-full;
+  }
+    
+  .neumorphic-button:hover::after {
+    @apply opacity-100;
   }
 }

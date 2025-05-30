@@ -1,6 +1,7 @@
 
 import { Globe } from "@/components/ui/globe"
 import { Hero } from "@/components/ui/animated-hero"
+import Hero3D from "@/components/ui/hero"
 
 export function GlobeDemo() {
   return (
@@ -18,6 +19,14 @@ export function HeroDemo() {
   return (
     <div className="block">
       <Hero />
+    </div>
+  );
+}
+
+export function Hero3DDemo() {
+  return (
+    <div className="block">
+      <Hero3D />
     </div>
   );
 }
