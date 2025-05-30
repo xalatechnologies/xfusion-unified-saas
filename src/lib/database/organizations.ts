@@ -1,4 +1,5 @@
 
+
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -82,3 +83,4 @@ export const organizationsApi = {
     return data;
   },
 };
+

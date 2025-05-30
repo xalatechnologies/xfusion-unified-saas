@@ -33,13 +33,17 @@ export const useOrganizationSettingsForm = (organizationId: string) => {
   useEffect(() => {
     if (currentOrganization) {
       console.log("Loading organization data:", currentOrganization);
+      
+      // Extract contact info from the contact JSON field if it exists
+      const contactInfo = currentOrganization.contact as any || {};
+      
       setFormData({
         name: currentOrganization.name || "",
         website: currentOrganization.website || "",
         address: currentOrganization.address || "",
-        email: currentOrganization.contact_email || "",
-        phone: currentOrganization.contact_phone || "",
-        fax: currentOrganization.contact_fax || "",
+        email: currentOrganization.contact_email || contactInfo.email || "",
+        phone: currentOrganization.contact_phone || contactInfo.phone || "",
+        fax: currentOrganization.contact_fax || contactInfo.fax || "",
         defaultLanguage: currentOrganization.default_language || "en",
       });
     }
@@ -55,10 +59,18 @@ export const useOrganizationSettingsForm = (organizationId: string) => {
       return;
     }
 
+    // Build the contact object for the contact JSON field
+    const contactData = {
+      email: formData.email,
+      phone: formData.phone,
+      fax: formData.fax,
+    };
+
     const updatePayload = {
       name: formData.name,
       website: formData.website,
       address: formData.address,
+      contact: contactData,
       contact_email: formData.email,
       contact_phone: formData.phone,
       contact_fax: formData.fax,
@@ -98,3 +110,4 @@ export const useOrganizationSettingsForm = (organizationId: string) => {
     isLoading: updateOrganization.isPending,
   };
 };
+
