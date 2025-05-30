@@ -97,28 +97,48 @@
   }
 
   body {
-    @apply bg-background text-foreground text-base;
-    font-size: 16px;
+    @apply bg-background text-foreground;
+    font-size: 18px; /* Increased from 16px */
   }
   
   h1 {
-    @apply text-3xl;
+    @apply text-4xl; /* Increased from text-3xl */
   }
   
   h2 {
-    @apply text-2xl;
+    @apply text-3xl; /* Increased from text-2xl */
   }
   
   h3 {
-    @apply text-xl;
+    @apply text-2xl; /* Increased from text-xl */
   }
   
   h4 {
-    @apply text-lg;
+    @apply text-xl; /* Increased from text-lg */
   }
   
   p {
-    @apply text-base;
+    @apply text-lg; /* Increased from text-base */
+  }
+  
+  /* Ensure form elements follow larger font sizes */
+  input, textarea, select, button {
+    font-size: 16px !important; /* Minimum 16px to prevent zoom on mobile */
+  }
+  
+  /* Content area specific styles */
+  main {
+    font-size: 18px;
+  }
+  
+  /* Table content */
+  table {
+    font-size: 16px;
+  }
+  
+  /* Card content */
+  .card {
+    font-size: 18px;
   }
 }
 
