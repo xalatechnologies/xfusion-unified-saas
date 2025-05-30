@@ -13,6 +13,12 @@ interface OrganizationSettingsProps {
   organizationId: string;
 }
 
+interface ContactInfo {
+  email?: string;
+  phone?: string;
+  fax?: string;
+}
+
 export const OrganizationSettings = ({ organizationId }: OrganizationSettingsProps) => {
   const { t } = useLanguage();
   const { toast } = useToast();
@@ -34,13 +40,15 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
   // Update form data when organization data loads
   useEffect(() => {
     if (currentOrganization) {
+      const contact = currentOrganization.contact as ContactInfo | null;
+      
       setFormData({
         name: currentOrganization.name || "",
         website: currentOrganization.website || "",
         address: currentOrganization.address || "",
-        email: currentOrganization.contact?.email || "",
-        phone: currentOrganization.contact?.phone || "",
-        fax: currentOrganization.contact?.fax || "",
+        email: contact?.email || "",
+        phone: contact?.phone || "",
+        fax: contact?.fax || "",
       });
     }
   }, [currentOrganization]);
