@@ -1,5 +1,3 @@
-
-
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -31,7 +29,21 @@ export const organizationsApi = {
     console.log("Updating organization with ID:", id);
     console.log("Updates being sent:", updates);
     
-    // Perform the update with explicit field mapping
+    // First, verify the organization exists
+    const { data: existingOrg, error: checkError } = await supabase
+      .from("organizations")
+      .select("id")
+      .eq("id", id)
+      .single();
+    
+    if (checkError) {
+      console.error("Organization not found:", checkError);
+      throw new Error(`Organization with ID ${id} not found`);
+    }
+    
+    console.log("Organization exists, proceeding with update");
+    
+    // Perform the update
     const { data, error } = await supabase
       .from("organizations")
       .update({
@@ -46,16 +58,20 @@ export const organizationsApi = {
         updated_at: new Date().toISOString()
       })
       .eq("id", id)
-      .select()
-      .single();
+      .select();
     
     if (error) {
       console.error("Supabase update error:", error);
       throw error;
     }
     
-    console.log("Update successful, returned data:", data);
-    return data;
+    if (!data || data.length === 0) {
+      console.error("No rows updated");
+      throw new Error("Update failed - no rows were updated");
+    }
+    
+    console.log("Update successful, returned data:", data[0]);
+    return data[0];
   },
 
   async getOrganizationMembers(organizationId: string) {
@@ -83,4 +99,3 @@ export const organizationsApi = {
     return data;
   },
 };
-
