@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -29,6 +30,7 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
     email: "",
     phone: "",
     fax: "",
+    defaultLanguage: "en",
   });
 
   // Update form data when organization data loads
@@ -41,6 +43,7 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
         email: currentOrganization.contact_email || "",
         phone: currentOrganization.contact_phone || "",
         fax: currentOrganization.contact_fax || "",
+        defaultLanguage: currentOrganization.default_language || "en",
       });
     }
   }, [currentOrganization]);
@@ -56,6 +59,7 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
           contact_email: formData.email,
           contact_phone: formData.phone,
           contact_fax: formData.fax,
+          default_language: formData.defaultLanguage,
         },
       });
       
@@ -135,6 +139,23 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
                 onChange={(e) => setFormData({ ...formData, fax: e.target.value })}
                 placeholder="+1 (555) 123-4568"
               />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="default-language">Default Language</Label>
+              <Select
+                value={formData.defaultLanguage}
+                onValueChange={(value) => setFormData({ ...formData, defaultLanguage: value })}
+              >
+                <SelectTrigger id="default-language">
+                  <SelectValue placeholder="Select language" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="fr">French</SelectItem>
+                  <SelectItem value="no">Norwegian</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           

@@ -330,6 +330,7 @@ export type Database = {
           contact_phone: string | null
           created_at: string | null
           created_by: string
+          default_language: string | null
           id: string
           name: string
           settings: Json | null
@@ -345,6 +346,7 @@ export type Database = {
           contact_phone?: string | null
           created_at?: string | null
           created_by: string
+          default_language?: string | null
           id?: string
           name: string
           settings?: Json | null
@@ -360,6 +362,7 @@ export type Database = {
           contact_phone?: string | null
           created_at?: string | null
           created_by?: string
+          default_language?: string | null
           id?: string
           name?: string
           settings?: Json | null
