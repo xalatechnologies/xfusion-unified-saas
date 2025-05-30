@@ -64,7 +64,7 @@ export const MemberInviteForm = ({ organizationId }: MemberInviteFormProps) => {
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="invite-email" className="text-sm font-medium text-gray-700">
+            <Label htmlFor="invite-email" className="text-sm font-medium text-gray-700 text-left">
               Email Address
             </Label>
             <Input
@@ -77,7 +77,7 @@ export const MemberInviteForm = ({ organizationId }: MemberInviteFormProps) => {
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium text-gray-700">
+            <Label className="text-sm font-medium text-gray-700 text-left">
               Role
             </Label>
             <Select value={inviteRole} onValueChange={(value: Database["public"]["Enums"]["organization_role"]) => setInviteRole(value)}>
@@ -86,6 +86,8 @@ export const MemberInviteForm = ({ organizationId }: MemberInviteFormProps) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="viewer">Viewer</SelectItem>
+                <SelectItem value="client">Client</SelectItem>
+                <SelectItem value="requester">Requester</SelectItem>
                 <SelectItem value="technician">Technician</SelectItem>
                 <SelectItem value="engineer">Engineer</SelectItem>
                 <SelectItem value="maintenance_manager">Maintenance Manager</SelectItem>

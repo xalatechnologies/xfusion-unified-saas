@@ -23,16 +23,16 @@ export const OrganizationLanguageSettings = ({ defaultLanguage, onLanguageChange
         <div className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full">
           <Globe className="w-4 h-4 text-blue-600" />
         </div>
-        <div>
-          <h4 className="text-sm font-medium text-blue-900">Language Settings</h4>
-          <p className="text-xs text-blue-700">
+        <div className="text-left">
+          <h4 className="text-sm font-medium text-blue-900 text-left">Language Settings</h4>
+          <p className="text-xs text-blue-700 text-left">
             This will be the default language for all organization members and system communications.
           </p>
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="default-language" className="text-sm font-medium text-gray-700 flex items-center">
+        <Label htmlFor="default-language" className="text-sm font-medium text-gray-700 flex items-center text-left">
           <Languages className="w-4 h-4 mr-2 text-gray-500" />
           Default Language
         </Label>
@@ -61,7 +61,7 @@ export const OrganizationLanguageSettings = ({ defaultLanguage, onLanguageChange
             ))}
           </SelectContent>
         </Select>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-muted-foreground text-left">
           Choose the primary language for your organization's interface and communications
         </p>
       </div>
