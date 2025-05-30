@@ -1,8 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Shield, Info } from "lucide-react";
-import { getRoleIcon, getRoleIconColor, getRoleBadgeColor } from "./memberUtils";
+import { getRoleIcon, getRoleIconColor } from "./memberUtils";
 
 const rolePermissions = [
   {
@@ -68,22 +67,16 @@ export const RolePermissions = () => {
           {rolePermissions.map(({ role, permissions }) => {
             const RoleIcon = getRoleIcon(role);
             const iconColor = getRoleIconColor(role);
-            const badgeColor = getRoleBadgeColor(role);
             const roleName = role.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
 
             return (
               <Card key={role} className="h-full bg-white border border-gray-200 hover:shadow-md transition-shadow duration-200">
                 <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <RoleIcon className={`w-5 h-5 ${iconColor}`} />
-                      <CardTitle className="text-sm font-semibold text-gray-900">
-                        {roleName}
-                      </CardTitle>
-                    </div>
-                    <Badge className={`text-xs border ${badgeColor}`}>
+                  <div className="flex items-center space-x-2">
+                    <RoleIcon className={`w-5 h-5 ${iconColor}`} />
+                    <CardTitle className="text-sm font-semibold text-gray-900">
                       {roleName}
-                    </Badge>
+                    </CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent className="pt-0">
