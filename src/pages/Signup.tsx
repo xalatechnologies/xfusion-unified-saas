@@ -81,45 +81,7 @@ const Signup = () => {
       <div className="absolute top-20 left-20 w-72 h-72 bg-blue-200/20 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-20 w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl"></div>
 
-      {/* Left side - Illustration */}
-      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 items-center justify-center p-12 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30" style={{
-          backgroundImage: "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.1\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"
-        }}></div>
-        
-        <div className="relative max-w-md text-center text-white z-10">
-          <div className="w-24 h-24 mx-auto mb-8 bg-white/20 rounded-3xl flex items-center justify-center backdrop-blur-sm">
-            <TrendingUp className="w-12 h-12 text-white" />
-          </div>
-          <h3 className="text-3xl font-bold mb-6">Transform Your Business</h3>
-          <p className="text-emerald-100 text-lg leading-relaxed mb-8">
-            Get real-time insights, automate workflows, and improve operational 
-            efficiency with our comprehensive AI-powered platform.
-          </p>
-          <div className="space-y-4">
-            <div className="flex items-center space-x-3 text-emerald-100">
-              <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm">✓</span>
-              </div>
-              <span>14-day free trial</span>
-            </div>
-            <div className="flex items-center space-x-3 text-emerald-100">
-              <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm">✓</span>
-              </div>
-              <span>No credit card required</span>
-            </div>
-            <div className="flex items-center space-x-3 text-emerald-100">
-              <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm">✓</span>
-              </div>
-              <span>Cancel anytime</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Right side - Form */}
+      {/* Left side - Form */}
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-md w-full space-y-8">
           <div className="text-center">
@@ -310,6 +272,44 @@ const Signup = () => {
               </p>
             </CardContent>
           </Card>
+        </div>
+      </div>
+
+      {/* Right side - Illustration */}
+      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 items-center justify-center p-12 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-30" style={{
+          backgroundImage: "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.1\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"
+        }}></div>
+        
+        <div className="relative max-w-md text-center text-white z-10">
+          <div className="w-24 h-24 mx-auto mb-8 bg-white/20 rounded-3xl flex items-center justify-center backdrop-blur-sm">
+            <TrendingUp className="w-12 h-12 text-white" />
+          </div>
+          <h3 className="text-3xl font-bold mb-6">Transform Your Business</h3>
+          <p className="text-emerald-100 text-lg leading-relaxed mb-8">
+            Get real-time insights, automate workflows, and improve operational 
+            efficiency with our comprehensive AI-powered platform.
+          </p>
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3 text-emerald-100">
+              <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm">✓</span>
+              </div>
+              <span>14-day free trial</span>
+            </div>
+            <div className="flex items-center space-x-3 text-emerald-100">
+              <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm">✓</span>
+              </div>
+              <span>No credit card required</span>
+            </div>
+            <div className="flex items-center space-x-3 text-emerald-100">
+              <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm">✓</span>
+              </div>
+              <span>Cancel anytime</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
