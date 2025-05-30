@@ -3,7 +3,6 @@
 
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Globe } from "@/components/ui/globe";
 
 export default function Hero() {
   return (
@@ -83,7 +82,11 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
         >
           <div className="w-full flex h-40 md:h-64 relative overflow-hidden mb-8">
-            <Globe className="absolute top-0 left-1/2 -translate-x-1/2 mx-auto -z-10 opacity-80" />
+            <img
+              src="https://blocks.mvp-subha.me/assets/earth.png"
+              alt="Global Operations"
+              className="absolute px-4 top-0 left-1/2 -translate-x-1/2 mx-auto -z-10 opacity-80"
+            />
           </div>
           <div className="relative z-10 mx-auto max-w-5xl overflow-hidden rounded-lg shadow-[0_0_50px_rgba(59,130,246,0.2)]">
             <img
