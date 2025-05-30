@@ -1,5 +1,4 @@
-
-export type Language = 'en' | 'es' | 'fr';
+export type Language = 'en' | 'fr' | 'no';
 
 export interface TranslationKeys {
   // Navigation

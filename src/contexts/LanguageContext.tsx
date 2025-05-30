@@ -35,8 +35,8 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
 
   const availableLanguages = [
     { code: 'en' as Language, name: 'English', flag: '🇺🇸' },
-    { code: 'es' as Language, name: 'Español', flag: '🇪🇸' },
     { code: 'fr' as Language, name: 'Français', flag: '🇫🇷' },
+    { code: 'no' as Language, name: 'Norsk', flag: '🇳🇴' },
   ];
 
   useEffect(() => {
