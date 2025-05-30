@@ -42,7 +42,7 @@ function App() {
                 }
               />
               <Route
-                path="/work-orders"
+                path="/dashboard/work-orders"
                 element={
                   <ProtectedRoute>
                     <WorkOrders />
@@ -50,7 +50,7 @@ function App() {
                 }
               />
               <Route
-                path="/organization"
+                path="/dashboard/organization"
                 element={
                   <ProtectedRoute>
                     <Organization />
@@ -58,7 +58,7 @@ function App() {
                 }
               />
               <Route
-                path="/procedures"
+                path="/dashboard/procedures"
                 element={
                   <ProtectedRoute>
                     <Procedures />
@@ -66,7 +66,7 @@ function App() {
                 }
               />
               <Route
-                path="/translations"
+                path="/dashboard/translations"
                 element={
                   <ProtectedRoute>
                     <TranslationManagement />
