@@ -1,9 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { Mail } from "lucide-react";
 import { useInviteOrganizationMember } from "@/hooks/useOrganizations";
 import { useSubscriptionLimits } from "@/hooks/useSubscriptionLimits";
 import { InviteFormHeader } from "./InviteFormHeader";
@@ -88,33 +86,15 @@ export const MemberInviteForm = ({ organizationId }: MemberInviteFormProps) => {
           maxUsers={subscriptionLimits.maxUsers}
         />
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <InviteFormFields
-            email={email}
-            setEmail={setEmail}
-            role={role}
-            setRole={setRole}
-            disabled={subscriptionLimits.isAtLimit || inviteMutation.isPending}
-          />
-
-          <Button 
-            type="submit" 
-            className="w-full h-10 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
-            disabled={inviteMutation.isPending || subscriptionLimits.isAtLimit || !email.trim()}
-          >
-            {inviteMutation.isPending ? (
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Sending...</span>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Mail className="w-4 h-4" />
-                <span>Send Invitation</span>
-              </div>
-            )}
-          </Button>
-        </form>
+        <InviteFormFields
+          email={email}
+          setEmail={setEmail}
+          role={role}
+          setRole={setRole}
+          disabled={subscriptionLimits.isAtLimit || inviteMutation.isPending}
+          onSubmit={handleSubmit}
+          isLoading={inviteMutation.isPending}
+        />
       </CardContent>
     </Card>
   );
