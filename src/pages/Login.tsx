@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { ArrowRight, Zap, AlertCircle, Loader2 } from "lucide-react";
+import { ArrowRight, Zap, AlertCircle, Loader2, Mail, Lock } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -52,35 +52,37 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 flex relative overflow-hidden">
-      <div className="absolute top-20 left-20 w-72 h-72 bg-blue-200/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-20 w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl"></div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50 flex relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute top-20 left-20 w-72 h-72 bg-blue-200/30 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-cyan-200/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-purple-200/20 rounded-full blur-3xl animate-pulse delay-500"></div>
       
       {/* Left side - Form */}
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-md w-full space-y-8">
           <div className="text-center">
-            <Link to="/" className="flex items-center justify-center space-x-3 mb-8">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-xl">S</span>
+            <Link to="/" className="inline-flex items-center space-x-3 mb-8 group">
+              <div className="w-14 h-14 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <span className="text-white font-bold text-2xl">S</span>
               </div>
-              <span className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+              <span className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-cyan-600 bg-clip-text text-transparent">
                 SupplyMantix
               </span>
             </Link>
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-blue-700 bg-clip-text text-transparent mb-2">
               Welcome back
             </h2>
-            <p className="mt-3 text-gray-600 text-lg">Sign in to your account to continue</p>
+            <p className="text-gray-500">Ready to get started?</p>
           </div>
 
-          <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-lg">
-            <CardHeader className="space-y-1 pb-6">
-              <CardTitle className="text-2xl text-center font-bold text-gray-900">Log in</CardTitle>
+          <Card className="border-0 shadow-2xl bg-white/90 backdrop-blur-xl rounded-3xl overflow-hidden">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-2xl text-center font-bold text-gray-900">Sign In</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               {error && (
-                <Alert className="border-red-200 bg-red-50">
+                <Alert className="border-red-200 bg-red-50 rounded-xl">
                   <AlertCircle className="h-4 w-4 text-red-600" />
                   <AlertDescription className="text-red-700">
                     {error}
@@ -88,101 +90,108 @@ const Login = () => {
                 </Alert>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-3">
-                  <Label htmlFor="email" className="text-gray-700 font-medium">Email Address</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20"
-                    required
-                    disabled={loading}
-                  />
-                </div>
-                <div className="space-y-3">
-                  <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="Enter your password"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    className="h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20"
-                    required
-                    disabled={loading}
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <input type="checkbox" id="remember" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                    <Label htmlFor="remember" className="text-sm text-gray-600 font-medium">
-                      Remember me
-                    </Label>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="space-y-4">
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="h-12 pl-11 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200"
+                      required
+                      disabled={loading}
+                    />
                   </div>
-                  <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-500 font-medium">
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="Enter your password"
+                      value={formData.password}
+                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                      className="h-12 pl-11 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200"
+                      required
+                      disabled={loading}
+                    />
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between text-sm">
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                    <span className="text-gray-600">Remember me</span>
+                  </label>
+                  <Link to="/forgot-password" className="text-blue-600 hover:text-blue-500 font-medium">
                     Forgot password?
                   </Link>
                 </div>
+                
                 <Button 
                   type="submit" 
-                  className="w-full h-12 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 group"
+                  className="w-full h-12 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 hover:from-blue-700 hover:via-purple-700 hover:to-cyan-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
                   disabled={loading}
                 >
                   {loading ? (
                     <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
                       Signing in...
                     </>
                   ) : (
                     <>
-                      Sign in
-                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      Sign In
+                      <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </>
                   )}
                 </Button>
               </form>
 
-              <p className="text-center text-gray-600">
-                Don't have an account?{" "}
+              <div className="text-center">
+                <span className="text-gray-600">Don't have an account? </span>
                 <Link to="/signup" className="text-blue-600 hover:text-blue-500 font-semibold">
                   Sign up
                 </Link>
-              </p>
+              </div>
             </CardContent>
           </Card>
         </div>
       </div>
 
-      {/* Right side - Illustration */}
-      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-blue-600 via-cyan-600 to-blue-700 items-center justify-center p-12 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30" style={{
-          backgroundImage: "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.1\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"
-        }}></div>
+      {/* Right side - Enhanced Illustration */}
+      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-700 items-center justify-center p-12 relative overflow-hidden">
+        {/* Animated pattern background */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 left-0 w-full h-full" style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(255,255,255,0.2) 1px, transparent 1px),
+                            radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
         
-        <div className="relative max-w-md text-center text-white z-10">
-          <div className="w-24 h-24 mx-auto mb-8 bg-white/20 rounded-3xl flex items-center justify-center backdrop-blur-sm">
-            <Zap className="w-12 h-12 text-white" />
+        <div className="relative max-w-lg text-center text-white z-10">
+          <div className="w-32 h-32 mx-auto mb-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm shadow-2xl">
+            <Zap className="w-16 h-16 text-white animate-pulse" />
           </div>
-          <h3 className="text-3xl font-bold mb-6">Streamline Your Operations</h3>
-          <p className="text-blue-100 text-lg leading-relaxed mb-8">
-            Join thousands of companies using SupplyMantix to optimize their maintenance 
-            and supply chain workflows with AI-powered automation.
+          <h3 className="text-4xl font-bold mb-4">Streamline Operations</h3>
+          <p className="text-blue-100 text-xl leading-relaxed mb-8 opacity-90">
+            Join thousands optimizing workflows with AI-powered automation
           </p>
-          <div className="flex items-center justify-center space-x-8 text-blue-100">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">40%</div>
-              <div className="text-sm">Less Downtime</div>
+          
+          <div className="grid grid-cols-3 gap-6 text-center">
+            <div className="bg-white/10 rounded-2xl p-4 backdrop-blur-sm">
+              <div className="text-3xl font-bold text-white mb-1">40%</div>
+              <div className="text-blue-200 text-sm">Less Downtime</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">60%</div>
-              <div className="text-sm">Faster Orders</div>
+            <div className="bg-white/10 rounded-2xl p-4 backdrop-blur-sm">
+              <div className="text-3xl font-bold text-white mb-1">60%</div>
+              <div className="text-blue-200 text-sm">Faster Orders</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">25%</div>
-              <div className="text-sm">Cost Savings</div>
+            <div className="bg-white/10 rounded-2xl p-4 backdrop-blur-sm">
+              <div className="text-3xl font-bold text-white mb-1">25%</div>
+              <div className="text-blue-200 text-sm">Cost Savings</div>
             </div>
           </div>
         </div>
