@@ -1,7 +1,6 @@
 
 import { Mail } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import type { Database } from "@/integrations/supabase/types";
@@ -40,12 +39,9 @@ export const InviteFormFields = ({
 }: InviteFormFieldsProps) => {
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <div className="flex items-end gap-4">
+      <div className="flex items-start gap-4">
         <div className="flex-1">
-          <Label htmlFor="email" className="text-sm font-medium text-gray-900">
-            Email Address
-          </Label>
-          <div className="relative mt-1">
+          <div className="relative">
             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
               id="email"
@@ -58,14 +54,14 @@ export const InviteFormFields = ({
               required
             />
           </div>
+          <p className="text-xs text-muted-foreground mt-1">
+            Enter the email address of the person you want to invite
+          </p>
         </div>
 
         <div className="w-48">
-          <Label htmlFor="role" className="text-sm font-medium text-gray-900">
-            Role
-          </Label>
           <Select value={role} onValueChange={(value: OrganizationRole) => setRole(value)}>
-            <SelectTrigger className="h-10 mt-1">
+            <SelectTrigger className="h-10">
               <SelectValue placeholder="Choose a role" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200 shadow-lg">
@@ -82,25 +78,33 @@ export const InviteFormFields = ({
               ))}
             </SelectContent>
           </Select>
+          <p className="text-xs text-muted-foreground mt-1">
+            Select the role for this team member
+          </p>
         </div>
 
-        <Button 
-          type="submit" 
-          className="h-10 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors px-6"
-          disabled={isLoading || disabled || !email.trim()}
-        >
-          {isLoading ? (
-            <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              <span>Sending...</span>
-            </div>
-          ) : (
-            <div className="flex items-center space-x-2">
-              <Mail className="w-4 h-4" />
-              <span>Send Invitation</span>
-            </div>
-          )}
-        </Button>
+        <div className="flex flex-col">
+          <Button 
+            type="submit" 
+            className="h-10 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors px-6"
+            disabled={isLoading || disabled || !email.trim()}
+          >
+            {isLoading ? (
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <span>Sending...</span>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-2">
+                <Mail className="w-4 h-4" />
+                <span>Send Invitation</span>
+              </div>
+            )}
+          </Button>
+          <p className="text-xs text-muted-foreground mt-1">
+            Click to send the invitation email
+          </p>
+        </div>
       </div>
     </form>
   );
