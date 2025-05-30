@@ -152,6 +152,42 @@ export type Database = {
           },
         ]
       }
+      organizations: {
+        Row: {
+          address: string | null
+          contact: Json | null
+          created_at: string | null
+          created_by: string
+          id: string
+          name: string
+          settings: Json | null
+          updated_at: string | null
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          contact?: Json | null
+          created_at?: string | null
+          created_by: string
+          id?: string
+          name: string
+          settings?: Json | null
+          updated_at?: string | null
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          contact?: Json | null
+          created_at?: string | null
+          created_by?: string
+          id?: string
+          name?: string
+          settings?: Json | null
+          updated_at?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
       procedures: {
         Row: {
           asset_type: string | null

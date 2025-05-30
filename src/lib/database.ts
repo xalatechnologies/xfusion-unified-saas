@@ -1,10 +1,43 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
 type Tables = Database["public"]["Tables"];
 
 export const databaseApi = {
+  // Organizations
+  async getOrganizations() {
+    const { data, error } = await supabase
+      .from("organizations")
+      .select("*")
+      .order("created_at", { ascending: false });
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async createOrganization(organization: Tables["organizations"]["Insert"]) {
+    const { data, error } = await supabase
+      .from("organizations")
+      .insert(organization)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async updateOrganization(id: string, updates: Tables["organizations"]["Update"]) {
+    const { data, error } = await supabase
+      .from("organizations")
+      .update(updates)
+      .eq("id", id)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
   // Tenants
   async getTenants() {
     const { data, error } = await supabase
