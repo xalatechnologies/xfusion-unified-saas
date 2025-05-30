@@ -35,8 +35,8 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
 
   const availableLanguages = [
     { code: 'en' as Language, name: 'English', flag: '🇺🇸' },
+    { code: 'es' as Language, name: 'Español', flag: '🇪🇸' },
     { code: 'fr' as Language, name: 'Français', flag: '🇫🇷' },
-    { code: 'no' as Language, name: 'Norsk', flag: '🇳🇴' },
   ];
 
   useEffect(() => {
@@ -69,7 +69,22 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
 
   const t = (key: keyof TranslationKeys): string => {
     // First check custom translations, then fall back to default translations
-    return customTranslations[key] || translations[language][key] || key;
+    const customValue = customTranslations[key];
+    if (customValue) return customValue;
+    
+    const defaultTranslations = translations[language];
+    if (defaultTranslations && defaultTranslations[key]) {
+      return defaultTranslations[key];
+    }
+    
+    // Fallback to English if translation not found
+    const englishTranslations = translations['en'];
+    if (englishTranslations && englishTranslations[key]) {
+      return englishTranslations[key];
+    }
+    
+    // Final fallback to the key itself
+    return key;
   };
 
   useEffect(() => {

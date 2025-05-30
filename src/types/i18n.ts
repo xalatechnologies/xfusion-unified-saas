@@ -1,5 +1,5 @@
 
-export type Language = 'en' | 'fr' | 'no';
+export type Language = 'en' | 'es' | 'fr';
 
 export interface TranslationKeys {
   // Navigation
@@ -30,10 +30,14 @@ export interface TranslationKeys {
   'auth.login': string;
   'auth.signup': string;
   'auth.signOut': string;
+  'auth.logout': string;
   'auth.email': string;
   'auth.password': string;
   'auth.confirmPassword': string;
   'auth.fullName': string;
+  'auth.firstName': string;
+  'auth.lastName': string;
+  'auth.company': string;
   'auth.welcomeBack': string;
   'auth.signInToAccount': string;
   'auth.noAccount': string;
@@ -42,6 +46,9 @@ export interface TranslationKeys {
   'auth.alreadyHaveAccount': string;
   'auth.getStarted': string;
   'auth.forgotPassword': string;
+  'auth.dontHaveAccount': string;
+  'auth.signInWithEmail': string;
+  'auth.signUpWithEmail': string;
 
   // Landing page
   'landing.hero.title': string;
@@ -79,6 +86,29 @@ export interface TranslationKeys {
   'landing.cta.noCard': string;
   'landing.cta.cancelAnytime': string;
 
+  // Dashboard
+  'dashboard.title': string;
+  'dashboard.welcome': string;
+  'dashboard.overview': string;
+
+  // Work Orders
+  'workOrders.title': string;
+  'workOrders.description': string;
+
+  // Procedures
+  'procedures.title': string;
+  'procedures.description': string;
+
+  // Organization
+  'organization.title': string;
+  'organization.description': string;
+  'organization.tabs.settings': string;
+  'organization.tabs.branding': string;
+  'organization.tabs.members': string;
+  'organization.tabs.subscription': string;
+  'organization.tabs.billing': string;
+  'organization.settings.general': string;
+
   // Admin panel
   'admin.translations': string;
   'admin.translations.title': string;
@@ -100,12 +130,23 @@ export interface TranslationKeys {
   'common.delete': string;
   'common.edit': string;
   'common.create': string;
+  'common.add': string;
   'common.loading': string;
   'common.error': string;
   'common.success': string;
   'common.profile': string;
   'common.settings': string;
   'common.notifications': string;
+  'common.filter': string;
+
+  // Language
+  'language.selectLanguage': string;
+  'language.english': string;
+  'language.spanish': string;
+  'language.french': string;
+  'language.german': string;
+  'language.chinese': string;
+  'language.japanese': string;
 }
 
 export type Translations = Record<Language, TranslationKeys>;

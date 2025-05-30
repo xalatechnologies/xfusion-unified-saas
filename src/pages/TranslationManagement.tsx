@@ -49,8 +49,9 @@ const TranslationManagement = () => {
 
   const filteredTranslations = Object.entries(currentTranslations)
     .filter(([key, value]) => {
+      const stringValue = String(value);
       const matchesSearch = key.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          value.toLowerCase().includes(searchTerm.toLowerCase());
+                          stringValue.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = categoryFilter === "all" || key.startsWith(categoryFilter + ".");
       return matchesSearch && matchesCategory;
     });
@@ -148,8 +149,8 @@ const TranslationManagement = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="en">🇺🇸 English</SelectItem>
+                  <SelectItem value="es">🇪🇸 Español</SelectItem>
                   <SelectItem value="fr">🇫🇷 Français</SelectItem>
-                  <SelectItem value="no">🇳🇴 Norsk</SelectItem>
                 </SelectContent>
               </Select>
               <Select value={categoryFilter} onValueChange={setCategoryFilter}>
@@ -184,52 +185,55 @@ const TranslationManagement = () => {
                 <div className="col-span-2 text-center">Actions</div>
               </div>
               <div className="max-h-96 overflow-y-auto">
-                {filteredTranslations.map(([key, value]) => (
-                  <div key={key} className="grid grid-cols-12 gap-4 p-4 border-b hover:bg-gray-50">
-                    <div className="col-span-4">
-                      <div className="flex flex-col gap-1">
-                        <code className="text-sm font-mono text-blue-600">{key}</code>
-                        <Badge variant="outline" className="w-fit">
-                          {key.split('.')[0]}
-                        </Badge>
+                {filteredTranslations.map(([key, value]) => {
+                  const stringValue = String(value);
+                  return (
+                    <div key={key} className="grid grid-cols-12 gap-4 p-4 border-b hover:bg-gray-50">
+                      <div className="col-span-4">
+                        <div className="flex flex-col gap-1">
+                          <code className="text-sm font-mono text-blue-600">{key}</code>
+                          <Badge variant="outline" className="w-fit">
+                            {key.split('.')[0]}
+                          </Badge>
+                        </div>
+                      </div>
+                      <div className="col-span-6">
+                        {editingKey === key ? (
+                          <Textarea
+                            value={editValue}
+                            onChange={(e) => setEditValue(e.target.value)}
+                            className="min-h-[60px]"
+                            autoFocus
+                          />
+                        ) : (
+                          <div className="text-sm leading-relaxed min-h-[60px] flex items-center">
+                            {stringValue}
+                          </div>
+                        )}
+                      </div>
+                      <div className="col-span-2 flex gap-2 justify-center">
+                        {editingKey === key ? (
+                          <>
+                            <Button size="sm" onClick={handleSave}>
+                              <Save className="w-4 h-4" />
+                            </Button>
+                            <Button size="sm" variant="outline" onClick={handleCancel}>
+                              {t('common.cancel')}
+                            </Button>
+                          </>
+                        ) : (
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            onClick={() => handleEdit(key, stringValue)}
+                          >
+                            {t('common.edit')}
+                          </Button>
+                        )}
                       </div>
                     </div>
-                    <div className="col-span-6">
-                      {editingKey === key ? (
-                        <Textarea
-                          value={editValue}
-                          onChange={(e) => setEditValue(e.target.value)}
-                          className="min-h-[60px]"
-                          autoFocus
-                        />
-                      ) : (
-                        <div className="text-sm leading-relaxed min-h-[60px] flex items-center">
-                          {value}
-                        </div>
-                      )}
-                    </div>
-                    <div className="col-span-2 flex gap-2 justify-center">
-                      {editingKey === key ? (
-                        <>
-                          <Button size="sm" onClick={handleSave}>
-                            <Save className="w-4 h-4" />
-                          </Button>
-                          <Button size="sm" variant="outline" onClick={handleCancel}>
-                            {t('common.cancel')}
-                          </Button>
-                        </>
-                      ) : (
-                        <Button 
-                          size="sm" 
-                          variant="outline" 
-                          onClick={() => handleEdit(key, value)}
-                        >
-                          {t('common.edit')}
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </CardContent>
