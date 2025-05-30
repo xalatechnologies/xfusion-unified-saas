@@ -1,4 +1,3 @@
-
 "use client";
 
 import { motion } from "framer-motion";
@@ -90,7 +89,7 @@ export default function Hero() {
           </div>
           <div className="relative z-10 mx-auto max-w-5xl overflow-hidden rounded-lg shadow-[0_0_50px_rgba(59,130,246,0.2)]">
             <img
-              src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1920&h=1080&fit=crop"
+              src="/lovable-uploads/74528ea3-af78-4d04-b707-15daf4860450.png"
               alt="SupplyMantix Dashboard - Work Orders Management"
               className="h-auto w-full rounded-lg border border-white/10"
             />
