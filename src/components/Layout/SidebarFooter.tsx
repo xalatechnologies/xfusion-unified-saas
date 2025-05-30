@@ -9,8 +9,8 @@ export function AppSidebarFooter() {
           <div className="w-2 h-2 rounded-full bg-white opacity-90"></div>
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-xs font-medium text-gray-700 tracking-wide">System Status</div>
-          <div className="text-xs text-emerald-600 font-medium">All systems operational</div>
+          <div className="text-sm font-medium text-gray-700 tracking-wide">System Status</div>
+          <div className="text-sm text-emerald-600 font-medium">All systems operational</div>
         </div>
       </div>
     </BaseSidebarFooter>
