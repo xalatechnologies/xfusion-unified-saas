@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useOrganizationMembers, useInviteOrganizationMember } from "@/hooks/useDatabase";
+import { useOrganizationMembers, useInviteOrganizationMember } from "@/hooks/useOrganizations";
 
 interface OrganizationMembersProps {
   organizationId: string;

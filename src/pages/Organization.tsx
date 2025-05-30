@@ -1,4 +1,3 @@
-
 import { DashboardLayout } from "@/components/Layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,7 +7,7 @@ import { OrganizationBranding } from "@/components/organization/OrganizationBran
 import { OrganizationSubscription } from "@/components/organization/OrganizationSubscription";
 import { OrganizationBilling } from "@/components/organization/OrganizationBilling";
 import { OrganizationMembers } from "@/components/organization/OrganizationMembers";
-import { useOrganizations } from "@/hooks/useDatabase";
+import { useOrganizations } from "@/hooks/useOrganizations";
 
 export default function Organization() {
   const { t } = useLanguage();

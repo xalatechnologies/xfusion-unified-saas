@@ -1,11 +1,10 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
 import { CreditCard, Download, Calendar, DollarSign } from "lucide-react";
-import { useBillingInformation, useInvoices } from "@/hooks/useDatabase";
+import { useBillingInformation, useInvoices } from "@/hooks/useBilling";
 
 interface OrganizationBillingProps {
   organizationId: string;
