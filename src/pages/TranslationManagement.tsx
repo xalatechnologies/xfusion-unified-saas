@@ -11,7 +11,7 @@ import { translations } from "@/lib/translations";
 import { Language, TranslationKeys } from "@/types/i18n";
 import { Search, Download, Upload, Save } from "lucide-react";
 import { toast } from "sonner";
-import DashboardLayout from "@/components/Layout/DashboardLayout";
+import { DashboardLayout } from "@/components/Layout/DashboardLayout";
 
 const TranslationManagement = () => {
   const { t, language } = useLanguage();
