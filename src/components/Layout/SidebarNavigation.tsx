@@ -9,17 +9,19 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { groupedItems } from "./sidebarMenuItems";
 
 export function SidebarNavigation() {
   const location = useLocation();
+  const { t } = useLanguage();
 
   return (
     <SidebarContent className="px-3 py-2 bg-white">
       {Object.entries(groupedItems).map(([group, items]) => (
-        <SidebarGroup key={group} className="mb-2">
-          <SidebarGroupLabel className="text-gray-500 uppercase text-xs font-bold tracking-widest mb-2 px-2">
-            {group}
+        <SidebarGroup key={group} className="mb-1">
+          <SidebarGroupLabel className="text-gray-500 uppercase text-xs font-bold tracking-widest mb-1 px-2">
+            {t(group as keyof typeof t)}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-0.5">
@@ -32,7 +34,7 @@ export function SidebarNavigation() {
                     <SidebarMenuButton 
                       asChild
                       className={`
-                        relative group h-9 px-3 rounded-lg transition-all duration-300 ease-out
+                        relative group h-8 px-3 rounded-lg transition-all duration-300 ease-out
                         ${isActive 
                           ? 'bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 text-blue-700 shadow-sm' 
                           : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'
@@ -41,17 +43,17 @@ export function SidebarNavigation() {
                     >
                       <Link to={item.url} className="flex items-center space-x-3 w-full">
                         <div className={`
-                          w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-300
+                          w-6 h-6 rounded-lg flex items-center justify-center transition-all duration-300
                           ${isActive 
                             ? 'bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-600 text-white shadow-md shadow-blue-500/30' 
                             : 'bg-gray-100 text-gray-600 group-hover:bg-gray-200 group-hover:text-gray-700'
                           }
                         `}>
-                          <Icon className="w-4 h-4" />
+                          <Icon className="w-3.5 h-3.5" />
                         </div>
-                        <span className="font-medium text-sm tracking-wide">{item.title}</span>
+                        <span className="font-medium text-sm tracking-wide">{t(item.title as keyof typeof t)}</span>
                         {isActive && (
-                          <div className="absolute right-3 w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 shadow-sm shadow-blue-400/50"></div>
+                          <div className="absolute right-3 w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 shadow-sm shadow-blue-400/50"></div>
                         )}
                       </Link>
                     </SidebarMenuButton>

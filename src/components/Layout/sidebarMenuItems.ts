@@ -18,88 +18,88 @@ import {
 
 export const menuItems = [
   {
-    title: "Work Orders",
+    title: "nav.workOrders",
     url: "/dashboard/work-orders",
     icon: Wrench,
-    group: "Operations"
+    group: "sidebar.operations"
   },
   {
-    title: "Purchase Orders",
+    title: "nav.purchaseOrders",
     url: "/dashboard/purchase-orders",
     icon: DollarSign,
-    group: "Operations"
+    group: "sidebar.operations"
   },
   {
-    title: "Requests",
+    title: "nav.requests",
     url: "/dashboard/requests",
     icon: FileText,
-    group: "Operations"
+    group: "sidebar.operations"
   },
   {
-    title: "Assets",
+    title: "nav.assets",
     url: "/dashboard/assets",
     icon: Factory,
-    group: "Resources"
+    group: "sidebar.resources"
   },
   {
-    title: "Inventory",
+    title: "nav.inventory",
     url: "/dashboard/inventory",
     icon: Package,
-    group: "Resources"
+    group: "sidebar.resources"
   },
   {
-    title: "Procedures",
+    title: "nav.procedures",
     url: "/dashboard/procedures",
     icon: ClipboardList,
-    group: "Resources"
+    group: "sidebar.resources"
   },
   {
-    title: "Meters",
+    title: "nav.meters",
     url: "/dashboard/meters",
     icon: BarChart3,
-    group: "Resources"
+    group: "sidebar.resources"
   },
   {
-    title: "Locations",
+    title: "nav.locations",
     url: "/dashboard/locations",
     icon: MapPin,
-    group: "Resources"
+    group: "sidebar.resources"
   },
   {
-    title: "Reporting",
+    title: "nav.reporting",
     url: "/dashboard/reporting",
     icon: TrendingUp,
-    group: "Collaboration"
+    group: "sidebar.collaboration"
   },
   {
-    title: "Messages",
+    title: "nav.messages",
     url: "/dashboard/messages",
     icon: MessageSquare,
-    group: "Collaboration"
+    group: "sidebar.collaboration"
   },
   {
-    title: "User Management",
+    title: "nav.users",
     url: "/dashboard/users",
     icon: Users,
-    group: "Administration"
+    group: "sidebar.administration"
   },
   {
-    title: "Organization",
+    title: "nav.organization",
     url: "/dashboard/organization", 
     icon: Building2,
-    group: "Administration"
+    group: "sidebar.administration"
   },
   {
-    title: "Subscriptions",
+    title: "nav.subscriptions",
     url: "/dashboard/subscriptions",
     icon: CreditCard,
-    group: "Administration"
+    group: "sidebar.administration"
   },
   {
-    title: "Translations",
+    title: "nav.translations",
     url: "/dashboard/translations",
     icon: Languages,
-    group: "Administration"
+    group: "sidebar.administration"
   }
 ];
 

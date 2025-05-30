@@ -17,6 +17,13 @@ export interface TranslationKeys {
   'nav.meters': string;
   'nav.locations': string;
   'nav.messages': string;
+  'nav.translations': string;
+
+  // Sidebar groups
+  'sidebar.operations': string;
+  'sidebar.resources': string;
+  'sidebar.collaboration': string;
+  'sidebar.administration': string;
 
   // Authentication
   'auth.login': string;

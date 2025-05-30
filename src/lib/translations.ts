@@ -1,4 +1,3 @@
-
 import type { Translations } from '@/types/i18n';
 
 export const translations: Translations = {
@@ -18,6 +17,13 @@ export const translations: Translations = {
     'nav.meters': 'Meters',
     'nav.locations': 'Locations',
     'nav.messages': 'Messages',
+    'nav.translations': 'Translations',
+
+    // Sidebar groups
+    'sidebar.operations': 'Operations',
+    'sidebar.resources': 'Resources',
+    'sidebar.collaboration': 'Collaboration',
+    'sidebar.administration': 'Administration',
 
     // Authentication
     'auth.login': 'Log In',
@@ -116,6 +122,13 @@ export const translations: Translations = {
     'nav.meters': 'Compteurs',
     'nav.locations': 'Emplacements',
     'nav.messages': 'Messages',
+    'nav.translations': 'Traductions',
+
+    // Sidebar groups
+    'sidebar.operations': 'Opérations',
+    'sidebar.resources': 'Ressources',
+    'sidebar.collaboration': 'Collaboration',
+    'sidebar.administration': 'Administration',
 
     // Authentication
     'auth.login': 'Se connecter',
@@ -214,6 +227,13 @@ export const translations: Translations = {
     'nav.meters': 'Målere',
     'nav.locations': 'Lokasjoner',
     'nav.messages': 'Meldinger',
+    'nav.translations': 'Oversettelser',
+
+    // Sidebar groups
+    'sidebar.operations': 'Operasjoner',
+    'sidebar.resources': 'Ressurser',
+    'sidebar.collaboration': 'Samarbeid',
+    'sidebar.administration': 'Administrasjon',
 
     // Authentication
     'auth.login': 'Logg inn',
