@@ -149,8 +149,8 @@ const TranslationManagement = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="en">🇺🇸 English</SelectItem>
-                  <SelectItem value="es">🇪🇸 Español</SelectItem>
                   <SelectItem value="fr">🇫🇷 Français</SelectItem>
+                  <SelectItem value="no">🇳🇴 Norsk</SelectItem>
                 </SelectContent>
               </Select>
               <Select value={categoryFilter} onValueChange={setCategoryFilter}>

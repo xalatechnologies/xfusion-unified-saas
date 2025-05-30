@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -16,7 +17,6 @@ export const OrganizationSettings = () => {
     name: "SupplyMantix Corporation",
     description: "Leading maintenance and supply chain solutions provider",
     timezone: "America/New_York",
-    language: "en",
     emailNotifications: true,
     slackIntegration: false,
     autoApproval: false,
@@ -67,12 +67,10 @@ export const OrganizationSettings = () => {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="language">Default Language</Label>
-              <Input
-                id="language"
-                value={settings.language}
-                onChange={(e) => setSettings({ ...settings, language: e.target.value })}
-              />
+              <Label htmlFor="language">Organization Language</Label>
+              <div className="pt-2">
+                <LanguageSelector />
+              </div>
             </div>
           </div>
         </CardContent>
