@@ -13,7 +13,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useOrganizationMembers, useInviteOrganizationMember } from "@/hooks/useOrganizations";
+import { useAuthState } from "@/hooks/useAuthState";
+import { databaseApi } from "@/lib/database";
 
 interface OrganizationMembersProps {
   organizationId: string;
@@ -22,33 +31,51 @@ interface OrganizationMembersProps {
 export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps) => {
   const { t } = useLanguage();
   const { toast } = useToast();
+  const { user } = useAuthState();
   const [inviteEmail, setInviteEmail] = useState("");
+  const [inviteRole, setInviteRole] = useState<"viewer" | "admin" | "engineer" | "technician">("viewer");
+  const [isInviting, setIsInviting] = useState(false);
   
   const { data: members, isLoading } = useOrganizationMembers(organizationId);
-  const inviteMember = useInviteOrganizationMember();
 
   const handleInvite = async () => {
-    if (inviteEmail) {
-      try {
-        await inviteMember.mutateAsync({
-          organization_id: organizationId,
-          user_id: null, // Will be set when user accepts invitation
-          role: "viewer",
-          status: "pending",
-        });
-        
-        toast({
-          title: "Invitation Sent",
-          description: `Invitation sent to ${inviteEmail}`,
-        });
-        setInviteEmail("");
-      } catch (error) {
-        toast({
-          title: "Error",
-          description: "Failed to send invitation",
-          variant: "destructive",
-        });
-      }
+    if (!inviteEmail || !user) return;
+
+    setIsInviting(true);
+    try {
+      // Create the invitation record
+      const invitation = await databaseApi.inviteOrganizationMember({
+        organization_id: organizationId,
+        invited_email: inviteEmail,
+        role: inviteRole,
+        invited_by: user.id,
+      });
+
+      // Send the invitation email
+      await databaseApi.sendInvitationEmail({
+        email: inviteEmail,
+        organizationName: invitation.organizations?.name || "Your Organization",
+        inviterName: user.email || "Someone",
+        role: inviteRole,
+        invitationToken: invitation.invitation_token,
+      });
+      
+      toast({
+        title: "Invitation Sent",
+        description: `Invitation sent to ${inviteEmail}`,
+      });
+      
+      setInviteEmail("");
+      setInviteRole("viewer");
+    } catch (error) {
+      console.error("Error sending invitation:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send invitation",
+        variant: "destructive",
+      });
+    } finally {
+      setIsInviting(false);
     }
   };
 
@@ -107,20 +134,34 @@ export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex space-x-2 mb-4">
-            <Input
-              placeholder="Enter email address to invite"
-              value={inviteEmail}
-              onChange={(e) => setInviteEmail(e.target.value)}
-            />
-            <Button 
-              onClick={handleInvite} 
-              variant="outline"
-              disabled={inviteMember.isPending}
-            >
-              <Mail className="w-4 h-4 mr-2" />
-              {inviteMember.isPending ? "Sending..." : "Send Invite"}
-            </Button>
+          <div className="space-y-4 mb-6">
+            <div className="flex space-x-2">
+              <Input
+                placeholder="Enter email address to invite"
+                value={inviteEmail}
+                onChange={(e) => setInviteEmail(e.target.value)}
+                className="flex-1"
+              />
+              <Select value={inviteRole} onValueChange={(value: any) => setInviteRole(value)}>
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="Select role" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="viewer">Viewer</SelectItem>
+                  <SelectItem value="technician">Technician</SelectItem>
+                  <SelectItem value="engineer">Engineer</SelectItem>
+                  <SelectItem value="admin">Admin</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button 
+                onClick={handleInvite} 
+                variant="outline"
+                disabled={isInviting || !inviteEmail}
+              >
+                <Mail className="w-4 h-4 mr-2" />
+                {isInviting ? "Sending..." : "Send Invite"}
+              </Button>
+            </div>
           </div>
 
           <div className="space-y-4">
@@ -129,12 +170,16 @@ export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps
                 <div className="flex items-center space-x-3">
                   <Avatar>
                     <AvatarFallback>
-                      {member.users?.email?.substring(0, 2).toUpperCase() || "??"}
+                      {(member.users?.email || member.invited_email)?.substring(0, 2).toUpperCase() || "??"}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-medium">{member.users?.email || "Unknown User"}</p>
-                    <p className="text-sm text-gray-600">{member.users?.email}</p>
+                    <p className="font-medium">
+                      {member.users?.email || member.invited_email || "Unknown User"}
+                    </p>
+                    {member.status === "pending" && (
+                      <p className="text-sm text-amber-600">Pending invitation</p>
+                    )}
                   </div>
                 </div>
                 
@@ -154,7 +199,9 @@ export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuItem>Edit Role</DropdownMenuItem>
-                      <DropdownMenuItem>Resend Invite</DropdownMenuItem>
+                      {member.status === "pending" && (
+                        <DropdownMenuItem>Resend Invite</DropdownMenuItem>
+                      )}
                       <DropdownMenuItem className="text-red-600">Remove Member</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

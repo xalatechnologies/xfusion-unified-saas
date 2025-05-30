@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -94,13 +93,59 @@ export const organizationsApi = {
     }));
   },
 
-  async inviteOrganizationMember(member: Tables["organization_members"]["Insert"]) {
+  async inviteOrganizationMember(invitation: {
+    organization_id: string;
+    invited_email: string;
+    role: Database["public"]["Enums"]["organization_role"];
+    invited_by: string;
+  }) {
     const { data, error } = await supabase
       .from("organization_members")
-      .insert(member)
-      .select()
+      .insert({
+        organization_id: invitation.organization_id,
+        invited_email: invitation.invited_email,
+        role: invitation.role,
+        status: "pending",
+        invited_by: invitation.invited_by,
+        invited_at: new Date().toISOString(),
+      })
+      .select("*, organizations(name)")
       .single();
     
+    if (error) throw error;
+    return data;
+  },
+
+  async sendInvitationEmail(params: {
+    email: string;
+    organizationName: string;
+    inviterName: string;
+    role: string;
+    invitationToken: string;
+  }) {
+    const { data, error } = await supabase.functions.invoke('send-invitation', {
+      body: params,
+    });
+
+    if (error) throw error;
+    return data;
+  },
+
+  async getInvitationByToken(token: string) {
+    const { data, error } = await supabase.rpc('get_invitation_by_token', {
+      token_param: token
+    });
+
+    if (error) throw error;
+    return data?.[0] || null;
+  },
+
+  async acceptInvitation(token: string, userId: string) {
+    const { data, error } = await supabase.rpc('accept_invitation', {
+      token_param: token,
+      user_id_param: userId
+    });
+
     if (error) throw error;
     return data;
   },

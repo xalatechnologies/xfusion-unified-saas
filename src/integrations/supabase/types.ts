@@ -263,8 +263,11 @@ export type Database = {
         Row: {
           created_at: string | null
           id: string
+          invitation_expires_at: string | null
+          invitation_token: string | null
           invited_at: string | null
           invited_by: string | null
+          invited_email: string | null
           joined_at: string | null
           organization_id: string | null
           role: Database["public"]["Enums"]["organization_role"]
@@ -275,8 +278,11 @@ export type Database = {
         Insert: {
           created_at?: string | null
           id?: string
+          invitation_expires_at?: string | null
+          invitation_token?: string | null
           invited_at?: string | null
           invited_by?: string | null
+          invited_email?: string | null
           joined_at?: string | null
           organization_id?: string | null
           role?: Database["public"]["Enums"]["organization_role"]
@@ -287,8 +293,11 @@ export type Database = {
         Update: {
           created_at?: string | null
           id?: string
+          invitation_expires_at?: string | null
+          invitation_token?: string | null
           invited_at?: string | null
           invited_by?: string | null
+          invited_email?: string | null
           joined_at?: string | null
           organization_id?: string | null
           role?: Database["public"]["Enums"]["organization_role"]
@@ -661,9 +670,28 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_invitation: {
+        Args: { token_param: string; user_id_param: string }
+        Returns: boolean
+      }
+      get_invitation_by_token: {
+        Args: { token_param: string }
+        Returns: {
+          id: string
+          organization_id: string
+          invited_email: string
+          role: Database["public"]["Enums"]["organization_role"]
+          invitation_expires_at: string
+          organization_name: string
+        }[]
+      }
       get_user_tenant_id: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      user_can_manage_organization_members: {
+        Args: { org_id: string; user_id: string }
+        Returns: boolean
       }
       user_can_update_organization: {
         Args: { org_id: string; user_id: string }
@@ -674,6 +702,10 @@ export type Database = {
         Returns: boolean
       }
       user_is_organization_member: {
+        Args: { org_id: string; user_id: string }
+        Returns: boolean
+      }
+      user_is_organization_member_secure: {
         Args: { org_id: string; user_id: string }
         Returns: boolean
       }
