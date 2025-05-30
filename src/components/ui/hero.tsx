@@ -3,8 +3,11 @@
 
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section
       className="relative w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 pb-10 pt-32 font-light text-white antialiased md:pb-16 md:pt-20"
@@ -34,13 +37,10 @@ export default function Hero() {
             NEXT GENERATION MAINTENANCE & SUPPLY CHAIN
           </span>
           <h1 className="mx-auto mb-6 max-w-4xl text-4xl font-light md:text-5xl lg:text-7xl">
-            Transform Operations with{" "}
-            <span className="text-blue-400">AI-Powered</span> Platform
+            {t('landing.hero.title')}
           </h1>
           <p className="mx-auto mb-10 max-w-2xl text-lg text-blue-100/80 md:text-xl">
-            SupplyMantix combines artificial intelligence with streamlined workflows
-            to help you reduce downtime by 40% and optimize your entire operation
-            with precision and ease.
+            {t('landing.hero.subtitle')}
           </p>
 
           <div className="mb-10 sm:mb-0 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -48,13 +48,13 @@ export default function Hero() {
               to="/signup"
               className="relative w-full overflow-hidden rounded-xl border border-blue-400/20 bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-4 text-white shadow-xl transition-all duration-300 hover:from-blue-500 hover:to-indigo-500 hover:shadow-2xl hover:shadow-blue-500/25 sm:w-auto"
             >
-              Start Free Trial
+              {t('landing.hero.getStarted')}
             </Link>
             <a
               href="#features"
               className="flex w-full items-center justify-center gap-2 text-blue-200 transition-colors hover:text-white sm:w-auto"
             >
-              <span>See how it works</span>
+              <span>{t('landing.hero.watchDemo')}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
