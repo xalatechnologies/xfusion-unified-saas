@@ -30,22 +30,32 @@ export const organizationsApi = {
     console.log("Updating organization with ID:", id);
     console.log("Updates:", updates);
     
+    // First check if the organization exists
+    const { data: existingOrg, error: checkError } = await supabase
+      .from("organizations")
+      .select("id")
+      .eq("id", id)
+      .single();
+    
+    if (checkError || !existingOrg) {
+      console.error("Organization not found:", checkError);
+      throw new Error(`Organization with ID ${id} not found`);
+    }
+    
+    // Now perform the update
     const { data, error } = await supabase
       .from("organizations")
       .update(updates)
       .eq("id", id)
       .select()
-      .maybeSingle();
+      .single();
     
     if (error) {
       console.error("Supabase update error:", error);
       throw error;
     }
     
-    if (!data) {
-      throw new Error(`Organization with ID ${id} not found`);
-    }
-    
+    console.log("Update successful:", data);
     return data;
   },
 
