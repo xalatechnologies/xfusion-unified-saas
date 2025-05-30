@@ -27,14 +27,25 @@ export const organizationsApi = {
   },
 
   async updateOrganization(id: string, updates: Tables["organizations"]["Update"]) {
+    console.log("Updating organization with ID:", id);
+    console.log("Updates:", updates);
+    
     const { data, error } = await supabase
       .from("organizations")
       .update(updates)
       .eq("id", id)
       .select()
-      .single();
+      .maybeSingle();
     
-    if (error) throw error;
+    if (error) {
+      console.error("Supabase update error:", error);
+      throw error;
+    }
+    
+    if (!data) {
+      throw new Error(`Organization with ID ${id} not found`);
+    }
+    
     return data;
   },
 

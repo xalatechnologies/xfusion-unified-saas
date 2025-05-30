@@ -50,6 +50,15 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
   }, [currentOrganization]);
 
   const handleSave = async () => {
+    if (!organizationId) {
+      toast({
+        title: "Error",
+        description: "No organization ID found. Please refresh the page.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       console.log("Saving organization data:", {
         id: organizationId,
