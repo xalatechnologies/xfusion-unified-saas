@@ -14,27 +14,42 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useOrganizationMembers, useInviteOrganizationMember } from "@/hooks/useDatabase";
 
-const mockMembers = [
-  { id: 1, name: "John Doe", email: "john@supplymantix.com", role: "admin", status: "active" },
-  { id: 2, name: "Jane Smith", email: "jane@supplymantix.com", role: "manager", status: "active" },
-  { id: 3, name: "Mike Johnson", email: "mike@supplymantix.com", role: "technician", status: "active" },
-  { id: 4, name: "Sarah Wilson", email: "sarah@supplymantix.com", role: "viewer", status: "pending" },
-];
+interface OrganizationMembersProps {
+  organizationId: string;
+}
 
-export const OrganizationMembers = () => {
+export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps) => {
   const { t } = useLanguage();
   const { toast } = useToast();
-  const [members, setMembers] = useState(mockMembers);
   const [inviteEmail, setInviteEmail] = useState("");
+  
+  const { data: members, isLoading } = useOrganizationMembers(organizationId);
+  const inviteMember = useInviteOrganizationMember();
 
-  const handleInvite = () => {
+  const handleInvite = async () => {
     if (inviteEmail) {
-      toast({
-        title: "Invitation Sent",
-        description: `Invitation sent to ${inviteEmail}`,
-      });
-      setInviteEmail("");
+      try {
+        await inviteMember.mutateAsync({
+          organization_id: organizationId,
+          user_id: null, // Will be set when user accepts invitation
+          role: "member",
+          status: "pending",
+        });
+        
+        toast({
+          title: "Invitation Sent",
+          description: `Invitation sent to ${inviteEmail}`,
+        });
+        setInviteEmail("");
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to send invitation",
+          variant: "destructive",
+        });
+      }
     }
   };
 
@@ -43,6 +58,7 @@ export const OrganizationMembers = () => {
       case "admin": return "bg-red-100 text-red-800";
       case "manager": return "bg-blue-100 text-blue-800";
       case "technician": return "bg-green-100 text-green-800";
+      case "member": return "bg-purple-100 text-purple-800";
       case "viewer": return "bg-gray-100 text-gray-800";
       default: return "bg-gray-100 text-gray-800";
     }
@@ -56,6 +72,16 @@ export const OrganizationMembers = () => {
       default: return "bg-gray-100 text-gray-800";
     }
   };
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardContent className="p-6">
+          <div className="text-center">Loading members...</div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -76,24 +102,28 @@ export const OrganizationMembers = () => {
               value={inviteEmail}
               onChange={(e) => setInviteEmail(e.target.value)}
             />
-            <Button onClick={handleInvite} variant="outline">
+            <Button 
+              onClick={handleInvite} 
+              variant="outline"
+              disabled={inviteMember.isPending}
+            >
               <Mail className="w-4 h-4 mr-2" />
-              Send Invite
+              {inviteMember.isPending ? "Sending..." : "Send Invite"}
             </Button>
           </div>
 
           <div className="space-y-4">
-            {members.map((member) => (
+            {members?.map((member) => (
               <div key={member.id} className="flex items-center justify-between p-4 border rounded-lg">
                 <div className="flex items-center space-x-3">
                   <Avatar>
                     <AvatarFallback>
-                      {member.name.split(' ').map(n => n[0]).join('')}
+                      {member.user?.email?.substring(0, 2).toUpperCase() || "??"}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-medium">{member.name}</p>
-                    <p className="text-sm text-gray-600">{member.email}</p>
+                    <p className="font-medium">{member.user?.email || "Unknown User"}</p>
+                    <p className="text-sm text-gray-600">{member.user?.email}</p>
                   </div>
                 </div>
                 
@@ -120,6 +150,11 @@ export const OrganizationMembers = () => {
                 </div>
               </div>
             ))}
+            {(!members || members.length === 0) && (
+              <div className="text-center py-8 text-gray-500">
+                No members found. Invite your first team member!
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
