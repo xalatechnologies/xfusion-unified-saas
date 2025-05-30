@@ -42,12 +42,48 @@ export interface TranslationKeys {
   'landing.hero.watchDemo': string;
   'landing.features.title': string;
   'landing.features.subtitle': string;
+  'landing.features.description': string;
+  'landing.features.workOrders.title': string;
+  'landing.features.workOrders.description': string;
+  'landing.features.inventory.title': string;
+  'landing.features.inventory.description': string;
+  'landing.features.maintenance.title': string;
+  'landing.features.maintenance.description': string;
+  'landing.features.procurement.title': string;
+  'landing.features.procurement.description': string;
+  'landing.features.procedures.title': string;
+  'landing.features.procedures.description': string;
+  'landing.features.analytics.title': string;
+  'landing.features.analytics.description': string;
   'landing.benefits.title': string;
   'landing.benefits.subtitle': string;
+  'landing.benefits.improvement.title': string;
+  'landing.benefits.improvement.description': string;
+  'landing.benefits.standardize.title': string;
+  'landing.benefits.standardize.description': string;
+  'landing.benefits.performance.title': string;
+  'landing.benefits.performance.description': string;
   'landing.cta.title': string;
   'landing.cta.subtitle': string;
   'landing.cta.startTrial': string;
   'landing.cta.scheduleDemo': string;
+  'landing.cta.freeTrial': string;
+  'landing.cta.noCard': string;
+  'landing.cta.cancelAnytime': string;
+
+  // Admin panel
+  'admin.translations': string;
+  'admin.translations.title': string;
+  'admin.translations.subtitle': string;
+  'admin.translations.language': string;
+  'admin.translations.key': string;
+  'admin.translations.value': string;
+  'admin.translations.search': string;
+  'admin.translations.filter': string;
+  'admin.translations.all': string;
+  'admin.translations.updated': string;
+  'admin.translations.export': string;
+  'admin.translations.import': string;
 
   // Common
   'common.search': string;

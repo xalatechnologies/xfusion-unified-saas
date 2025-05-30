@@ -3,8 +3,11 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const CTASection = () => {
+  const { t } = useLanguage();
+
   return (
     <motion.section 
       className="py-24 bg-white text-slate-900 relative overflow-hidden"
@@ -41,7 +44,7 @@ const CTASection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, type: "spring" }}
         >
-          Ready to Transform Your Operations?
+          {t('landing.cta.title')}
         </motion.h2>
         <motion.p 
           className="text-xl md:text-2xl mb-10 text-slate-600 leading-relaxed"
@@ -50,7 +53,7 @@ const CTASection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Join industry leaders who've already reduced downtime and increased efficiency with SupplyMantix
+          {t('landing.cta.subtitle')}
         </motion.p>
         
         <motion.div 
@@ -67,7 +70,7 @@ const CTASection = () => {
               transition={{ type: "spring", stiffness: 400 }}
             >
               <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-10 py-4 text-lg font-bold shadow-xl hover:shadow-2xl transition-all duration-300 group">
-                Start Your Free Trial
+                {t('landing.cta.startTrial')}
                 <motion.div
                   animate={{ x: [0, 5, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
@@ -83,7 +86,7 @@ const CTASection = () => {
             transition={{ type: "spring", stiffness: 400 }}
           >
             <Button size="lg" variant="outline" className="border-2 border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 px-10 py-4 text-lg font-semibold">
-              Schedule Demo
+              {t('landing.cta.scheduleDemo')}
             </Button>
           </motion.div>
         </motion.div>
@@ -96,9 +99,9 @@ const CTASection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           {[
-            "14-day free trial",
-            "No credit card required", 
-            "Cancel anytime"
+            t('landing.cta.freeTrial'),
+            t('landing.cta.noCard'), 
+            t('landing.cta.cancelAnytime')
           ].map((text, index) => (
             <motion.div 
               key={text}

@@ -1,22 +1,25 @@
 
 import { TrendingUp, Shield, Zap } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const BenefitsSection = () => {
+  const { t } = useLanguage();
+
   const benefits = [
     {
-      title: "Drive Continuous Improvement",
-      description: "Leverage data-driven insights to optimize your operations and reduce downtime by up to 40%",
+      title: t('landing.benefits.improvement.title'),
+      description: t('landing.benefits.improvement.description'),
       icon: TrendingUp
     },
     {
-      title: "Standardize Operations", 
-      description: "Ensure consistent execution across teams with digital procedures and automated workflows",
+      title: t('landing.benefits.standardize.title'), 
+      description: t('landing.benefits.standardize.description'),
       icon: Shield
     },
     {
-      title: "Accelerate Performance",
-      description: "Reduce MTTR and improve asset reliability with intelligent maintenance scheduling",
+      title: t('landing.benefits.performance.title'),
+      description: t('landing.benefits.performance.description'),
       icon: Zap
     }
   ];
@@ -66,10 +69,10 @@ const BenefitsSection = () => {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Why Choose SupplyMantix?
+            {t('landing.benefits.title')}
           </h2>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-            Experience the future of maintenance and supply chain management
+            {t('landing.benefits.subtitle')}
           </p>
         </motion.div>
         

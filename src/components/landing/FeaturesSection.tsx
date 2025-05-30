@@ -1,42 +1,45 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const FeaturesSection = () => {
+  const { t } = useLanguage();
+
   const features = [
     {
-      title: "Work Orders",
-      description: "Streamline maintenance requests and execution with intelligent routing",
+      title: t('landing.features.workOrders.title'),
+      description: t('landing.features.workOrders.description'),
       icon: "🔧",
       gradient: "from-blue-500 to-indigo-500"
     },
     {
-      title: "Smart Inventory",
-      description: "AI-powered inventory management with auto-replenishment",
+      title: t('landing.features.inventory.title'),
+      description: t('landing.features.inventory.description'),
       icon: "📦",
       gradient: "from-emerald-500 to-teal-500"
     },
     {
-      title: "Preventive Maintenance",
-      description: "Automated scheduling with predictive analytics",
+      title: t('landing.features.maintenance.title'),
+      description: t('landing.features.maintenance.description'),
       icon: "📅",
       gradient: "from-purple-500 to-indigo-500"
     },
     {
-      title: "Purchase Orders",
-      description: "Streamlined procurement with vendor collaboration",
+      title: t('landing.features.procurement.title'),
+      description: t('landing.features.procurement.description'),
       icon: "💰",
       gradient: "from-orange-500 to-red-500"
     },
     {
-      title: "Digital Procedures",
-      description: "Interactive checklists with compliance tracking",
+      title: t('landing.features.procedures.title'),
+      description: t('landing.features.procedures.description'),
       icon: "📋",
       gradient: "from-pink-500 to-rose-500"
     },
     {
-      title: "Real-time Analytics",
-      description: "Advanced insights with customizable dashboards",
+      title: t('landing.features.analytics.title'),
+      description: t('landing.features.analytics.description'),
       icon: "📊",
       gradient: "from-violet-500 to-purple-500"
     }
@@ -90,15 +93,15 @@ const FeaturesSection = () => {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-              Everything You Need
+              {t('landing.features.title')}
             </span>
             <br />
             <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              In One Platform
+              {t('landing.features.subtitle')}
             </span>
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Powerful modules that work together seamlessly to optimize your entire operation
+            {t('landing.features.description')}
           </p>
         </motion.div>
         

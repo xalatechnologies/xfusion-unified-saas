@@ -13,6 +13,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import WorkOrders from "./pages/WorkOrders";
 import Procedures from "./pages/Procedures";
+import TranslationManagement from "./pages/TranslationManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,11 @@ const App = () => (
               <Route path="/dashboard/procedures" element={
                 <ProtectedRoute>
                   <Procedures />
+                </ProtectedRoute>
+              } />
+              <Route path="/dashboard/translations" element={
+                <ProtectedRoute>
+                  <TranslationManagement />
                 </ProtectedRoute>
               } />
               
