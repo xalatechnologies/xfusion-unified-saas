@@ -31,24 +31,6 @@ import {
 
 const menuItems = [
   {
-    title: "User Management",
-    url: "/dashboard/users",
-    icon: Users,
-    group: "Administration"
-  },
-  {
-    title: "Organization",
-    url: "/dashboard/organization", 
-    icon: Building2,
-    group: "Administration"
-  },
-  {
-    title: "Subscriptions",
-    url: "/dashboard/subscriptions",
-    icon: CreditCard,
-    group: "Administration"
-  },
-  {
     title: "Work Orders",
     url: "/dashboard/work-orders",
     icon: Wrench,
@@ -101,6 +83,24 @@ const menuItems = [
     url: "/dashboard/reporting",
     icon: TrendingUp,
     group: "Analytics"
+  },
+  {
+    title: "User Management",
+    url: "/dashboard/users",
+    icon: Users,
+    group: "Administration"
+  },
+  {
+    title: "Organization",
+    url: "/dashboard/organization", 
+    icon: Building2,
+    group: "Administration"
+  },
+  {
+    title: "Subscriptions",
+    url: "/dashboard/subscriptions",
+    icon: CreditCard,
+    group: "Administration"
   },
   {
     title: "Messages",
