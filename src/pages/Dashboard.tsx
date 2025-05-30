@@ -12,8 +12,9 @@ const Dashboard = () => {
       title: "Open Work Orders",
       value: "12",
       change: "+2 from yesterday",
-      color: "text-orange-600",
-      bgColor: "bg-gradient-to-br from-orange-50 to-orange-100",
+      color: "text-blue-700",
+      bgColor: "bg-gradient-to-br from-blue-50 to-blue-100",
+      iconBg: "bg-blue-500",
       icon: Wrench,
       trend: "up"
     },
@@ -21,8 +22,9 @@ const Dashboard = () => {
       title: "Low Stock Items",
       value: "7",
       change: "3 critical",
-      color: "text-red-600",
+      color: "text-red-700",
       bgColor: "bg-gradient-to-br from-red-50 to-red-100",
+      iconBg: "bg-red-500",
       icon: AlertTriangle,
       trend: "down"
     },
@@ -30,8 +32,9 @@ const Dashboard = () => {
       title: "Upcoming PM",
       value: "15",
       change: "Next 7 days",
-      color: "text-blue-600",
-      bgColor: "bg-gradient-to-br from-blue-50 to-blue-100",
+      color: "text-indigo-700",
+      bgColor: "bg-gradient-to-br from-indigo-50 to-indigo-100",
+      iconBg: "bg-indigo-500",
       icon: Clock,
       trend: "up"
     },
@@ -39,8 +42,9 @@ const Dashboard = () => {
       title: "Active Assets",
       value: "143",
       change: "All systems operational",
-      color: "text-green-600",
-      bgColor: "bg-gradient-to-br from-green-50 to-green-100",
+      color: "text-emerald-700",
+      bgColor: "bg-gradient-to-br from-emerald-50 to-emerald-100",
+      iconBg: "bg-emerald-500",
       icon: CheckCircle2,
       trend: "stable"
     }
@@ -77,43 +81,43 @@ const Dashboard = () => {
   ];
 
   const quickActions = [
-    { title: "New Work Order", icon: "🔧", route: "/dashboard/work-orders/create", color: "bg-blue-500" },
-    { title: "New Request", icon: "📝", route: "/dashboard/requests/create", color: "bg-green-500" },
-    { title: "New PO", icon: "💰", route: "/dashboard/purchase-orders/create", color: "bg-purple-500" },
-    { title: "Add Asset", icon: "🏭", route: "/dashboard/assets/create", color: "bg-orange-500" }
+    { title: "New Work Order", icon: "🔧", route: "/dashboard/work-orders/create", color: "bg-blue-500 hover:bg-blue-600" },
+    { title: "New Request", icon: "📝", route: "/dashboard/requests/create", color: "bg-emerald-500 hover:bg-emerald-600" },
+    { title: "New PO", icon: "💰", route: "/dashboard/purchase-orders/create", color: "bg-indigo-500 hover:bg-indigo-600" },
+    { title: "Add Asset", icon: "🏭", route: "/dashboard/assets/create", color: "bg-slate-500 hover:bg-slate-600" }
   ];
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'High': return 'bg-red-500';
-      case 'Medium': return 'bg-yellow-500';
-      case 'Low': return 'bg-green-500';
-      default: return 'bg-gray-500';
+      case 'Medium': return 'bg-amber-500';
+      case 'Low': return 'bg-emerald-500';
+      default: return 'bg-slate-500';
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Open': return 'bg-blue-100 text-blue-700 border-blue-200';
-      case 'On Hold': return 'bg-orange-100 text-orange-700 border-orange-200';
-      case 'In Progress': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
-      default: return 'bg-gray-100 text-gray-700 border-gray-200';
+      case 'Open': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'On Hold': return 'bg-amber-100 text-amber-800 border-amber-200';
+      case 'In Progress': return 'bg-indigo-100 text-indigo-800 border-indigo-200';
+      default: return 'bg-slate-100 text-slate-800 border-slate-200';
     }
   };
 
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        {/* Header with gradient background */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 p-8 text-white">
-          <div className="absolute inset-0 bg-black/10"></div>
+        {/* Header with consistent gradient */}
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 p-8 text-white">
+          <div className="absolute inset-0 bg-black/20"></div>
           <div className="relative z-10 flex items-center justify-between">
             <div>
               <h1 className="text-4xl font-bold mb-2">Welcome back! 👋</h1>
               <p className="text-blue-100 text-lg">Here's what's happening with your operations today</p>
             </div>
             <div className="hidden md:block">
-              <Button className="bg-white/20 backdrop-blur-sm border border-white/30 hover:bg-white/30 text-white">
+              <Button className="bg-white/20 backdrop-blur-sm border border-white/30 hover:bg-white/30 text-white transition-all duration-200">
                 <Link to="/dashboard/work-orders/create">Create Work Order</Link>
               </Button>
             </div>
@@ -123,21 +127,21 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Enhanced Stats Grid */}
+        {/* Consistent Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
-            <Card key={index} className="relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <Card key={index} className="relative overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
               <div className={`absolute inset-0 ${stat.bgColor}`}></div>
               <CardContent className="relative z-10 p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div className={`p-3 rounded-xl bg-white shadow-sm`}>
-                    <stat.icon className={`h-6 w-6 ${stat.color}`} />
+                  <div className={`p-3 rounded-xl ${stat.iconBg} shadow-sm`}>
+                    <stat.icon className="h-6 w-6 text-white" />
                   </div>
-                  {stat.trend === 'up' && <TrendingUp className="h-4 w-4 text-green-500" />}
-                  {stat.trend === 'down' && <TrendingDown className="h-4 w-4 text-red-500" />}
+                  {stat.trend === 'up' && <TrendingUp className="h-4 w-4 text-emerald-600" />}
+                  {stat.trend === 'down' && <TrendingDown className="h-4 w-4 text-red-600" />}
                 </div>
-                <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
-                <div className="text-sm font-medium text-gray-600 mb-2">{stat.title}</div>
+                <div className="text-3xl font-bold text-slate-900 mb-1">{stat.value}</div>
+                <div className="text-sm font-medium text-slate-700 mb-2">{stat.title}</div>
                 <p className={`text-xs font-medium ${stat.color}`}>
                   {stat.change}
                 </p>
@@ -147,34 +151,34 @@ const Dashboard = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Enhanced Recent Work Orders */}
-          <Card className="lg:col-span-2 border-0 shadow-lg">
-            <CardHeader className="pb-4">
+          {/* Recent Work Orders with consistent styling */}
+          <Card className="lg:col-span-2 border border-slate-200 shadow-sm">
+            <CardHeader className="pb-4 border-b border-slate-100">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-xl font-bold text-gray-900">Recent Work Orders</CardTitle>
-                <Badge variant="secondary" className="bg-blue-100 text-blue-700">
+                <CardTitle className="text-xl font-bold text-slate-900">Recent Work Orders</CardTitle>
+                <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-200">
                   {recentWorkOrders.length} active
                 </Badge>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-6">
               {recentWorkOrders.map((wo, index) => (
-                <div key={index} className="group p-4 rounded-xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/50 transition-all duration-200">
+                <div key={index} className="group p-4 rounded-xl border border-slate-200 hover:border-blue-300 hover:bg-blue-50/50 transition-all duration-200">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center space-x-3 mb-2">
-                        <span className="text-sm font-bold text-blue-600">{wo.id}</span>
+                        <span className="text-sm font-bold text-blue-700">{wo.id}</span>
                         <div className={`w-2 h-2 rounded-full ${getPriorityColor(wo.priority)}`}></div>
                         <Badge className={`text-xs ${getStatusColor(wo.status)} border`}>
                           {wo.status}
                         </Badge>
                       </div>
-                      <h4 className="font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
+                      <h4 className="font-semibold text-slate-900 mb-1 group-hover:text-blue-700 transition-colors">
                         {wo.title}
                       </h4>
-                      <div className="flex items-center space-x-4 text-sm text-gray-500">
+                      <div className="flex items-center space-x-4 text-sm text-slate-600">
                         <div className="flex items-center space-x-2">
-                          <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-medium">
+                          <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xs font-medium">
                             {wo.avatar}
                           </div>
                           <span>{wo.assignee}</span>
@@ -188,7 +192,7 @@ const Dashboard = () => {
               ))}
               <div className="pt-4">
                 <Link to="/dashboard/work-orders">
-                  <Button variant="outline" className="w-full hover:bg-blue-50 hover:border-blue-200">
+                  <Button variant="outline" className="w-full hover:bg-blue-50 hover:border-blue-300 border-slate-300">
                     View All Work Orders
                   </Button>
                 </Link>
@@ -196,26 +200,26 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Enhanced Quick Actions */}
-          <Card className="border-0 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-xl font-bold text-gray-900 flex items-center space-x-2">
-                <Zap className="h-5 w-5 text-yellow-500" />
+          {/* Quick Actions with consistent styling */}
+          <Card className="border border-slate-200 shadow-sm">
+            <CardHeader className="border-b border-slate-100">
+              <CardTitle className="text-xl font-bold text-slate-900 flex items-center space-x-2">
+                <Zap className="h-5 w-5 text-amber-500" />
                 <span>Quick Actions</span>
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-6">
               <div className="grid grid-cols-1 gap-4">
                 {quickActions.map((action, index) => (
                   <Link key={index} to={action.route}>
                     <Button 
                       variant="outline" 
-                      className="w-full h-16 flex items-center justify-start space-x-4 p-4 hover:shadow-md transition-all duration-200 border-gray-200 hover:border-blue-200 group"
+                      className="w-full h-16 flex items-center justify-start space-x-4 p-4 hover:shadow-sm transition-all duration-200 border-slate-300 hover:border-slate-400 group"
                     >
                       <div className={`w-10 h-10 rounded-lg ${action.color} flex items-center justify-center text-white text-xl group-hover:scale-110 transition-transform`}>
                         {action.icon}
                       </div>
-                      <span className="font-medium text-gray-700 group-hover:text-blue-600">{action.title}</span>
+                      <span className="font-medium text-slate-700 group-hover:text-slate-900">{action.title}</span>
                     </Button>
                   </Link>
                 ))}
@@ -224,12 +228,12 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Activity Timeline */}
-        <Card className="border-0 shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-xl font-bold text-gray-900">Recent Activity</CardTitle>
+        {/* Activity Timeline with consistent styling */}
+        <Card className="border border-slate-200 shadow-sm">
+          <CardHeader className="border-b border-slate-100">
+            <CardTitle className="text-xl font-bold text-slate-900">Recent Activity</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-6">
             <div className="space-y-4">
               {[
                 { time: "2 minutes ago", action: "Work Order #5489 status changed to On Hold", user: "Mary Kavanagh", type: "warning" },
@@ -237,17 +241,17 @@ const Dashboard = () => {
                 { time: "1 hour ago", action: "Asset inspection completed for Forklift Fleet #7", user: "Chris Manning", type: "success" },
                 { time: "3 hours ago", action: "Low stock alert triggered for safety equipment", user: "System", type: "warning" }
               ].map((activity, index) => (
-                <div key={index} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                <div key={index} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-slate-50 transition-colors">
                   <div className={`w-2 h-2 rounded-full mt-2 ${
-                    activity.type === 'success' ? 'bg-green-400' : 
-                    activity.type === 'warning' ? 'bg-yellow-400' : 'bg-blue-400'
+                    activity.type === 'success' ? 'bg-emerald-500' : 
+                    activity.type === 'warning' ? 'bg-amber-500' : 'bg-blue-500'
                   }`}></div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-gray-900">{activity.action}</p>
+                    <p className="text-sm text-slate-900">{activity.action}</p>
                     <div className="flex items-center space-x-2 mt-1">
-                      <span className="text-xs text-gray-500">{activity.time}</span>
-                      <span className="text-xs text-gray-400">•</span>
-                      <span className="text-xs text-gray-500">by {activity.user}</span>
+                      <span className="text-xs text-slate-500">{activity.time}</span>
+                      <span className="text-xs text-slate-400">•</span>
+                      <span className="text-xs text-slate-500">by {activity.user}</span>
                     </div>
                   </div>
                 </div>
