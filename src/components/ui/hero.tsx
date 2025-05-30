@@ -80,7 +80,7 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
         >
-          <div className="w-full flex h-40 md:h-64 relative overflow-hidden mb-8">
+          <div className="w-full flex h-40 md:h-64 relative overflow-hidden mb-2">
             <img
               src="https://blocks.mvp-subha.me/assets/earth.png"
               alt="Global Operations"
