@@ -1,280 +1,106 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Crown, Shield, Users, Wrench, Eye, UserCheck, Settings, FileText } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Shield, Info } from "lucide-react";
+import { getRoleIcon, getRoleIconColor, getRoleBadgeColor } from "./memberUtils";
+
+const rolePermissions = [
+  {
+    role: "admin",
+    permissions: ["Full system access", "Manage all users", "Configure organization settings", "Access billing", "Delete organization"]
+  },
+  {
+    role: "operations_manager", 
+    permissions: ["Manage work orders", "Assign resources", "View reports", "Manage teams", "Access scheduling"]
+  },
+  {
+    role: "maintenance_manager",
+    permissions: ["Create maintenance plans", "Schedule PM tasks", "Manage procedures", "Assign technicians", "Track compliance"]
+  },
+  {
+    role: "engineer",
+    permissions: ["Create procedures", "Design workflows", "Technical documentation", "System configuration", "Quality control"]
+  },
+  {
+    role: "technician", 
+    permissions: ["Execute work orders", "Update task status", "Record time", "Access mobile app", "View procedures"]
+  },
+  {
+    role: "requester",
+    permissions: ["Submit work requests", "Track request status", "View assigned work", "Basic reporting", "Request approvals"]
+  },
+  {
+    role: "client",
+    permissions: ["View assigned work", "Submit requests", "Track progress", "Access reports", "Limited system access"]
+  },
+  {
+    role: "viewer",
+    permissions: ["Read-only access", "View dashboards", "Basic reports", "No editing rights", "Limited data access"]
+  }
+];
 
 export const RolePermissions = () => {
   return (
     <Card className="shadow-sm border-0 bg-gray-50/30">
       <CardHeader className="pb-4 text-left">
-        <CardTitle className="text-lg font-medium text-gray-900 text-left">
-          Role Permissions
+        <CardTitle className="text-lg font-medium text-gray-900 flex items-center text-left">
+          <Shield className="w-5 h-5 mr-2 text-blue-600" />
+          Role Permissions Overview
         </CardTitle>
         <p className="text-sm text-muted-foreground text-left">
-          Understanding what each role can do in your organization
+          Understanding what each role can do within your organization
         </p>
       </CardHeader>
       <CardContent>
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="flex items-start space-x-3">
+            <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+            <div className="text-left">
+              <h4 className="text-sm font-medium text-blue-900 text-left">Permission Hierarchy</h4>
+              <p className="text-xs text-blue-700 mt-1 text-left">
+                Roles are organized from highest to lowest access level. Higher roles typically inherit permissions from lower roles.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          <Card className="bg-gradient-to-br from-yellow-50 to-amber-50 border-yellow-200 shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-yellow-100 rounded-lg">
-                  <Crown className="w-5 h-5 text-yellow-600" />
-                </div>
-                <h4 className="font-semibold text-gray-900 text-left">Owner</h4>
-              </div>
-              <ul className="text-sm text-gray-600 space-y-1.5">
-                <li className="flex items-start text-left">
-                  <span className="text-yellow-600 mr-2">•</span>
-                  Full organization control
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-yellow-600 mr-2">•</span>
-                  Delete organization
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-yellow-600 mr-2">•</span>
-                  Transfer ownership
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-yellow-600 mr-2">•</span>
-                  All admin permissions
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-gradient-to-br from-red-50 to-rose-50 border-red-200 shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-red-100 rounded-lg">
-                  <Shield className="w-5 h-5 text-red-600" />
-                </div>
-                <h4 className="font-semibold text-gray-900 text-left">Admin</h4>
-              </div>
-              <ul className="text-sm text-gray-600 space-y-1.5">
-                <li className="flex items-start text-left">
-                  <span className="text-red-600 mr-2">•</span>
-                  Full organization access
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-red-600 mr-2">•</span>
-                  Manage all settings
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-red-600 mr-2">•</span>
-                  Invite/remove members
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-red-600 mr-2">•</span>
-                  Billing management
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200 shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-lg">
-                  <UserCheck className="w-5 h-5 text-blue-600" />
-                </div>
-                <h4 className="font-semibold text-gray-900 text-left">Operations Manager</h4>
-              </div>
-              <ul className="text-sm text-gray-600 space-y-1.5">
-                <li className="flex items-start text-left">
-                  <span className="text-blue-600 mr-2">•</span>
-                  Manage work orders
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-blue-600 mr-2">•</span>
-                  View reports
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-blue-600 mr-2">•</span>
-                  Manage inventory
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-blue-600 mr-2">•</span>
-                  Limited settings access
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-gradient-to-br from-purple-50 to-violet-50 border-purple-200 shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-purple-100 rounded-lg">
-                  <Wrench className="w-5 h-5 text-purple-600" />
-                </div>
-                <h4 className="font-semibold text-gray-900 text-left">Maintenance Manager</h4>
-              </div>
-              <ul className="text-sm text-gray-600 space-y-1.5">
-                <li className="flex items-start text-left">
-                  <span className="text-purple-600 mr-2">•</span>
-                  Manage maintenance
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-purple-600 mr-2">•</span>
-                  Create procedures
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-purple-600 mr-2">•</span>
-                  Assign technicians
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-purple-600 mr-2">•</span>
-                  Approve work orders
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+          {rolePermissions.map(({ role, permissions }) => {
+            const RoleIcon = getRoleIcon(role);
+            const iconColor = getRoleIconColor(role);
+            const badgeColor = getRoleBadgeColor(role);
+            const roleName = role.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
 
-          <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-green-100 rounded-lg">
-                  <Settings className="w-5 h-5 text-green-600" />
-                </div>
-                <h4 className="font-semibold text-gray-900 text-left">Engineer</h4>
-              </div>
-              <ul className="text-sm text-gray-600 space-y-1.5">
-                <li className="flex items-start text-left">
-                  <span className="text-green-600 mr-2">•</span>
-                  Create work orders
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-green-600 mr-2">•</span>
-                  Update procedures
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-green-600 mr-2">•</span>
-                  Asset management
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-green-600 mr-2">•</span>
-                  Technical reporting
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200 shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-orange-100 rounded-lg">
-                  <Wrench className="w-5 h-5 text-orange-600" />
-                </div>
-                <h4 className="font-semibold text-gray-900 text-left">Technician</h4>
-              </div>
-              <ul className="text-sm text-gray-600 space-y-1.5">
-                <li className="flex items-start text-left">
-                  <span className="text-orange-600 mr-2">•</span>
-                  Execute work orders
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-orange-600 mr-2">•</span>
-                  Update task status
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-orange-600 mr-2">•</span>
-                  Record hours
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-orange-600 mr-2">•</span>
-                  Submit reports
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-teal-50 to-cyan-50 border-teal-200 shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-teal-100 rounded-lg">
-                  <FileText className="w-5 h-5 text-teal-600" />
-                </div>
-                <h4 className="font-semibold text-gray-900 text-left">Requester</h4>
-              </div>
-              <ul className="text-sm text-gray-600 space-y-1.5">
-                <li className="flex items-start text-left">
-                  <span className="text-teal-600 mr-2">•</span>
-                  Submit work requests
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-teal-600 mr-2">•</span>
-                  Track request status
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-teal-600 mr-2">•</span>
-                  View assigned tasks
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-teal-600 mr-2">•</span>
-                  Basic reporting
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-pink-50 to-rose-50 border-pink-200 shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-pink-100 rounded-lg">
-                  <Users className="w-5 h-5 text-pink-600" />
-                </div>
-                <h4 className="font-semibold text-gray-900 text-left">Client</h4>
-              </div>
-              <ul className="text-sm text-gray-600 space-y-1.5">
-                <li className="flex items-start text-left">
-                  <span className="text-pink-600 mr-2">•</span>
-                  View project status
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-pink-600 mr-2">•</span>
-                  Submit feedback
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-pink-600 mr-2">•</span>
-                  Access reports
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-pink-600 mr-2">•</span>
-                  Limited visibility
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-gradient-to-br from-gray-50 to-slate-50 border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-lg">
-                  <Eye className="w-5 h-5 text-gray-600" />
-                </div>
-                <h4 className="font-semibold text-gray-900 text-left">Viewer</h4>
-              </div>
-              <ul className="text-sm text-gray-600 space-y-1.5">
-                <li className="flex items-start text-left">
-                  <span className="text-gray-600 mr-2">•</span>
-                  View work orders
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-gray-600 mr-2">•</span>
-                  View assigned tasks
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-gray-600 mr-2">•</span>
-                  Basic reporting
-                </li>
-                <li className="flex items-start text-left">
-                  <span className="text-gray-600 mr-2">•</span>
-                  Profile management
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+            return (
+              <Card key={role} className="h-full bg-white border border-gray-200 hover:shadow-md transition-shadow duration-200">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <RoleIcon className={`w-5 h-5 ${iconColor}`} />
+                      <CardTitle className="text-sm font-semibold text-gray-900">
+                        {roleName}
+                      </CardTitle>
+                    </div>
+                    <Badge className={`text-xs border ${badgeColor}`}>
+                      {roleName}
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <ul className="space-y-2">
+                    {permissions.map((permission, index) => (
+                      <li key={index} className="flex items-start space-x-2">
+                        <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0" />
+                        <span className="text-xs text-gray-600 leading-relaxed text-left">
+                          {permission}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </CardContent>
     </Card>

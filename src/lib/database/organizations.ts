@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -114,6 +115,36 @@ export const organizationsApi = {
     
     if (error) throw error;
     return data;
+  },
+
+  async updateOrganizationMember(memberId: string, updates: Tables["organization_members"]["Update"]) {
+    const { data, error } = await supabase
+      .from("organization_members")
+      .update(updates)
+      .eq("id", memberId)
+      .select()
+      .single();
+    
+    if (error) {
+      console.error("Error updating organization member:", error);
+      throw error;
+    }
+    
+    return data;
+  },
+
+  async removeOrganizationMember(memberId: string) {
+    const { error } = await supabase
+      .from("organization_members")
+      .delete()
+      .eq("id", memberId);
+    
+    if (error) {
+      console.error("Error removing organization member:", error);
+      throw error;
+    }
+    
+    return true;
   },
 
   async sendInvitationEmail(params: {

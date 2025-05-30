@@ -55,3 +55,28 @@ export const useInviteOrganizationMember = () => {
     },
   });
 };
+
+export const useUpdateOrganizationMember = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: ({ memberId, updates }: { 
+      memberId: string; 
+      updates: Tables["organization_members"]["Update"] 
+    }) => databaseApi.updateOrganizationMember(memberId, updates),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["organization-members"] });
+    },
+  });
+};
+
+export const useRemoveOrganizationMember = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: (memberId: string) => databaseApi.removeOrganizationMember(memberId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["organization-members"] });
+    },
+  });
+};

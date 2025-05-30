@@ -3,8 +3,6 @@ import { Crown, Shield, Users, Wrench, Eye, UserCheck, Settings, FileText } from
 
 export const getRoleIcon = (role: string) => {
   switch (role) {
-    case "owner":
-      return Crown;
     case "admin":
       return Shield;
     case "operations_manager":
@@ -28,8 +26,6 @@ export const getRoleIcon = (role: string) => {
 
 export const getRoleIconColor = (role: string) => {
   switch (role) {
-    case "owner":
-      return "text-yellow-600";
     case "admin":
       return "text-red-600";
     case "operations_manager":
@@ -53,8 +49,6 @@ export const getRoleIconColor = (role: string) => {
 
 export const getRoleBadgeColor = (role: string) => {
   switch (role) {
-    case "owner":
-      return "bg-yellow-100 text-yellow-800 border-yellow-200";
     case "admin":
       return "bg-red-100 text-red-800 border-red-200";
     case "operations_manager":
@@ -93,7 +87,6 @@ export const formatDate = (dateString: string) => {
 
 export const formatRoleName = (role: string) => {
   const roleNames: Record<string, string> = {
-    owner: "Owner",
     admin: "Admin",
     operations_manager: "Operations Manager",
     maintenance_manager: "Maintenance Manager",
@@ -106,3 +99,14 @@ export const formatRoleName = (role: string) => {
   
   return roleNames[role] || role.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
 };
+
+export const getAvailableRoles = () => [
+  { value: "admin", label: "Admin" },
+  { value: "operations_manager", label: "Operations Manager" },
+  { value: "maintenance_manager", label: "Maintenance Manager" },
+  { value: "engineer", label: "Engineer" },
+  { value: "technician", label: "Technician" },
+  { value: "requester", label: "Requester" },
+  { value: "client", label: "Client" },
+  { value: "viewer", label: "Viewer" },
+];
