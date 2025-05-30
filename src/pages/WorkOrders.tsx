@@ -11,8 +11,14 @@ export default function WorkOrders() {
       <ModulePlaceholder 
         title="Work Orders" 
         description="Manage maintenance work orders and tasks"
-        icon="wrench"
-        comingSoon={true}
+        icon="🔧"
+        features={[
+          "Create and assign work orders",
+          "Track maintenance tasks and progress", 
+          "Schedule preventive maintenance",
+          "Real-time collaboration and updates",
+          "Mobile-friendly interface for field work"
+        ]}
       />
     </DashboardLayout>
   );
