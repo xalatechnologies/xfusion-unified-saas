@@ -38,6 +38,90 @@ export const databaseApi = {
     return data;
   },
 
+  // Organization Members
+  async getOrganizationMembers(organizationId: string) {
+    const { data, error } = await supabase
+      .from("organization_members")
+      .select(`
+        *,
+        user:users(email)
+      `)
+      .eq("organization_id", organizationId)
+      .order("created_at", { ascending: false });
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async inviteOrganizationMember(member: Tables["organization_members"]["Insert"]) {
+    const { data, error } = await supabase
+      .from("organization_members")
+      .insert(member)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  // Subscriptions
+  async getSubscriptions(organizationId: string) {
+    const { data, error } = await supabase
+      .from("subscriptions")
+      .select("*")
+      .eq("organization_id", organizationId)
+      .order("created_at", { ascending: false });
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async createSubscription(subscription: Tables["subscriptions"]["Insert"]) {
+    const { data, error } = await supabase
+      .from("subscriptions")
+      .insert(subscription)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  // Billing Information
+  async getBillingInformation(organizationId: string) {
+    const { data, error } = await supabase
+      .from("billing_information")
+      .select("*")
+      .eq("organization_id", organizationId)
+      .order("created_at", { ascending: false });
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async createBillingInformation(billing: Tables["billing_information"]["Insert"]) {
+    const { data, error } = await supabase
+      .from("billing_information")
+      .insert(billing)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  // Invoices
+  async getInvoices(organizationId: string) {
+    const { data, error } = await supabase
+      .from("invoices")
+      .select("*")
+      .eq("organization_id", organizationId)
+      .order("created_at", { ascending: false });
+    
+    if (error) throw error;
+    return data;
+  },
+
   // Tenants
   async getTenants() {
     const { data, error } = await supabase

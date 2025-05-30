@@ -1,318 +1,159 @@
 
-export type Language = 'en' | 'fr' | 'no';
-
-export interface TranslationKeys {
-  // Navigation
-  'nav.dashboard': string;
-  'nav.workOrders': string;
-  'nav.purchaseOrders': string;
-  'nav.requests': string;
-  'nav.assets': string;
-  'nav.inventory': string;
-  'nav.procedures': string;
-  'nav.meters': string;
-  'nav.locations': string;
-  'nav.reporting': string;
-  'nav.messages': string;
-  'nav.users': string;
-  'nav.organization': string;
-  'nav.subscriptions': string;
-  'nav.translations': string;
-
-  // Sidebar groups
-  'sidebar.overview': string;
-  'sidebar.operations': string;
-  'sidebar.resources': string;
-  'sidebar.collaboration': string;
-  'sidebar.administration': string;
-
-  // Organization
-  'organization.title': string;
-  'organization.description': string;
-  'organization.tabs.settings': string;
-  'organization.tabs.branding': string;
-  'organization.tabs.members': string;
-  'organization.tabs.subscription': string;
-  'organization.tabs.billing': string;
-  'organization.settings.general': string;
-
-  // Common
-  'common.save': string;
-  'common.cancel': string;
-  'common.edit': string;
-  'common.delete': string;
-  'common.add': string;
-  'common.search': string;
-  'common.filter': string;
-  'common.actions': string;
-  'common.status': string;
-  'common.date': string;
-  'common.name': string;
-  'common.description': string;
-  'common.loading': string;
-  'common.error': string;
-  'common.success': string;
-
-  // Work Orders
-  'workOrders.title': string;
-  'workOrders.new': string;
-  'workOrders.status.open': string;
-  'workOrders.status.inProgress': string;
-  'workOrders.status.completed': string;
-  'workOrders.status.cancelled': string;
-
-  // Procedures
-  'procedures.title': string;
-  'procedures.new': string;
-  'procedures.steps': string;
-  'procedures.duration': string;
-
-  // Translation Management
-  'translations.title': string;
-  'translations.description': string;
-  'translations.key': string;
-  'translations.value': string;
-  'translations.language': string;
-  'translations.save': string;
-  'translations.search': string;
-  'translations.filter': string;
-  'translations.filterByLanguage': string;
-  'translations.refresh': string;
-}
-
-export const translations: Record<Language, TranslationKeys> = {
+export const translations = {
   en: {
     // Navigation
-    'nav.dashboard': 'Dashboard',
-    'nav.workOrders': 'Work Orders',
-    'nav.purchaseOrders': 'Purchase Orders',
-    'nav.requests': 'Requests',
-    'nav.assets': 'Assets',
-    'nav.inventory': 'Inventory',
-    'nav.procedures': 'Procedures',
-    'nav.meters': 'Meters',
-    'nav.locations': 'Locations',
-    'nav.reporting': 'Reporting',
-    'nav.messages': 'Messages',
-    'nav.users': 'Users',
-    'nav.organization': 'Organization',
-    'nav.subscriptions': 'Subscriptions',
-    'nav.translations': 'Translations',
+    "nav.dashboard": "Dashboard",
+    "nav.workOrders": "Work Orders",
+    "nav.procedures": "Procedures",
+    "nav.users": "Users",
+    "nav.subscriptions": "Subscriptions",
+    "nav.purchaseOrders": "Purchase Orders",
+    "nav.requests": "Requests",
+    "nav.assets": "Assets",
+    "nav.inventory": "Inventory",
+    "nav.meters": "Meters",
+    "nav.locations": "Locations",
+    "nav.reporting": "Reporting",
+    "nav.messages": "Messages",
+    "nav.organization": "Organization",
 
-    // Sidebar groups
-    'sidebar.overview': 'Overview',
-    'sidebar.operations': 'Operations',
-    'sidebar.resources': 'Resources',
-    'sidebar.collaboration': 'Collaboration',
-    'sidebar.administration': 'Administration',
+    // Authentication
+    "auth.login": "Sign In",
+    "auth.signup": "Sign Up",
+    "auth.logout": "Sign Out",
+    "auth.email": "Email",
+    "auth.password": "Password",
+    "auth.confirmPassword": "Confirm Password",
+    "auth.firstName": "First Name",
+    "auth.lastName": "Last Name",
+    "auth.company": "Company",
+    "auth.forgotPassword": "Forgot your password?",
+    "auth.dontHaveAccount": "Don't have an account?",
+    "auth.alreadyHaveAccount": "Already have an account?",
+    "auth.signInWithEmail": "Sign in with email",
+    "auth.signUpWithEmail": "Sign up with email",
 
-    // Organization
-    'organization.title': 'Organization Settings',
-    'organization.description': 'Manage your organization settings, branding, members, and billing',
-    'organization.tabs.settings': 'Settings',
-    'organization.tabs.branding': 'Branding',
-    'organization.tabs.members': 'Members',
-    'organization.tabs.subscription': 'Subscription',
-    'organization.tabs.billing': 'Billing',
-    'organization.settings.general': 'General Settings',
-
-    // Common
-    'common.save': 'Save',
-    'common.cancel': 'Cancel',
-    'common.edit': 'Edit',
-    'common.delete': 'Delete',
-    'common.add': 'Add',
-    'common.search': 'Search',
-    'common.filter': 'Filter',
-    'common.actions': 'Actions',
-    'common.status': 'Status',
-    'common.date': 'Date',
-    'common.name': 'Name',
-    'common.description': 'Description',
-    'common.loading': 'Loading...',
-    'common.error': 'Error',
-    'common.success': 'Success',
+    // Dashboard
+    "dashboard.title": "Dashboard",
+    "dashboard.welcome": "Welcome to SupplyMantix",
+    "dashboard.overview": "Overview",
 
     // Work Orders
-    'workOrders.title': 'Work Orders',
-    'workOrders.new': 'New Work Order',
-    'workOrders.status.open': 'Open',
-    'workOrders.status.inProgress': 'In Progress',
-    'workOrders.status.completed': 'Completed',
-    'workOrders.status.cancelled': 'Cancelled',
+    "workOrders.title": "Work Orders",
+    "workOrders.description": "Manage and track maintenance work orders",
 
     // Procedures
-    'procedures.title': 'Procedures',
-    'procedures.new': 'New Procedure',
-    'procedures.steps': 'Steps',
-    'procedures.duration': 'Duration',
+    "procedures.title": "Procedures",
+    "procedures.description": "Standardized maintenance procedures and checklists",
 
-    // Translation Management
-    'translations.title': 'Translation Management',
-    'translations.description': 'Manage translations for different languages',
-    'translations.key': 'Translation Key',
-    'translations.value': 'Translation Value',
-    'translations.language': 'Language',
-    'translations.save': 'Save Translation',
-    'translations.search': 'Search translations...',
-    'translations.filter': 'Filter',
-    'translations.filterByLanguage': 'Filter by language',
-    'translations.refresh': 'Refresh Translations',
+    // Organization
+    "organization.title": "Organization Settings",
+    "organization.description": "Manage your organization settings, members, and billing",
+    "organization.tabs.settings": "Settings",
+    "organization.tabs.branding": "Branding",
+    "organization.tabs.members": "Members",
+    "organization.tabs.subscription": "Subscription",
+    "organization.tabs.billing": "Billing",
+    "organization.settings.general": "General Settings",
+
+    // Common
+    "common.save": "Save",
+    "common.cancel": "Cancel",
+    "common.edit": "Edit",
+    "common.delete": "Delete",
+    "common.add": "Add",
+    "common.search": "Search",
+    "common.filter": "Filter",
+    "common.loading": "Loading...",
+    "common.error": "Error",
+    "common.success": "Success",
+
+    // Language
+    "language.selectLanguage": "Select Language",
+    "language.english": "English",
+    "language.spanish": "Español",
+    "language.french": "Français",
+    "language.german": "Deutsch",
+    "language.chinese": "中文",
+    "language.japanese": "日本語",
   },
-  fr: {
+  es: {
     // Navigation
-    'nav.dashboard': 'Tableau de bord',
-    'nav.workOrders': 'Ordres de travail',
-    'nav.purchaseOrders': 'Bons de commande',
-    'nav.requests': 'Demandes',
-    'nav.assets': 'Actifs',
-    'nav.inventory': 'Inventaire',
-    'nav.procedures': 'Procédures',
-    'nav.meters': 'Compteurs',
-    'nav.locations': 'Emplacements',
-    'nav.reporting': 'Rapports',
-    'nav.messages': 'Messages',
-    'nav.users': 'Utilisateurs',
-    'nav.organization': 'Organisation',
-    'nav.subscriptions': 'Abonnements',
-    'nav.translations': 'Traductions',
+    "nav.dashboard": "Panel de Control",
+    "nav.workOrders": "Órdenes de Trabajo",
+    "nav.procedures": "Procedimientos",
+    "nav.users": "Usuarios",
+    "nav.subscriptions": "Suscripciones",
+    "nav.purchaseOrders": "Órdenes de Compra",
+    "nav.requests": "Solicitudes",
+    "nav.assets": "Activos",
+    "nav.inventory": "Inventario",
+    "nav.meters": "Medidores",
+    "nav.locations": "Ubicaciones",
+    "nav.reporting": "Reportes",
+    "nav.messages": "Mensajes",
+    "nav.organization": "Organización",
 
-    // Sidebar groups
-    'sidebar.overview': 'Vue d\'ensemble',
-    'sidebar.operations': 'Opérations',
-    'sidebar.resources': 'Ressources',
-    'sidebar.collaboration': 'Collaboration',
-    'sidebar.administration': 'Administration',
+    // Authentication
+    "auth.login": "Iniciar Sesión",
+    "auth.signup": "Registrarse",
+    "auth.logout": "Cerrar Sesión",
+    "auth.email": "Correo Electrónico",
+    "auth.password": "Contraseña",
+    "auth.confirmPassword": "Confirmar Contraseña",
+    "auth.firstName": "Nombre",
+    "auth.lastName": "Apellido",
+    "auth.company": "Empresa",
+    "auth.forgotPassword": "¿Olvidaste tu contraseña?",
+    "auth.dontHaveAccount": "¿No tienes una cuenta?",
+    "auth.alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "auth.signInWithEmail": "Iniciar sesión con correo",
+    "auth.signUpWithEmail": "Registrarse con correo",
 
-    // Organization
-    'organization.title': 'Paramètres de l\'organisation',
-    'organization.description': 'Gérez les paramètres, l\'image de marque, les membres et la facturation de votre organisation',
-    'organization.tabs.settings': 'Paramètres',
-    'organization.tabs.branding': 'Image de marque',
-    'organization.tabs.members': 'Membres',
-    'organization.tabs.subscription': 'Abonnement',
-    'organization.tabs.billing': 'Facturation',
-    'organization.settings.general': 'Paramètres généraux',
-
-    // Common
-    'common.save': 'Enregistrer',
-    'common.cancel': 'Annuler',
-    'common.edit': 'Modifier',
-    'common.delete': 'Supprimer',
-    'common.add': 'Ajouter',
-    'common.search': 'Rechercher',
-    'common.filter': 'Filtrer',
-    'common.actions': 'Actions',
-    'common.status': 'Statut',
-    'common.date': 'Date',
-    'common.name': 'Nom',
-    'common.description': 'Description',
-    'common.loading': 'Chargement...',
-    'common.error': 'Erreur',
-    'common.success': 'Succès',
+    // Dashboard
+    "dashboard.title": "Panel de Control",
+    "dashboard.welcome": "Bienvenido a SupplyMantix",
+    "dashboard.overview": "Resumen",
 
     // Work Orders
-    'workOrders.title': 'Ordres de travail',
-    'workOrders.new': 'Nouvel ordre de travail',
-    'workOrders.status.open': 'Ouvert',
-    'workOrders.status.inProgress': 'En cours',
-    'workOrders.status.completed': 'Terminé',
-    'workOrders.status.cancelled': 'Annulé',
+    "workOrders.title": "Órdenes de Trabajo",
+    "workOrders.description": "Gestionar y rastrear órdenes de trabajo de mantenimiento",
 
     // Procedures
-    'procedures.title': 'Procédures',
-    'procedures.new': 'Nouvelle procédure',
-    'procedures.steps': 'Étapes',
-    'procedures.duration': 'Durée',
-
-    // Translation Management
-    'translations.title': 'Gestion des traductions',
-    'translations.description': 'Gérer les traductions pour différentes langues',
-    'translations.key': 'Clé de traduction',
-    'translations.value': 'Valeur de traduction',
-    'translations.language': 'Langue',
-    'translations.save': 'Enregistrer la traduction',
-    'translations.search': 'Rechercher des traductions...',
-    'translations.filter': 'Filtrer',
-    'translations.filterByLanguage': 'Filtrer par langue',
-    'translations.refresh': 'Actualiser les traductions',
-  },
-  no: {
-    // Navigation
-    'nav.dashboard': 'Dashbord',
-    'nav.workOrders': 'Arbeidsordrer',
-    'nav.purchaseOrders': 'Innkjøpsordrer',
-    'nav.requests': 'Forespørsler',
-    'nav.assets': 'Eiendeler',
-    'nav.inventory': 'Lager',
-    'nav.procedures': 'Prosedyrer',
-    'nav.meters': 'Målere',
-    'nav.locations': 'Lokasjoner',
-    'nav.reporting': 'Rapportering',
-    'nav.messages': 'Meldinger',
-    'nav.users': 'Brukere',
-    'nav.organization': 'Organisasjon',
-    'nav.subscriptions': 'Abonnementer',
-    'nav.translations': 'Oversettelser',
-
-    // Sidebar groups
-    'sidebar.overview': 'Oversikt',
-    'sidebar.operations': 'Operasjoner',
-    'sidebar.resources': 'Ressurser',
-    'sidebar.collaboration': 'Samarbeid',
-    'sidebar.administration': 'Administrasjon',
+    "procedures.title": "Procedimientos",
+    "procedures.description": "Procedimientos de mantenimiento estandarizados y listas de verificación",
 
     // Organization
-    'organization.title': 'Organisasjonsinnstillinger',
-    'organization.description': 'Administrer organisasjonsinnstillinger, merkevarebygging, medlemmer og fakturering',
-    'organization.tabs.settings': 'Innstillinger',
-    'organization.tabs.branding': 'Merkevarebygging',
-    'organization.tabs.members': 'Medlemmer',
-    'organization.tabs.subscription': 'Abonnement',
-    'organization.tabs.billing': 'Fakturering',
-    'organization.settings.general': 'Generelle innstillinger',
+    "organization.title": "Configuración de Organización",
+    "organization.description": "Gestiona la configuración, miembros y facturación de tu organización",
+    "organization.tabs.settings": "Configuración",
+    "organization.tabs.branding": "Marca",
+    "organization.tabs.members": "Miembros",
+    "organization.tabs.subscription": "Suscripción",
+    "organization.tabs.billing": "Facturación",
+    "organization.settings.general": "Configuración General",
 
     // Common
-    'common.save': 'Lagre',
-    'common.cancel': 'Avbryt',
-    'common.edit': 'Rediger',
-    'common.delete': 'Slett',
-    'common.add': 'Legg til',
-    'common.search': 'Søk',
-    'common.filter': 'Filter',
-    'common.actions': 'Handlinger',
-    'common.status': 'Status',
-    'common.date': 'Dato',
-    'common.name': 'Navn',
-    'common.description': 'Beskrivelse',
-    'common.loading': 'Laster...',
-    'common.error': 'Feil',
-    'common.success': 'Suksess',
+    "common.save": "Guardar",
+    "common.cancel": "Cancelar",
+    "common.edit": "Editar",
+    "common.delete": "Eliminar",
+    "common.add": "Agregar",
+    "common.search": "Buscar",
+    "common.filter": "Filtrar",
+    "common.loading": "Cargando...",
+    "common.error": "Error",
+    "common.success": "Éxito",
 
-    // Work Orders
-    'workOrders.title': 'Arbeidsordrer',
-    'workOrders.new': 'Ny arbeidsordre',
-    'workOrders.status.open': 'Åpen',
-    'workOrders.status.inProgress': 'Pågår',
-    'workOrders.status.completed': 'Fullført',
-    'workOrders.status.cancelled': 'Avbrutt',
-
-    // Procedures
-    'procedures.title': 'Prosedyrer',
-    'procedures.new': 'Ny prosedyre',
-    'procedures.steps': 'Trinn',
-    'procedures.duration': 'Varighet',
-
-    // Translation Management
-    'translations.title': 'Oversettelsesadministrasjon',
-    'translations.description': 'Administrer oversettelser for forskjellige språk',
-    'translations.key': 'Oversettelsesnøkkel',
-    'translations.value': 'Oversettelsesverdi',
-    'translations.language': 'Språk',
-    'translations.save': 'Lagre oversettelse',
-    'translations.search': 'Søk oversettelser...',
-    'translations.filter': 'Filter',
-    'translations.filterByLanguage': 'Filtrer etter språk',
-    'translations.refresh': 'Oppdater oversettelser',
-  },
+    // Language
+    "language.selectLanguage": "Seleccionar Idioma",
+    "language.english": "English",
+    "language.spanish": "Español",
+    "language.french": "Français",
+    "language.german": "Deutsch",
+    "language.chinese": "中文",
+    "language.japanese": "日本語",
+  }
 };
+
+export type TranslationKeys = keyof typeof translations.en;

@@ -53,6 +53,56 @@ export type Database = {
           },
         ]
       }
+      billing_information: {
+        Row: {
+          billing_address: Json | null
+          card_brand: string | null
+          card_exp_month: number | null
+          card_exp_year: number | null
+          card_last_four: string | null
+          created_at: string | null
+          id: string
+          is_primary: boolean | null
+          organization_id: string | null
+          payment_method_type: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          billing_address?: Json | null
+          card_brand?: string | null
+          card_exp_month?: number | null
+          card_exp_year?: number | null
+          card_last_four?: string | null
+          created_at?: string | null
+          id?: string
+          is_primary?: boolean | null
+          organization_id?: string | null
+          payment_method_type?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          billing_address?: Json | null
+          card_brand?: string | null
+          card_exp_month?: number | null
+          card_exp_year?: number | null
+          card_last_four?: string | null
+          created_at?: string | null
+          id?: string
+          is_primary?: boolean | null
+          organization_id?: string | null
+          payment_method_type?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "billing_information_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       chat_messages: {
         Row: {
           created_at: string | null
@@ -152,9 +202,128 @@ export type Database = {
           },
         ]
       }
+      invoices: {
+        Row: {
+          amount_due: number
+          amount_paid: number | null
+          created_at: string | null
+          due_date: string | null
+          id: string
+          invoice_number: string
+          organization_id: string | null
+          paid_at: string | null
+          status: string
+          subscription_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          amount_due: number
+          amount_paid?: number | null
+          created_at?: string | null
+          due_date?: string | null
+          id?: string
+          invoice_number: string
+          organization_id?: string | null
+          paid_at?: string | null
+          status?: string
+          subscription_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          amount_due?: number
+          amount_paid?: number | null
+          created_at?: string | null
+          due_date?: string | null
+          id?: string
+          invoice_number?: string
+          organization_id?: string | null
+          paid_at?: string | null
+          status?: string
+          subscription_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoices_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invoices_subscription_id_fkey"
+            columns: ["subscription_id"]
+            isOneToOne: false
+            referencedRelation: "subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organization_members: {
+        Row: {
+          created_at: string | null
+          id: string
+          invited_at: string | null
+          invited_by: string | null
+          joined_at: string | null
+          organization_id: string | null
+          role: string
+          status: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          invited_at?: string | null
+          invited_by?: string | null
+          joined_at?: string | null
+          organization_id?: string | null
+          role?: string
+          status?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          invited_at?: string | null
+          invited_by?: string | null
+          joined_at?: string | null
+          organization_id?: string | null
+          role?: string
+          status?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organization_members_invited_by_fkey"
+            columns: ["invited_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_members_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organizations: {
         Row: {
           address: string | null
+          branding: Json | null
           contact: Json | null
           created_at: string | null
           created_by: string
@@ -166,6 +335,7 @@ export type Database = {
         }
         Insert: {
           address?: string | null
+          branding?: Json | null
           contact?: Json | null
           created_at?: string | null
           created_by: string
@@ -177,6 +347,7 @@ export type Database = {
         }
         Update: {
           address?: string | null
+          branding?: Json | null
           contact?: Json | null
           created_at?: string | null
           created_by?: string
@@ -302,6 +473,65 @@ export type Database = {
             columns: ["tenant_id"]
             isOneToOne: false
             referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscriptions: {
+        Row: {
+          billing_cycle: string | null
+          created_at: string | null
+          current_period_end: string | null
+          current_period_start: string | null
+          id: string
+          organization_id: string | null
+          plan_id: string
+          plan_name: string
+          price_monthly: number | null
+          price_yearly: number | null
+          status: string
+          trial_end: string | null
+          trial_start: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          billing_cycle?: string | null
+          created_at?: string | null
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          organization_id?: string | null
+          plan_id: string
+          plan_name: string
+          price_monthly?: number | null
+          price_yearly?: number | null
+          status?: string
+          trial_end?: string | null
+          trial_start?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          billing_cycle?: string | null
+          created_at?: string | null
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          organization_id?: string | null
+          plan_id?: string
+          plan_name?: string
+          price_monthly?: number | null
+          price_yearly?: number | null
+          status?: string
+          trial_end?: string | null
+          trial_start?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]
