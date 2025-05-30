@@ -37,12 +37,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(session?.user ?? null);
         setLoading(false);
 
-        // Handle successful signup confirmation
-        if (event === 'SIGNED_IN' && session?.user && !session.user.user_metadata?.tenant_created) {
+        // Handle successful signup confirmation or sign in
+        if (event === 'SIGNED_IN' && session?.user) {
+          // Check if user already has tenant records
           try {
-            await createUserTenantAndOrganization(session.user);
+            const existingUser = await databaseApi.getUsers();
+            const userExists = existingUser?.some(u => u.id === session.user.id);
+            
+            if (!userExists) {
+              console.log('Creating tenant and organization for new user');
+              await createUserTenantAndOrganization(session.user);
+            } else {
+              console.log('User already has tenant/organization records');
+            }
           } catch (error) {
-            console.error('Error creating tenant and organization:', error);
+            console.error('Error checking/creating user records:', error);
           }
         }
       }
@@ -64,10 +73,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const lastName = user.user_metadata?.last_name || '';
       const company = user.user_metadata?.company || `${firstName} ${lastName}'s Organization`.trim();
 
+      console.log('Creating tenant with name:', company);
+      
       // Create tenant
       const tenant = await databaseApi.createTenant({
         name: company || 'Default Organization'
       });
+
+      console.log('Created tenant:', tenant.id);
 
       // Create organization
       const organization = await databaseApi.createOrganization({
@@ -80,7 +93,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       });
 
-      // Create user record
+      console.log('Created organization:', organization.id);
+
+      // Create user record with admin role
       await databaseApi.createUser({
         id: user.id,
         email: user.email!,
@@ -88,9 +103,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         role: 'admin'
       });
 
+      console.log('Created user record with admin role');
+
       // Update user metadata to mark tenant as created
       await supabase.auth.updateUser({
-        data: { tenant_created: true }
+        data: { tenant_created: true, tenant_id: tenant.id }
       });
 
       console.log('Successfully created tenant, organization, and user records');
