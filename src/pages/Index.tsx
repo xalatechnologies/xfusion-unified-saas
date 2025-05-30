@@ -1,9 +1,8 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Check, Zap, Shield, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Globe } from "@/components/ui/globe";
+import { Hero } from "@/components/ui/animated-hero";
 
 const Index = () => {
   const features = [
@@ -103,67 +102,8 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-cyan-50/50"></div>
-        
-        <div className="relative max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left side - Content */}
-            <div className="text-center lg:text-left">
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700 text-sm font-medium mb-8 border border-blue-200/50">
-                <Zap className="w-4 h-4 mr-2" />
-                Trusted by 1000+ companies worldwide
-              </div>
-              
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
-                <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
-                  Transform Your
-                </span>
-                <br />
-                <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent">
-                  Operations
-                </span>
-              </h1>
-              
-              <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl leading-relaxed">
-                Unify maintenance and supply chain operations with our AI-powered platform. 
-                <span className="text-gray-800 font-semibold"> Reduce downtime by 40%</span> and streamline your entire workflow.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start mb-16">
-                <Link to="/signup">
-                  <Button size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-10 py-4 text-lg font-semibold shadow-2xl hover:shadow-3xl transition-all duration-300 group">
-                    Start Free Trial
-                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-                <Button size="lg" variant="outline" className="border-2 border-gray-300 text-gray-700 px-10 py-4 text-lg font-semibold hover:bg-gray-50 hover:border-gray-400 transition-all duration-200">
-                  Watch Demo
-                </Button>
-              </div>
-
-              {/* Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                {stats.map((stat, index) => (
-                  <div key={index} className="text-center lg:text-left">
-                    <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-2">
-                      {stat.value}
-                    </div>
-                    <div className="text-gray-600 font-medium">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right side - Globe */}
-            <div className="relative h-[600px] flex items-center justify-center">
-              <Globe className="top-0" />
-              <div className="absolute inset-0 bg-gradient-to-t from-white/20 via-transparent to-white/20 pointer-events-none"></div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Hero Section - Now using animated hero */}
+      <Hero />
 
       {/* Features Grid */}
       <section className="py-24 bg-gradient-to-br from-white via-gray-50/50 to-white">
