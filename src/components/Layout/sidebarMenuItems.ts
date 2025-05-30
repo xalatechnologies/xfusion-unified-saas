@@ -68,7 +68,13 @@ export const menuItems = [
     title: "Reporting",
     url: "/dashboard/reporting",
     icon: TrendingUp,
-    group: "Analytics"
+    group: "Collaboration"
+  },
+  {
+    title: "Messages",
+    url: "/dashboard/messages",
+    icon: MessageSquare,
+    group: "Collaboration"
   },
   {
     title: "User Management",
@@ -87,12 +93,6 @@ export const menuItems = [
     url: "/dashboard/subscriptions",
     icon: CreditCard,
     group: "Administration"
-  },
-  {
-    title: "Messages",
-    url: "/dashboard/messages",
-    icon: MessageSquare,
-    group: "Communication"
   }
 ];
 

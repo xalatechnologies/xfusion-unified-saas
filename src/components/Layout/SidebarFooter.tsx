@@ -13,9 +13,6 @@ export function AppSidebarFooter() {
           <div className="text-xs text-emerald-600 font-medium">All systems operational</div>
         </div>
       </div>
-      <div className="text-xs text-gray-400 text-center mt-3">
-        © 2024 SupplyMantix
-      </div>
     </BaseSidebarFooter>
   );
 }
