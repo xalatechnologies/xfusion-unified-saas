@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -91,9 +90,10 @@ export const MemberInviteForm = ({ organizationId }: MemberInviteFormProps) => {
 
     try {
       await inviteMutation.mutateAsync({
-        organizationId,
-        email: email.trim(),
+        organization_id: organizationId,
+        invited_email: email.trim(),
         role,
+        invited_by: "current-user-id", // This should come from auth context
       });
 
       toast({
