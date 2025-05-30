@@ -12,7 +12,8 @@ import {
   BarChart3, 
   MapPin, 
   TrendingUp, 
-  MessageSquare 
+  MessageSquare,
+  Languages
 } from "lucide-react";
 
 export const menuItems = [
@@ -92,6 +93,12 @@ export const menuItems = [
     title: "Subscriptions",
     url: "/dashboard/subscriptions",
     icon: CreditCard,
+    group: "Administration"
+  },
+  {
+    title: "Translations",
+    url: "/dashboard/translations",
+    icon: Languages,
     group: "Administration"
   }
 ];
