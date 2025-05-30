@@ -339,6 +339,7 @@ export type Database = {
           contact_phone: string | null
           created_at: string | null
           created_by: string
+          current_subscription_id: string | null
           default_language: string | null
           id: string
           name: string
@@ -355,6 +356,7 @@ export type Database = {
           contact_phone?: string | null
           created_at?: string | null
           created_by: string
+          current_subscription_id?: string | null
           default_language?: string | null
           id?: string
           name: string
@@ -371,6 +373,7 @@ export type Database = {
           contact_phone?: string | null
           created_at?: string | null
           created_by?: string
+          current_subscription_id?: string | null
           default_language?: string | null
           id?: string
           name?: string
@@ -378,7 +381,15 @@ export type Database = {
           updated_at?: string | null
           website?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "organizations_current_subscription_id_fkey"
+            columns: ["current_subscription_id"]
+            isOneToOne: false
+            referencedRelation: "subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       procedures: {
         Row: {
@@ -504,13 +515,17 @@ export type Database = {
           created_at: string | null
           current_period_end: string | null
           current_period_start: string | null
+          features: Json | null
           id: string
+          max_users: number | null
           organization_id: string | null
           plan_id: string
           plan_name: string
           price_monthly: number | null
           price_yearly: number | null
           status: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
           trial_end: string | null
           trial_start: string | null
           updated_at: string | null
@@ -520,13 +535,17 @@ export type Database = {
           created_at?: string | null
           current_period_end?: string | null
           current_period_start?: string | null
+          features?: Json | null
           id?: string
+          max_users?: number | null
           organization_id?: string | null
           plan_id: string
           plan_name: string
           price_monthly?: number | null
           price_yearly?: number | null
           status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
           trial_end?: string | null
           trial_start?: string | null
           updated_at?: string | null
@@ -536,13 +555,17 @@ export type Database = {
           created_at?: string | null
           current_period_end?: string | null
           current_period_start?: string | null
+          features?: Json | null
           id?: string
+          max_users?: number | null
           organization_id?: string | null
           plan_id?: string
           plan_name?: string
           price_monthly?: number | null
           price_yearly?: number | null
           status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
           trial_end?: string | null
           trial_start?: string | null
           updated_at?: string | null

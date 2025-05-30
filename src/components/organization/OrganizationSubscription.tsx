@@ -74,7 +74,8 @@ export const OrganizationSubscription = ({ organizationId }: OrganizationSubscri
   const { data: members } = useOrganizationMembers(organizationId);
   const createSubscription = useCreateSubscription();
   
-  const currentSubscription = subscriptions?.[0];
+  // Get the active subscription (status = 'active')
+  const currentSubscription = subscriptions?.find(sub => sub.status === 'active') || subscriptions?.[0];
   const currentPlan = plans.find(p => p.id === currentSubscription?.plan_id);
   const memberCount = members?.length || 0;
 
@@ -93,6 +94,13 @@ export const OrganizationSubscription = ({ organizationId }: OrganizationSubscri
     }
 
     try {
+      // Cancel current subscription first if it exists
+      if (currentSubscription && currentSubscription.status === 'active') {
+        // In a real app, you'd cancel the current subscription via Stripe API
+        console.log('Cancelling current subscription:', currentSubscription.id);
+      }
+
+      // Create new subscription
       await createSubscription.mutateAsync({
         organization_id: organizationId,
         plan_id: planId,
@@ -100,11 +108,23 @@ export const OrganizationSubscription = ({ organizationId }: OrganizationSubscri
         price_monthly: parseFloat(selectedPlan.price.replace('$', '')),
         status: 'active',
         billing_cycle: 'monthly',
+        max_users: selectedPlan.maxUsers,
+        current_period_start: new Date().toISOString(),
+        current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days from now
+        features: {
+          workOrders: selectedPlan.id === 'basic' ? 100 : -1,
+          assetManagement: selectedPlan.id !== 'basic',
+          customProcedures: selectedPlan.id !== 'basic',
+          apiAccess: selectedPlan.id !== 'basic',
+          prioritySupport: selectedPlan.id !== 'basic',
+          customBranding: selectedPlan.id === 'enterprise',
+          ssoAuth: selectedPlan.id === 'enterprise',
+        },
       });
 
       toast({
-        title: "Plan Change Requested",
-        description: `Your subscription will be updated to ${selectedPlan.name}`,
+        title: "Subscription Updated",
+        description: `Your subscription has been updated to ${selectedPlan.name}`,
       });
     } catch (error) {
       toast({
@@ -163,9 +183,14 @@ export const OrganizationSubscription = ({ organizationId }: OrganizationSubscri
                   <div className="flex items-center space-x-2 mt-1">
                     <Users className="w-4 h-4 text-gray-500" />
                     <span className="text-sm text-gray-600">
-                      {memberCount} of {currentPlan.maxUsers === -1 ? 'unlimited' : currentPlan.maxUsers} members
+                      {memberCount} of {currentSubscription.max_users === -1 ? 'unlimited' : currentSubscription.max_users} members
                     </span>
                   </div>
+                  {currentSubscription.current_period_end && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      Next billing: {new Date(currentSubscription.current_period_end).toLocaleDateString()}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="text-right">
@@ -173,7 +198,11 @@ export const OrganizationSubscription = ({ organizationId }: OrganizationSubscri
                   ${currentSubscription.price_monthly || 0}
                 </p>
                 <p className="text-gray-600">per month</p>
-                <Badge className="bg-green-100 text-green-800 mt-1">
+                <Badge className={`mt-1 ${
+                  currentSubscription.status === 'active' ? 'bg-green-100 text-green-800' :
+                  currentSubscription.status === 'trialing' ? 'bg-blue-100 text-blue-800' :
+                  'bg-gray-100 text-gray-800'
+                }`}>
                   {currentSubscription.status}
                 </Badge>
               </div>
@@ -188,7 +217,7 @@ export const OrganizationSubscription = ({ organizationId }: OrganizationSubscri
       )}
 
       {/* User Limit Warning */}
-      {currentPlan && currentPlan.maxUsers !== -1 && memberCount >= currentPlan.maxUsers * 0.8 && (
+      {currentSubscription && currentSubscription.max_users !== -1 && memberCount >= (currentSubscription.max_users || 0) * 0.8 && (
         <Card className="border-orange-200 bg-orange-50">
           <CardContent className="p-4">
             <div className="flex items-start space-x-3">
@@ -196,8 +225,8 @@ export const OrganizationSubscription = ({ organizationId }: OrganizationSubscri
               <div className="text-left">
                 <h4 className="text-sm font-medium text-orange-900">Approaching User Limit</h4>
                 <p className="text-xs text-orange-700 mt-1">
-                  You're using {memberCount} of {currentPlan.maxUsers} available members. 
-                  {memberCount >= currentPlan.maxUsers 
+                  You're using {memberCount} of {currentSubscription.max_users} available members. 
+                  {memberCount >= (currentSubscription.max_users || 0)
                     ? " You've reached your limit and cannot add more members."
                     : " Consider upgrading to add more team members."
                   }

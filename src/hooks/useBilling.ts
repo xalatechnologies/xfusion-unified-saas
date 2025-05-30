@@ -18,6 +18,32 @@ export const useCreateSubscription = () => {
     mutationFn: databaseApi.createSubscription,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["subscriptions", data.organization_id] });
+      queryClient.invalidateQueries({ queryKey: ["organizations"] });
+    },
+  });
+};
+
+export const useUpdateSubscription = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: ({ id, updates }: { id: string; updates: any }) => 
+      databaseApi.updateSubscription(id, updates),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["subscriptions", data.organization_id] });
+      queryClient.invalidateQueries({ queryKey: ["organizations"] });
+    },
+  });
+};
+
+export const useCancelSubscription = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: databaseApi.cancelSubscription,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["subscriptions", data.organization_id] });
+      queryClient.invalidateQueries({ queryKey: ["organizations"] });
     },
   });
 };

@@ -17,9 +17,42 @@ export const billingApi = {
   },
 
   async createSubscription(subscription: Tables["subscriptions"]["Insert"]) {
+    // First, mark any existing active subscriptions as cancelled
+    if (subscription.organization_id && subscription.status === 'active') {
+      await supabase
+        .from("subscriptions")
+        .update({ status: 'cancelled' })
+        .eq("organization_id", subscription.organization_id)
+        .eq("status", "active");
+    }
+
     const { data, error } = await supabase
       .from("subscriptions")
       .insert(subscription)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async updateSubscription(id: string, updates: Tables["subscriptions"]["Update"]) {
+    const { data, error } = await supabase
+      .from("subscriptions")
+      .update(updates)
+      .eq("id", id)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async cancelSubscription(id: string) {
+    const { data, error } = await supabase
+      .from("subscriptions")
+      .update({ status: 'cancelled' })
+      .eq("id", id)
       .select()
       .single();
     
