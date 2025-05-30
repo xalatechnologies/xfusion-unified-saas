@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Check, Zap, Shield, TrendingUp } from "lucide-react";
@@ -319,35 +320,35 @@ const Index = () => {
 
       {/* CTA Section */}
       <motion.section 
-        className="py-24 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 text-white relative overflow-hidden"
+        className="py-24 bg-white text-slate-900 relative overflow-hidden"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
       >
         <motion.div 
-          className="absolute inset-0 bg-black/10"
+          className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50"
           animate={{ 
             background: [
-              "radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)",
-              "radial-gradient(circle at 80% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)",
-              "radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)"
+              "linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(99, 102, 241, 0.05) 100%)",
+              "linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%)",
+              "linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(99, 102, 241, 0.05) 100%)"
             ]
           }}
           transition={{ duration: 8, repeat: Infinity }}
         />
         <motion.div 
-          className="absolute top-0 left-0 w-full h-full opacity-10"
+          className="absolute top-0 left-0 w-full h-full opacity-5"
           animate={{ x: [0, 100, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
           style={{
-            backgroundImage: "url('data:image/svg+xml,%3Csvg width=\"100\" height=\"100\" viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M0 100V0h100\" fill=\"none\" stroke=\"%23ffffff\" stroke-width=\"0.5\" opacity=\"0.1\"/%3E%3C/svg%3E')"
+            backgroundImage: "url('data:image/svg+xml,%3Csvg width=\"100\" height=\"100\" viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M0 100V0h100\" fill=\"none\" stroke=\"%2364748b\" stroke-width=\"0.5\" opacity=\"0.1\"/%3E%3C/svg%3E')"
           }}
         />
         
         <div className="relative max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <motion.h2 
-            className="text-4xl md:text-5xl font-bold mb-6"
+            className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent"
             initial={{ scale: 0.8, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true }}
@@ -356,7 +357,7 @@ const Index = () => {
             Ready to Transform Your Operations?
           </motion.h2>
           <motion.p 
-            className="text-xl md:text-2xl mb-10 text-blue-100 leading-relaxed"
+            className="text-xl md:text-2xl mb-10 text-slate-600 leading-relaxed"
             initial={{ y: 30, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
@@ -378,7 +379,7 @@ const Index = () => {
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400 }}
               >
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-slate-50 px-10 py-4 text-lg font-bold shadow-2xl hover:shadow-3xl transition-all duration-300 group">
+                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-10 py-4 text-lg font-bold shadow-xl hover:shadow-2xl transition-all duration-300 group">
                   Start Your Free Trial
                   <motion.div
                     animate={{ x: [0, 5, 0] }}
@@ -394,14 +395,14 @@ const Index = () => {
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400 }}
             >
-              <Button size="lg" variant="outline" className="border-2 border-white/30 text-white hover:bg-white/10 px-10 py-4 text-lg font-semibold backdrop-blur-sm">
+              <Button size="lg" variant="outline" className="border-2 border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 px-10 py-4 text-lg font-semibold">
                 Schedule Demo
               </Button>
             </motion.div>
           </motion.div>
           
           <motion.div 
-            className="mt-12 flex items-center justify-center space-x-8 text-blue-100"
+            className="mt-12 flex items-center justify-center space-x-8 text-slate-600"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -425,7 +426,7 @@ const Index = () => {
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
                 >
-                  <Check className="w-5 h-5" />
+                  <Check className="w-5 h-5 text-green-600" />
                 </motion.div>
                 <span>{text}</span>
               </motion.div>
