@@ -1,14 +1,16 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { ArrowRight, TrendingUp } from "lucide-react";
+import { ArrowRight, TrendingUp, AlertCircle, CheckCircle } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { signUp, user } = useAuth();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -17,11 +19,60 @@ const Signup = () => {
     password: "",
     confirmPassword: ""
   });
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // For demo purposes, navigate to dashboard
+  // Redirect if already logged in
+  if (user) {
     navigate("/dashboard");
+    return null;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    setLoading(true);
+
+    // Validate passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+
+    // Validate password strength
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const { error } = await signUp(
+        formData.email, 
+        formData.password, 
+        formData.firstName, 
+        formData.lastName
+      );
+      
+      if (error) {
+        if (error.message.includes("already registered")) {
+          setError("An account with this email already exists. Please sign in instead.");
+        } else if (error.message.includes("Password")) {
+          setError("Password is too weak. Please choose a stronger password.");
+        } else {
+          setError(error.message);
+        }
+      } else {
+        setSuccess("Account created successfully! Please check your email for a confirmation link.");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -90,6 +141,24 @@ const Signup = () => {
               <CardTitle className="text-2xl text-center font-bold text-gray-900">Create Account</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
+              {error && (
+                <Alert className="border-red-200 bg-red-50">
+                  <AlertCircle className="h-4 w-4 text-red-600" />
+                  <AlertDescription className="text-red-700">
+                    {error}
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              {success && (
+                <Alert className="border-green-200 bg-green-50">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <AlertDescription className="text-green-700">
+                    {success}
+                  </AlertDescription>
+                </Alert>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
@@ -102,6 +171,7 @@ const Signup = () => {
                       onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                       className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20"
                       required
+                      disabled={loading}
                     />
                   </div>
                   <div className="space-y-2">
@@ -114,6 +184,7 @@ const Signup = () => {
                       onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                       className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20"
                       required
+                      disabled={loading}
                     />
                   </div>
                 </div>
@@ -127,6 +198,7 @@ const Signup = () => {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20"
                     required
+                    disabled={loading}
                   />
                 </div>
                 <div className="space-y-2">
@@ -139,6 +211,7 @@ const Signup = () => {
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20"
                     required
+                    disabled={loading}
                   />
                 </div>
                 <div className="space-y-2">
@@ -151,6 +224,7 @@ const Signup = () => {
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20"
                     required
+                    disabled={loading}
                   />
                 </div>
                 <div className="space-y-2">
@@ -163,6 +237,7 @@ const Signup = () => {
                     onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                     className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20"
                     required
+                    disabled={loading}
                   />
                 </div>
                 <div className="flex items-start space-x-3">
@@ -178,9 +253,22 @@ const Signup = () => {
                     </Link>
                   </Label>
                 </div>
-                <Button type="submit" className="w-full h-12 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 group">
-                  Create Account
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <Button 
+                  type="submit" 
+                  className="w-full h-12 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 group"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Creating Account...
+                    </>
+                  ) : (
+                    <>
+                      Create Account
+                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
                 </Button>
               </form>
 
