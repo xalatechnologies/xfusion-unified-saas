@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -9,45 +8,27 @@ import { LanguageSelector } from "@/components/LanguageSelector";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LogOut, User } from "lucide-react";
-
 export const TopBar = () => {
-  const { user, signOut } = useAuth();
-  const { t } = useLanguage();
-
+  const {
+    user,
+    signOut
+  } = useAuth();
+  const {
+    t
+  } = useLanguage();
   const handleSignOut = async () => {
     await signOut();
   };
-
   const getUserInitials = () => {
     if (!user?.email) return "U";
     return user.email.charAt(0).toUpperCase();
   };
-
-  return (
-    <header className="h-16 border-b border-gray-200 bg-white flex items-center justify-between px-6">
-      <div className="flex items-center space-x-4">
-        <SidebarTrigger className="lg:hidden" />
-        
-        {/* Organization Switcher */}
-        <Select defaultValue="acme-corp">
-          <SelectTrigger className="w-48">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="acme-corp">Acme Corporation</SelectItem>
-            <SelectItem value="beta-inc">Beta Industries</SelectItem>
-            <SelectItem value="gamma-llc">Gamma LLC</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+  return <header className="h-16 border-b border-gray-200 bg-white flex items-center justify-between px-6">
+      
 
       {/* Global Search */}
       <div className="flex-1 max-w-lg mx-8">
-        <Input
-          type="search"
-          placeholder={t('common.search')}
-          className="w-full"
-        />
+        <Input type="search" placeholder={t('common.search')} className="w-full" />
       </div>
 
       <div className="flex items-center space-x-4">
@@ -90,6 +71,5 @@ export const TopBar = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-    </header>
-  );
+    </header>;
 };
