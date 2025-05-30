@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -8,23 +9,53 @@ import { LanguageSelector } from "@/components/LanguageSelector";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LogOut, User } from "lucide-react";
+
 export const TopBar = () => {
-  const {
-    user,
-    signOut
-  } = useAuth();
-  const {
-    t
-  } = useLanguage();
+  const { user, signOut } = useAuth();
+  const { t } = useLanguage();
+
   const handleSignOut = async () => {
     await signOut();
   };
+
   const getUserInitials = () => {
-    if (!user?.email) return "U";
-    return user.email.charAt(0).toUpperCase();
+    const firstName = user?.user_metadata?.first_name;
+    const lastName = user?.user_metadata?.last_name;
+    
+    if (firstName && lastName) {
+      return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+    }
+    
+    if (firstName) {
+      return firstName.charAt(0).toUpperCase();
+    }
+    
+    if (user?.email) {
+      return user.email.charAt(0).toUpperCase();
+    }
+    
+    return "U";
   };
-  return <header className="h-16 border-b border-gray-200 bg-white flex items-center justify-between px-6">
-      
+
+  const getUserDisplayName = () => {
+    const firstName = user?.user_metadata?.first_name;
+    const lastName = user?.user_metadata?.last_name;
+    
+    if (firstName && lastName) {
+      return `${firstName} ${lastName}`;
+    }
+    
+    if (firstName) {
+      return firstName;
+    }
+    
+    // Fallback to email if no name is available
+    return user?.email || 'User';
+  };
+
+  return (
+    <header className="h-16 border-b border-gray-200 bg-white flex items-center justify-between px-6">
+      <SidebarTrigger />
 
       {/* Global Search */}
       <div className="flex-1 max-w-lg mx-8">
@@ -53,7 +84,7 @@ export const TopBar = () => {
                 </AvatarFallback>
               </Avatar>
               <div className="hidden md:block text-left">
-                <p className="text-sm font-medium text-gray-900">{user?.email}</p>
+                <p className="text-sm font-medium text-gray-900">{getUserDisplayName()}</p>
                 <p className="text-xs text-gray-500">Admin</p>
               </div>
             </Button>
@@ -71,5 +102,6 @@ export const TopBar = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-    </header>;
+    </header>
+  );
 };
