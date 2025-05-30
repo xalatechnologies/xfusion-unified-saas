@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -14,12 +14,29 @@ import { toast } from "sonner";
 import { DashboardLayout } from "@/components/Layout/DashboardLayout";
 
 const TranslationManagement = () => {
-  const { t, language } = useLanguage();
+  const { t, language, updateTranslation } = useLanguage();
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(language);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [editingKey, setEditingKey] = useState<string | null>(null);
   const [editValue, setEditValue] = useState("");
+  const [currentTranslations, setCurrentTranslations] = useState(translations[selectedLanguage]);
+
+  useEffect(() => {
+    // Load custom translations from localStorage if they exist
+    const customTranslations = localStorage.getItem(`translations_${selectedLanguage}`);
+    if (customTranslations) {
+      try {
+        const parsed = JSON.parse(customTranslations);
+        setCurrentTranslations({ ...translations[selectedLanguage], ...parsed });
+      } catch (error) {
+        console.error('Failed to parse custom translations:', error);
+        setCurrentTranslations(translations[selectedLanguage]);
+      }
+    } else {
+      setCurrentTranslations(translations[selectedLanguage]);
+    }
+  }, [selectedLanguage]);
 
   const categories = [
     { value: "all", label: t('admin.translations.all') },
@@ -30,7 +47,7 @@ const TranslationManagement = () => {
     { value: "common", label: "Common" },
   ];
 
-  const filteredTranslations = Object.entries(translations[selectedLanguage])
+  const filteredTranslations = Object.entries(currentTranslations)
     .filter(([key, value]) => {
       const matchesSearch = key.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           value.toLowerCase().includes(searchTerm.toLowerCase());
@@ -45,9 +62,37 @@ const TranslationManagement = () => {
 
   const handleSave = () => {
     if (editingKey) {
-      // In a real app, this would save to database
-      console.log(`Saving translation: ${editingKey} = ${editValue}`);
-      toast(t('admin.translations.updated'));
+      // Update the current translations state
+      const updatedTranslations = {
+        ...currentTranslations,
+        [editingKey]: editValue
+      };
+      setCurrentTranslations(updatedTranslations);
+
+      // Save custom translations to localStorage
+      const existingCustom = localStorage.getItem(`translations_${selectedLanguage}`);
+      let customTranslations = {};
+      if (existingCustom) {
+        try {
+          customTranslations = JSON.parse(existingCustom);
+        } catch (error) {
+          console.error('Failed to parse existing custom translations:', error);
+        }
+      }
+
+      const newCustomTranslations = {
+        ...customTranslations,
+        [editingKey]: editValue
+      };
+
+      localStorage.setItem(`translations_${selectedLanguage}`, JSON.stringify(newCustomTranslations));
+
+      // Update the language context if we're editing the current language
+      if (selectedLanguage === language && updateTranslation) {
+        updateTranslation(editingKey as keyof TranslationKeys, editValue);
+      }
+
+      toast.success(t('admin.translations.updated'));
       setEditingKey(null);
       setEditValue("");
     }
@@ -59,7 +104,7 @@ const TranslationManagement = () => {
   };
 
   const exportTranslations = () => {
-    const data = JSON.stringify(translations[selectedLanguage], null, 2);
+    const data = JSON.stringify(currentTranslations, null, 2);
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
