@@ -9,7 +9,378 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      assets: {
+        Row: {
+          asset_tag: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          location: string | null
+          name: string
+          status: Database["public"]["Enums"]["asset_status"]
+          tenant_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          asset_tag?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          name: string
+          status?: Database["public"]["Enums"]["asset_status"]
+          tenant_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          asset_tag?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          name?: string
+          status?: Database["public"]["Enums"]["asset_status"]
+          tenant_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assets_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_messages: {
+        Row: {
+          created_at: string | null
+          id: string
+          message: string
+          tenant_id: string
+          user_id: string | null
+          work_order_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          message: string
+          tenant_id: string
+          user_id?: string | null
+          work_order_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          message?: string
+          tenant_id?: string
+          user_id?: string | null
+          work_order_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chat_messages_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chat_messages_work_order_id_fkey"
+            columns: ["work_order_id"]
+            isOneToOne: false
+            referencedRelation: "work_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory_items: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          location: string | null
+          min_quantity: number | null
+          name: string
+          quantity: number
+          sku: string | null
+          tenant_id: string
+          unit_cost: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          min_quantity?: number | null
+          name: string
+          quantity?: number
+          sku?: string | null
+          tenant_id: string
+          unit_cost?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          min_quantity?: number | null
+          name?: string
+          quantity?: number
+          sku?: string | null
+          tenant_id?: string
+          unit_cost?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_items_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      procedures: {
+        Row: {
+          asset_type: string | null
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          estimated_duration: number | null
+          id: string
+          steps: Json | null
+          tenant_id: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          asset_type?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          estimated_duration?: number | null
+          id?: string
+          steps?: Json | null
+          tenant_id: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          asset_type?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          estimated_duration?: number | null
+          id?: string
+          steps?: Json | null
+          tenant_id?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "procedures_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "procedures_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      purchase_orders: {
+        Row: {
+          approved_by: string | null
+          created_at: string | null
+          due_date: string | null
+          id: string
+          po_number: string
+          requested_by: string | null
+          status: Database["public"]["Enums"]["purchase_order_status"]
+          tenant_id: string
+          total_amount: number | null
+          updated_at: string | null
+          vendor: string | null
+        }
+        Insert: {
+          approved_by?: string | null
+          created_at?: string | null
+          due_date?: string | null
+          id?: string
+          po_number: string
+          requested_by?: string | null
+          status?: Database["public"]["Enums"]["purchase_order_status"]
+          tenant_id: string
+          total_amount?: number | null
+          updated_at?: string | null
+          vendor?: string | null
+        }
+        Update: {
+          approved_by?: string | null
+          created_at?: string | null
+          due_date?: string | null
+          id?: string
+          po_number?: string
+          requested_by?: string | null
+          status?: Database["public"]["Enums"]["purchase_order_status"]
+          tenant_id?: string
+          total_amount?: number | null
+          updated_at?: string | null
+          vendor?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchase_orders_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_orders_requested_by_fkey"
+            columns: ["requested_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_orders_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tenants: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      users: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          role: Database["public"]["Enums"]["user_role"]
+          tenant_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          tenant_id: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          tenant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "users_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      work_orders: {
+        Row: {
+          asset_id: string | null
+          assigned_to: string | null
+          created_at: string | null
+          description: string | null
+          due_date: string | null
+          id: string
+          status: Database["public"]["Enums"]["work_order_status"]
+          tenant_id: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          asset_id?: string | null
+          assigned_to?: string | null
+          created_at?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["work_order_status"]
+          tenant_id: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          asset_id?: string | null
+          assigned_to?: string | null
+          created_at?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["work_order_status"]
+          tenant_id?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "work_orders_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "assets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "work_orders_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "work_orders_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +389,21 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      asset_status: "active" | "maintenance" | "out_of_service" | "retired"
+      purchase_order_status:
+        | "draft"
+        | "pending"
+        | "approved"
+        | "ordered"
+        | "received"
+        | "cancelled"
+      user_role: "admin" | "manager" | "technician" | "viewer"
+      work_order_status:
+        | "open"
+        | "in_progress"
+        | "on_hold"
+        | "completed"
+        | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +518,24 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      asset_status: ["active", "maintenance", "out_of_service", "retired"],
+      purchase_order_status: [
+        "draft",
+        "pending",
+        "approved",
+        "ordered",
+        "received",
+        "cancelled",
+      ],
+      user_role: ["admin", "manager", "technician", "viewer"],
+      work_order_status: [
+        "open",
+        "in_progress",
+        "on_hold",
+        "completed",
+        "cancelled",
+      ],
+    },
   },
 } as const
