@@ -1,8 +1,6 @@
 
 import { 
-  Users, 
   Building2, 
-  CreditCard, 
   Wrench, 
   DollarSign, 
   FileText, 
@@ -85,21 +83,9 @@ export const menuItems = [
     group: "sidebar.collaboration"
   },
   {
-    title: "nav.users",
-    url: "/dashboard/users",
-    icon: Users,
-    group: "sidebar.administration"
-  },
-  {
     title: "nav.organization",
     url: "/dashboard/organization", 
     icon: Building2,
-    group: "sidebar.administration"
-  },
-  {
-    title: "nav.subscriptions",
-    url: "/dashboard/subscriptions",
-    icon: CreditCard,
     group: "sidebar.administration"
   },
   {
