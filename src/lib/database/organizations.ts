@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -30,33 +29,31 @@ export const organizationsApi = {
     console.log("Updating organization with ID:", id);
     console.log("Updates:", updates);
     
-    // First check if the organization exists
-    const { data: existingOrg, error: checkError } = await supabase
-      .from("organizations")
-      .select("id")
-      .eq("id", id)
-      .single();
-    
-    if (checkError || !existingOrg) {
-      console.error("Organization not found:", checkError);
-      throw new Error(`Organization with ID ${id} not found`);
-    }
-    
-    // Now perform the update
-    const { data, error } = await supabase
+    // Perform the update without trying to return the updated row first
+    const { error } = await supabase
       .from("organizations")
       .update(updates)
-      .eq("id", id)
-      .select()
-      .single();
+      .eq("id", id);
     
     if (error) {
       console.error("Supabase update error:", error);
       throw error;
     }
     
-    console.log("Update successful:", data);
-    return data;
+    // Then fetch the updated organization
+    const { data: updatedOrg, error: fetchError } = await supabase
+      .from("organizations")
+      .select("*")
+      .eq("id", id)
+      .single();
+    
+    if (fetchError) {
+      console.error("Error fetching updated organization:", fetchError);
+      throw fetchError;
+    }
+    
+    console.log("Update successful:", updatedOrg);
+    return updatedOrg;
   },
 
   async getOrganizationMembers(organizationId: string) {
