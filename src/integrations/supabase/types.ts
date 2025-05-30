@@ -325,6 +325,9 @@ export type Database = {
           address: string | null
           branding: Json | null
           contact: Json | null
+          contact_email: string | null
+          contact_fax: string | null
+          contact_phone: string | null
           created_at: string | null
           created_by: string
           id: string
@@ -337,6 +340,9 @@ export type Database = {
           address?: string | null
           branding?: Json | null
           contact?: Json | null
+          contact_email?: string | null
+          contact_fax?: string | null
+          contact_phone?: string | null
           created_at?: string | null
           created_by: string
           id?: string
@@ -349,6 +355,9 @@ export type Database = {
           address?: string | null
           branding?: Json | null
           contact?: Json | null
+          contact_email?: string | null
+          contact_fax?: string | null
+          contact_phone?: string | null
           created_at?: string | null
           created_by?: string
           id?: string
