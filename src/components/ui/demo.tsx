@@ -1,5 +1,6 @@
 
 import { Globe } from "@/components/ui/globe"
+import { Hero } from "@/components/ui/animated-hero"
 
 export function GlobeDemo() {
   return (
@@ -11,4 +12,12 @@ export function GlobeDemo() {
       <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
     </div>
   )
+}
+
+export function HeroDemo() {
+  return (
+    <div className="block">
+      <Hero />
+    </div>
+  );
 }
