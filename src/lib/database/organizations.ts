@@ -31,31 +31,31 @@ export const organizationsApi = {
     console.log("Updating organization with ID:", id);
     console.log("Updates being sent:", updates);
     
-    // Perform the update
-    const { error } = await supabase
+    // Perform the update with explicit field mapping
+    const { data, error } = await supabase
       .from("organizations")
-      .update(updates)
-      .eq("id", id);
+      .update({
+        name: updates.name,
+        website: updates.website,
+        address: updates.address,
+        contact: updates.contact,
+        contact_email: updates.contact_email,
+        contact_phone: updates.contact_phone,
+        contact_fax: updates.contact_fax,
+        default_language: updates.default_language,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", id)
+      .select()
+      .single();
     
     if (error) {
       console.error("Supabase update error:", error);
       throw error;
     }
     
-    // Fetch the updated organization to verify the changes
-    const { data: updatedOrg, error: fetchError } = await supabase
-      .from("organizations")
-      .select("*")
-      .eq("id", id)
-      .single();
-    
-    if (fetchError) {
-      console.error("Error fetching updated organization:", fetchError);
-      throw fetchError;
-    }
-    
-    console.log("Fetched organization after update:", updatedOrg);
-    return updatedOrg;
+    console.log("Update successful, returned data:", data);
+    return data;
   },
 
   async getOrganizationMembers(organizationId: string) {
