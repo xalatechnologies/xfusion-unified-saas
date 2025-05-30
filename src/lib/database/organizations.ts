@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -27,9 +28,9 @@ export const organizationsApi = {
 
   async updateOrganization(id: string, updates: Tables["organizations"]["Update"]) {
     console.log("Updating organization with ID:", id);
-    console.log("Updates:", updates);
+    console.log("Updates being sent:", updates);
     
-    // Perform the update without trying to return the updated row first
+    // Perform the update
     const { error } = await supabase
       .from("organizations")
       .update(updates)
@@ -40,7 +41,7 @@ export const organizationsApi = {
       throw error;
     }
     
-    // Then fetch the updated organization
+    // Fetch the updated organization to verify the changes
     const { data: updatedOrg, error: fetchError } = await supabase
       .from("organizations")
       .select("*")
@@ -52,7 +53,7 @@ export const organizationsApi = {
       throw fetchError;
     }
     
-    console.log("Update successful:", updatedOrg);
+    console.log("Fetched organization after update:", updatedOrg);
     return updatedOrg;
   },
 

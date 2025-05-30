@@ -55,34 +55,26 @@ export const useOrganizationSettingsForm = (organizationId: string) => {
       return;
     }
 
+    const updatePayload = {
+      name: formData.name,
+      website: formData.website,
+      address: formData.address,
+      contact_email: formData.email,
+      contact_phone: formData.phone,
+      contact_fax: formData.fax,
+      default_language: formData.defaultLanguage,
+    };
+
     try {
-      console.log("Saving organization data:", {
-        id: organizationId,
-        updates: {
-          name: formData.name,
-          website: formData.website,
-          address: formData.address,
-          contact_email: formData.email,
-          contact_phone: formData.phone,
-          contact_fax: formData.fax,
-          default_language: formData.defaultLanguage,
-        },
-      });
+      console.log("Form data before save:", formData);
+      console.log("Update payload being sent:", updatePayload);
 
       const result = await updateOrganization.mutateAsync({
         id: organizationId,
-        updates: {
-          name: formData.name,
-          website: formData.website,
-          address: formData.address,
-          contact_email: formData.email,
-          contact_phone: formData.phone,
-          contact_fax: formData.fax,
-          default_language: formData.defaultLanguage,
-        },
+        updates: updatePayload,
       });
       
-      console.log("Update result:", result);
+      console.log("Update result received:", result);
       
       toast({
         title: "Settings Updated",
