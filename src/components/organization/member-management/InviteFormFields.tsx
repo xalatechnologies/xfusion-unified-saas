@@ -54,9 +54,6 @@ export const InviteFormFields = ({
               required
             />
           </div>
-          <p className="text-xs text-muted-foreground mt-1">
-            Enter the email address of the person you want to invite
-          </p>
         </div>
 
         <div className="w-48">
@@ -78,33 +75,25 @@ export const InviteFormFields = ({
               ))}
             </SelectContent>
           </Select>
-          <p className="text-xs text-muted-foreground mt-1">
-            Select the role for this team member
-          </p>
         </div>
 
-        <div className="flex flex-col">
-          <Button 
-            type="submit" 
-            className="h-10 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors px-6"
-            disabled={isLoading || disabled || !email.trim()}
-          >
-            {isLoading ? (
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Sending...</span>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Mail className="w-4 h-4" />
-                <span>Send Invitation</span>
-              </div>
-            )}
-          </Button>
-          <p className="text-xs text-muted-foreground mt-1">
-            Click to send the invitation email
-          </p>
-        </div>
+        <Button 
+          type="submit" 
+          className="h-10 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors px-6"
+          disabled={isLoading || disabled || !email.trim()}
+        >
+          {isLoading ? (
+            <div className="flex items-center space-x-2">
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span>Sending...</span>
+            </div>
+          ) : (
+            <div className="flex items-center space-x-2">
+              <Mail className="w-4 h-4" />
+              <span>Send Invitation</span>
+            </div>
+          )}
+        </Button>
       </div>
     </form>
   );
