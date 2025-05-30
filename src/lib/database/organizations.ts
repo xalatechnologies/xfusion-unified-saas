@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -26,50 +27,23 @@ export const organizationsApi = {
   },
 
   async updateOrganization(id: string, updates: Tables["organizations"]["Update"]) {
-    console.log("Updating organization with ID:", id);
-    console.log("Updates being sent:", updates);
-    
-    // Debug: Let's first try to select the organization to see if it exists
-    const { data: existingOrg, error: selectError } = await supabase
-      .from("organizations")
-      .select("*")
-      .eq("id", id);
-    
-    console.log("Existing organization query result:", { existingOrg, selectError });
-    
-    if (selectError) {
-      console.error("Error selecting organization:", selectError);
-      throw selectError;
-    }
-    
-    if (!existingOrg || existingOrg.length === 0) {
-      console.error("Organization not found with ID:", id);
-      throw new Error(`Organization with ID ${id} not found`);
-    }
-    
-    console.log("Found organization:", existingOrg[0]);
-    
-    // Now perform the update with a simpler approach
     const { data, error } = await supabase
       .from("organizations")
       .update(updates)
       .eq("id", id)
-      .select();
-    
-    console.log("Update result:", { data, error });
+      .select()
+      .single();
     
     if (error) {
-      console.error("Supabase update error:", error);
+      console.error("Error updating organization:", error);
       throw error;
     }
     
-    if (!data || data.length === 0) {
-      console.error("No rows updated - this might be a permissions issue");
-      throw new Error("Update failed - no rows were updated. Check permissions.");
+    if (!data) {
+      throw new Error("Organization not found or you don't have permission to update it");
     }
     
-    console.log("Update successful, returned data:", data[0]);
-    return data[0];
+    return data;
   },
 
   async getOrganizationMembers(organizationId: string) {
