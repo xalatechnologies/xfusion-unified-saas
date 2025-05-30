@@ -13,10 +13,17 @@ import {
   MapPin, 
   TrendingUp, 
   MessageSquare,
-  Languages
+  Languages,
+  LayoutDashboard
 } from "lucide-react";
 
 export const menuItems = [
+  {
+    title: "nav.dashboard",
+    url: "/dashboard",
+    icon: LayoutDashboard,
+    group: "sidebar.overview"
+  },
   {
     title: "nav.workOrders",
     url: "/dashboard/work-orders",

@@ -20,6 +20,7 @@ export interface TranslationKeys {
   'nav.translations': string;
 
   // Sidebar groups
+  'sidebar.overview': string;
   'sidebar.operations': string;
   'sidebar.resources': string;
   'sidebar.collaboration': string;

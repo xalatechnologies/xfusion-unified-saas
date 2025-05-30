@@ -1,3 +1,4 @@
+
 import type { Translations } from '@/types/i18n';
 
 export const translations: Translations = {
@@ -20,6 +21,7 @@ export const translations: Translations = {
     'nav.translations': 'Translations',
 
     // Sidebar groups
+    'sidebar.overview': 'Overview',
     'sidebar.operations': 'Operations',
     'sidebar.resources': 'Resources',
     'sidebar.collaboration': 'Collaboration',
@@ -125,6 +127,7 @@ export const translations: Translations = {
     'nav.translations': 'Traductions',
 
     // Sidebar groups
+    'sidebar.overview': 'Vue d\'ensemble',
     'sidebar.operations': 'Opérations',
     'sidebar.resources': 'Ressources',
     'sidebar.collaboration': 'Collaboration',
@@ -230,6 +233,7 @@ export const translations: Translations = {
     'nav.translations': 'Oversettelser',
 
     // Sidebar groups
+    'sidebar.overview': 'Oversikt',
     'sidebar.operations': 'Operasjoner',
     'sidebar.resources': 'Ressurser',
     'sidebar.collaboration': 'Samarbeid',
