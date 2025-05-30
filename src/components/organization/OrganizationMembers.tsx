@@ -34,7 +34,7 @@ export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps
         await inviteMember.mutateAsync({
           organization_id: organizationId,
           user_id: null, // Will be set when user accepts invitation
-          role: "member",
+          role: "viewer",
           status: "pending",
         });
         
@@ -55,12 +55,24 @@ export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps
 
   const getRoleColor = (role: string) => {
     switch (role) {
+      case "owner": return "bg-purple-100 text-purple-800";
       case "admin": return "bg-red-100 text-red-800";
-      case "manager": return "bg-blue-100 text-blue-800";
-      case "technician": return "bg-green-100 text-green-800";
-      case "member": return "bg-purple-100 text-purple-800";
+      case "operations_manager": return "bg-blue-100 text-blue-800";
+      case "maintenance_manager": return "bg-indigo-100 text-indigo-800";
+      case "engineer": return "bg-green-100 text-green-800";
+      case "technician": return "bg-teal-100 text-teal-800";
+      case "requester": return "bg-orange-100 text-orange-800";
+      case "client": return "bg-pink-100 text-pink-800";
       case "viewer": return "bg-gray-100 text-gray-800";
       default: return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  const getRoleDisplayName = (role: string) => {
+    switch (role) {
+      case "operations_manager": return "Operations Manager";
+      case "maintenance_manager": return "Maintenance Manager";
+      default: return role.charAt(0).toUpperCase() + role.slice(1);
     }
   };
 
@@ -129,7 +141,7 @@ export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps
                 
                 <div className="flex items-center space-x-3">
                   <Badge className={getRoleColor(member.role)}>
-                    {member.role}
+                    {getRoleDisplayName(member.role)}
                   </Badge>
                   <Badge className={getStatusColor(member.status)}>
                     {member.status}

@@ -267,7 +267,7 @@ export type Database = {
           invited_by: string | null
           joined_at: string | null
           organization_id: string | null
-          role: string
+          role: Database["public"]["Enums"]["organization_role"]
           status: string
           updated_at: string | null
           user_id: string | null
@@ -279,7 +279,7 @@ export type Database = {
           invited_by?: string | null
           joined_at?: string | null
           organization_id?: string | null
-          role?: string
+          role?: Database["public"]["Enums"]["organization_role"]
           status?: string
           updated_at?: string | null
           user_id?: string | null
@@ -291,7 +291,7 @@ export type Database = {
           invited_by?: string | null
           joined_at?: string | null
           organization_id?: string | null
-          role?: string
+          role?: Database["public"]["Enums"]["organization_role"]
           status?: string
           updated_at?: string | null
           user_id?: string | null
@@ -559,21 +559,18 @@ export type Database = {
           created_at: string | null
           email: string
           id: string
-          role: Database["public"]["Enums"]["user_role"]
           tenant_id: string
         }
         Insert: {
           created_at?: string | null
           email: string
           id?: string
-          role?: Database["public"]["Enums"]["user_role"]
           tenant_id: string
         }
         Update: {
           created_at?: string | null
           email?: string
           id?: string
-          role?: Database["public"]["Enums"]["user_role"]
           tenant_id?: string
         }
         Relationships: [
@@ -663,6 +660,16 @@ export type Database = {
     }
     Enums: {
       asset_status: "active" | "maintenance" | "out_of_service" | "retired"
+      organization_role:
+        | "owner"
+        | "admin"
+        | "operations_manager"
+        | "maintenance_manager"
+        | "engineer"
+        | "technician"
+        | "requester"
+        | "client"
+        | "viewer"
       purchase_order_status:
         | "draft"
         | "pending"
@@ -670,7 +677,6 @@ export type Database = {
         | "ordered"
         | "received"
         | "cancelled"
-      user_role: "admin" | "manager" | "technician" | "viewer"
       work_order_status:
         | "open"
         | "in_progress"
@@ -793,6 +799,17 @@ export const Constants = {
   public: {
     Enums: {
       asset_status: ["active", "maintenance", "out_of_service", "retired"],
+      organization_role: [
+        "owner",
+        "admin",
+        "operations_manager",
+        "maintenance_manager",
+        "engineer",
+        "technician",
+        "requester",
+        "client",
+        "viewer",
+      ],
       purchase_order_status: [
         "draft",
         "pending",
@@ -801,7 +818,6 @@ export const Constants = {
         "received",
         "cancelled",
       ],
-      user_role: ["admin", "manager", "technician", "viewer"],
       work_order_status: [
         "open",
         "in_progress",
