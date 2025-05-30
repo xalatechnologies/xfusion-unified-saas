@@ -2,13 +2,14 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { databaseApi } from '@/lib/database';
 
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error?: any }>;
-  signUp: (email: string, password: string, firstName?: string, lastName?: string) => Promise<{ error?: any }>;
+  signUp: (email: string, password: string, firstName?: string, lastName?: string, company?: string) => Promise<{ error?: any }>;
   signOut: () => Promise<void>;
 }
 
@@ -30,11 +31,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
         console.log('Auth state changed:', event, session?.user?.email);
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
+
+        // Handle successful signup confirmation
+        if (event === 'SIGNED_IN' && session?.user && !session.user.user_metadata?.tenant_created) {
+          try {
+            await createUserTenantAndOrganization(session.user);
+          } catch (error) {
+            console.error('Error creating tenant and organization:', error);
+          }
+        }
       }
     );
 
@@ -48,6 +58,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => subscription.unsubscribe();
   }, []);
 
+  const createUserTenantAndOrganization = async (user: User) => {
+    try {
+      const firstName = user.user_metadata?.first_name || '';
+      const lastName = user.user_metadata?.last_name || '';
+      const company = user.user_metadata?.company || `${firstName} ${lastName}'s Organization`.trim();
+
+      // Create tenant
+      const tenant = await databaseApi.createTenant({
+        name: company || 'Default Organization'
+      });
+
+      // Create organization
+      const organization = await databaseApi.createOrganization({
+        name: company || 'Default Organization',
+        created_by: user.id,
+        contact: {
+          email: user.email,
+          phone: null,
+          address: null
+        }
+      });
+
+      // Create user record
+      await databaseApi.createUser({
+        id: user.id,
+        email: user.email!,
+        tenant_id: tenant.id,
+        role: 'admin'
+      });
+
+      // Update user metadata to mark tenant as created
+      await supabase.auth.updateUser({
+        data: { tenant_created: true }
+      });
+
+      console.log('Successfully created tenant, organization, and user records');
+    } catch (error) {
+      console.error('Error in createUserTenantAndOrganization:', error);
+      throw error;
+    }
+  };
+
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({
       email,
@@ -56,7 +108,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return { error };
   };
 
-  const signUp = async (email: string, password: string, firstName?: string, lastName?: string) => {
+  const signUp = async (email: string, password: string, firstName?: string, lastName?: string, company?: string) => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -64,6 +116,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         data: {
           first_name: firstName,
           last_name: lastName,
+          company: company,
         },
       },
     });

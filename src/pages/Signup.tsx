@@ -1,10 +1,8 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowRight, TrendingUp, AlertCircle, CheckCircle, Loader2, Mail, Lock, User, Building } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -24,11 +22,12 @@ const Signup = () => {
   const [success, setSuccess] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
-  // Redirect if already logged in
-  if (user) {
-    navigate("/dashboard");
-    return null;
-  }
+  // Handle redirect after user is authenticated
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,7 +54,8 @@ const Signup = () => {
         formData.email, 
         formData.password, 
         formData.firstName, 
-        formData.lastName
+        formData.lastName,
+        formData.company
       );
       
       if (error) {
@@ -75,6 +75,11 @@ const Signup = () => {
       setLoading(false);
     }
   };
+
+  // Don't render anything if user is already logged in to prevent flash
+  if (user) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 flex relative overflow-hidden">
