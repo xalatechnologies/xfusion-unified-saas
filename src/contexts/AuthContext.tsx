@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -137,19 +138,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         },
       },
     });
-
-    // If signup was successful and no error, auto-confirm the email
-    if (!error) {
-      try {
-        // Use admin API to auto-confirm the user
-        const { error: confirmError } = await supabase.auth.admin.updateUserById(
-          // We need to get the user ID from the signup response, but since we can't,
-          // we'll use a different approach - sign up with auto-confirm
-        );
-      } catch (confirmError) {
-        console.log('Auto-confirm not available, user will need to confirm email manually');
-      }
-    }
 
     return { error };
   };
