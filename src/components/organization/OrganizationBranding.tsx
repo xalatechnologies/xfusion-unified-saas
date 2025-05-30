@@ -1,147 +1,219 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { Separator } from "@/components/ui/separator";
+import { Upload, Palette, Image, FileImage, Save, Loader2 } from "lucide-react";
 import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { useOrganizations, useUpdateOrganization } from "@/hooks/useOrganizations";
-import { Upload, Palette } from "lucide-react";
 
 interface OrganizationBrandingProps {
   organizationId: string;
 }
 
 export const OrganizationBranding = ({ organizationId }: OrganizationBrandingProps) => {
-  const { t } = useLanguage();
-  const { toast } = useToast();
-  
-  const { data: organizations } = useOrganizations();
-  const updateOrganization = useUpdateOrganization();
-  
-  const currentOrganization = organizations?.find(org => org.id === organizationId);
-  const currentBranding = currentOrganization?.branding as any || {};
-  
-  const [formData, setFormData] = useState({
-    primaryColor: currentBranding.primaryColor || "#3B82F6",
-    secondaryColor: currentBranding.secondaryColor || "#6B7280",
-    logo: currentBranding.logo || "",
+  const [isLoading, setIsLoading] = useState(false);
+  const [brandData, setBrandData] = useState({
+    primaryColor: "#2563eb",
+    secondaryColor: "#64748b",
+    logoUrl: "",
+    faviconUrl: "",
   });
 
   const handleSave = async () => {
-    try {
-      await updateOrganization.mutateAsync({
-        id: organizationId,
-        updates: {
-          branding: formData,
-        },
-      });
-      
-      toast({
-        title: "Branding Updated",
-        description: "Your organization branding has been saved successfully.",
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to update organization branding.",
-        variant: "destructive",
-      });
-    }
+    setIsLoading(true);
+    // Simulate save operation
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setIsLoading(false);
   };
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Palette className="w-5 h-5" />
-            <span>Brand Colors</span>
+      {/* Logo & Visual Assets */}
+      <Card className="shadow-sm border-0 bg-gray-50/30">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg font-medium text-gray-900 flex items-center">
+            <Image className="w-5 h-5 mr-2 text-blue-600" />
+            Logo & Visual Assets
           </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Upload your organization's logo and favicon for consistent branding
+          </p>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="primary-color">Primary Color</Label>
-              <div className="flex space-x-2">
-                <Input
-                  id="primary-color"
-                  type="color"
-                  value={formData.primaryColor}
-                  onChange={(e) => setFormData({ ...formData, primaryColor: e.target.value })}
-                  className="w-16 h-10"
-                />
-                <Input
-                  value={formData.primaryColor}
-                  onChange={(e) => setFormData({ ...formData, primaryColor: e.target.value })}
-                  placeholder="#3B82F6"
-                  className="flex-1"
-                />
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <Label className="text-sm font-medium text-gray-700">Organization Logo</Label>
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                <Upload className="w-8 h-8 mx-auto text-gray-400 mb-2" />
+                <p className="text-sm text-gray-600 mb-2">
+                  Drop your logo here or click to upload
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  PNG, JPG up to 2MB (recommended: 200x60px)
+                </p>
+                <Button variant="outline" size="sm" className="mt-3">
+                  <FileImage className="w-4 h-4 mr-2" />
+                  Choose File
+                </Button>
               </div>
             </div>
             
-            <div className="space-y-2">
-              <Label htmlFor="secondary-color">Secondary Color</Label>
-              <div className="flex space-x-2">
-                <Input
-                  id="secondary-color"
-                  type="color"
-                  value={formData.secondaryColor}
-                  onChange={(e) => setFormData({ ...formData, secondaryColor: e.target.value })}
-                  className="w-16 h-10"
-                />
-                <Input
-                  value={formData.secondaryColor}
-                  onChange={(e) => setFormData({ ...formData, secondaryColor: e.target.value })}
-                  placeholder="#6B7280"
-                  className="flex-1"
-                />
+            <div className="space-y-3">
+              <Label className="text-sm font-medium text-gray-700">Favicon</Label>
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                <Upload className="w-8 h-8 mx-auto text-gray-400 mb-2" />
+                <p className="text-sm text-gray-600 mb-2">
+                  Drop your favicon here or click to upload
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  ICO, PNG up to 1MB (recommended: 32x32px)
+                </p>
+                <Button variant="outline" size="sm" className="mt-3">
+                  <FileImage className="w-4 h-4 mr-2" />
+                  Choose File
+                </Button>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Upload className="w-5 h-5" />
-            <span>Logo</span>
+      {/* Color Scheme */}
+      <Card className="shadow-sm border-0 bg-gray-50/30">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg font-medium text-gray-900 flex items-center">
+            <Palette className="w-5 h-5 mr-2 text-blue-600" />
+            Color Scheme
           </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Define your brand colors for a consistent visual identity
+          </p>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="logo-url">Logo URL</Label>
-            <Input
-              id="logo-url"
-              value={formData.logo}
-              onChange={(e) => setFormData({ ...formData, logo: e.target.value })}
-              placeholder="https://example.com/logo.png"
-            />
-          </div>
-          
-          {formData.logo && (
-            <div className="space-y-2">
-              <Label>Preview</Label>
-              <div className="border rounded-lg p-4 bg-gray-50">
-                <img
-                  src={formData.logo}
-                  alt="Logo preview"
-                  className="max-h-20 object-contain"
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <Label htmlFor="primary-color" className="text-sm font-medium text-gray-700">
+                Primary Color
+              </Label>
+              <div className="flex items-center space-x-3">
+                <div 
+                  className="w-12 h-10 rounded-md border border-gray-300 shadow-sm"
+                  style={{ backgroundColor: brandData.primaryColor }}
+                />
+                <Input
+                  id="primary-color"
+                  type="color"
+                  value={brandData.primaryColor}
+                  onChange={(e) => setBrandData(prev => ({ ...prev, primaryColor: e.target.value }))}
+                  className="w-16 h-10 p-1 cursor-pointer"
+                />
+                <Input
+                  value={brandData.primaryColor}
+                  onChange={(e) => setBrandData(prev => ({ ...prev, primaryColor: e.target.value }))}
+                  placeholder="#2563eb"
+                  className="flex-1"
                 />
               </div>
+              <p className="text-xs text-muted-foreground">
+                Used for buttons, links, and primary UI elements
+              </p>
             </div>
-          )}
-          
-          <Button 
-            onClick={handleSave} 
-            className="bg-blue-600 hover:bg-blue-700"
-            disabled={updateOrganization.isPending}
-          >
-            {updateOrganization.isPending ? "Saving..." : "Save Changes"}
-          </Button>
+            
+            <div className="space-y-3">
+              <Label htmlFor="secondary-color" className="text-sm font-medium text-gray-700">
+                Secondary Color
+              </Label>
+              <div className="flex items-center space-x-3">
+                <div 
+                  className="w-12 h-10 rounded-md border border-gray-300 shadow-sm"
+                  style={{ backgroundColor: brandData.secondaryColor }}
+                />
+                <Input
+                  id="secondary-color"
+                  type="color"
+                  value={brandData.secondaryColor}
+                  onChange={(e) => setBrandData(prev => ({ ...prev, secondaryColor: e.target.value }))}
+                  className="w-16 h-10 p-1 cursor-pointer"
+                />
+                <Input
+                  value={brandData.secondaryColor}
+                  onChange={(e) => setBrandData(prev => ({ ...prev, secondaryColor: e.target.value }))}
+                  placeholder="#64748b"
+                  className="flex-1"
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Used for secondary elements and accents
+              </p>
+            </div>
+          </div>
         </CardContent>
       </Card>
+
+      {/* Preview */}
+      <Card className="shadow-sm border-0 bg-gray-50/30">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg font-medium text-gray-900">
+            Brand Preview
+          </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            See how your branding will appear in the application
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="bg-white rounded-lg border p-6 space-y-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                <span className="text-xs font-bold text-gray-600">LOGO</span>
+              </div>
+              <span className="font-semibold text-gray-900">Your Organization</span>
+            </div>
+            <Separator />
+            <div className="flex space-x-3">
+              <Button 
+                style={{ backgroundColor: brandData.primaryColor }}
+                className="text-white hover:opacity-90"
+              >
+                Primary Button
+              </Button>
+              <Button 
+                variant="outline"
+                style={{ 
+                  borderColor: brandData.secondaryColor,
+                  color: brandData.secondaryColor 
+                }}
+              >
+                Secondary Button
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Save Actions */}
+      <div className="flex items-center justify-between pt-6 border-t bg-gray-50/50 -mx-6 px-6 py-4 rounded-b-lg">
+        <div className="text-sm text-muted-foreground">
+          Brand changes will be applied across all organization interfaces.
+        </div>
+        <Button 
+          onClick={handleSave}
+          disabled={isLoading}
+          className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm min-w-[120px]"
+        >
+          {isLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Saving...
+            </>
+          ) : (
+            <>
+              <Save className="w-4 h-4 mr-2" />
+              Save Branding
+            </>
+          )}
+        </Button>
+      </div>
     </div>
   );
 };

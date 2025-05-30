@@ -1,12 +1,11 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { useOrganizationSettingsForm } from "@/hooks/useOrganizationSettingsForm";
 import { OrganizationBasicInfo } from "./OrganizationBasicInfo";
 import { OrganizationContactInfo } from "./OrganizationContactInfo";
 import { OrganizationLanguageSettings } from "./OrganizationLanguageSettings";
-import { Building2, Save, Loader2 } from "lucide-react";
+import { Save, Loader2 } from "lucide-react";
 
 interface OrganizationSettingsProps {
   organizationId: string;
@@ -37,20 +36,8 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <div className="flex items-center space-x-3 mb-6">
-        <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-lg">
-          <Building2 className="w-5 h-5 text-blue-600" />
-        </div>
-        <div>
-          <h2 className="text-2xl font-semibold text-gray-900">Organization Settings</h2>
-          <p className="text-sm text-muted-foreground">
-            Manage your organization's basic information and preferences
-          </p>
-        </div>
-      </div>
-
-      <Card className="shadow-sm border-0 bg-white">
+    <div className="w-full p-6 space-y-6">
+      <Card className="shadow-sm border-0 bg-gray-50/30">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg font-medium text-gray-900">
             Basic Information
@@ -71,7 +58,7 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
         </CardContent>
       </Card>
 
-      <Card className="shadow-sm border-0 bg-white">
+      <Card className="shadow-sm border-0 bg-gray-50/30">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg font-medium text-gray-900">
             Contact Information
@@ -92,7 +79,7 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
         </CardContent>
       </Card>
 
-      <Card className="shadow-sm border-0 bg-white">
+      <Card className="shadow-sm border-0 bg-gray-50/30">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg font-medium text-gray-900">
             Language & Localization

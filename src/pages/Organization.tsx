@@ -1,5 +1,5 @@
+
 import { DashboardLayout } from "@/components/Layout/DashboardLayout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { OrganizationSettings } from "@/components/organization/OrganizationSettings";
@@ -8,6 +8,7 @@ import { OrganizationSubscription } from "@/components/organization/Organization
 import { OrganizationBilling } from "@/components/organization/OrganizationBilling";
 import { OrganizationMembers } from "@/components/organization/OrganizationMembers";
 import { useOrganizations } from "@/hooks/useOrganizations";
+import { Building2, Loader2 } from "lucide-react";
 
 export default function Organization() {
   const { t } = useLanguage();
@@ -20,7 +21,10 @@ export default function Organization() {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-64">
-          <div className="text-lg">Loading organization...</div>
+          <div className="flex items-center space-x-2 text-muted-foreground">
+            <Loader2 className="w-5 h-5 animate-spin" />
+            <span className="text-lg">Loading organization...</span>
+          </div>
         </div>
       </DashboardLayout>
     );
@@ -30,7 +34,7 @@ export default function Organization() {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-64">
-          <div className="text-lg">No organization found</div>
+          <div className="text-lg text-muted-foreground">No organization found</div>
         </div>
       </DashboardLayout>
     );
@@ -38,44 +42,80 @@ export default function Organization() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            {t("organization.title")}
-          </h1>
-          <p className="text-gray-600">
-            {t("organization.description")}
-          </p>
+      <div className="w-full space-y-6">
+        {/* Header */}
+        <div className="flex items-center space-x-3 pb-4">
+          <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-lg">
+            <Building2 className="w-5 h-5 text-blue-600" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">
+              {t("organization.title")}
+            </h1>
+            <p className="text-gray-600 mt-1">
+              {t("organization.description")}
+            </p>
+          </div>
         </div>
 
-        <Tabs defaultValue="settings" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="settings">{t("organization.tabs.settings")}</TabsTrigger>
-            <TabsTrigger value="branding">{t("organization.tabs.branding")}</TabsTrigger>
-            <TabsTrigger value="members">{t("organization.tabs.members")}</TabsTrigger>
-            <TabsTrigger value="subscription">{t("organization.tabs.subscription")}</TabsTrigger>
-            <TabsTrigger value="billing">{t("organization.tabs.billing")}</TabsTrigger>
-          </TabsList>
+        {/* Tabs */}
+        <Tabs defaultValue="settings" className="w-full space-y-6">
+          <div className="border-b border-gray-200 bg-white rounded-t-lg">
+            <TabsList className="grid w-full grid-cols-5 bg-transparent h-12 p-1">
+              <TabsTrigger 
+                value="settings" 
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none border-b-2 border-transparent"
+              >
+                {t("organization.tabs.settings")}
+              </TabsTrigger>
+              <TabsTrigger 
+                value="branding"
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none border-b-2 border-transparent"
+              >
+                {t("organization.tabs.branding")}
+              </TabsTrigger>
+              <TabsTrigger 
+                value="members"
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none border-b-2 border-transparent"
+              >
+                {t("organization.tabs.members")}
+              </TabsTrigger>
+              <TabsTrigger 
+                value="subscription"
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none border-b-2 border-transparent"
+              >
+                {t("organization.tabs.subscription")}
+              </TabsTrigger>
+              <TabsTrigger 
+                value="billing"
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none border-b-2 border-transparent"
+              >
+                {t("organization.tabs.billing")}
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
-          <TabsContent value="settings">
-            <OrganizationSettings organizationId={currentOrganization.id} />
-          </TabsContent>
+          <div className="bg-white rounded-b-lg border border-t-0 border-gray-200 min-h-[600px]">
+            <TabsContent value="settings" className="mt-0 p-0">
+              <OrganizationSettings organizationId={currentOrganization.id} />
+            </TabsContent>
 
-          <TabsContent value="branding">
-            <OrganizationBranding organizationId={currentOrganization.id} />
-          </TabsContent>
+            <TabsContent value="branding" className="mt-0 p-6">
+              <OrganizationBranding organizationId={currentOrganization.id} />
+            </TabsContent>
 
-          <TabsContent value="members">
-            <OrganizationMembers organizationId={currentOrganization.id} />
-          </TabsContent>
+            <TabsContent value="members" className="mt-0 p-6">
+              <OrganizationMembers organizationId={currentOrganization.id} />
+            </TabsContent>
 
-          <TabsContent value="subscription">
-            <OrganizationSubscription organizationId={currentOrganization.id} />
-          </TabsContent>
+            <TabsContent value="subscription" className="mt-0 p-6">
+              <OrganizationSubscription organizationId={currentOrganization.id} />
+            </TabsContent>
 
-          <TabsContent value="billing">
-            <OrganizationBilling organizationId={currentOrganization.id} />
-          </TabsContent>
+            <TabsContent value="billing" className="mt-0 p-6">
+              <OrganizationBilling organizationId={currentOrganization.id} />
+            </TabsContent>
+          </div>
         </Tabs>
       </div>
     </DashboardLayout>
