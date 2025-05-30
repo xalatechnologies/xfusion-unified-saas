@@ -1,23 +1,102 @@
 
-import type { Translations } from '@/types/i18n';
+export type Language = 'en' | 'fr' | 'no';
 
-export const translations: Translations = {
+export interface TranslationKeys {
+  // Navigation
+  'nav.dashboard': string;
+  'nav.workOrders': string;
+  'nav.purchaseOrders': string;
+  'nav.requests': string;
+  'nav.assets': string;
+  'nav.inventory': string;
+  'nav.procedures': string;
+  'nav.meters': string;
+  'nav.locations': string;
+  'nav.reporting': string;
+  'nav.messages': string;
+  'nav.users': string;
+  'nav.organization': string;
+  'nav.subscriptions': string;
+  'nav.translations': string;
+
+  // Sidebar groups
+  'sidebar.overview': string;
+  'sidebar.operations': string;
+  'sidebar.resources': string;
+  'sidebar.collaboration': string;
+  'sidebar.administration': string;
+
+  // Organization
+  'organization.title': string;
+  'organization.description': string;
+  'organization.tabs.settings': string;
+  'organization.tabs.branding': string;
+  'organization.tabs.members': string;
+  'organization.tabs.subscription': string;
+  'organization.tabs.billing': string;
+  'organization.settings.general': string;
+
+  // Common
+  'common.save': string;
+  'common.cancel': string;
+  'common.edit': string;
+  'common.delete': string;
+  'common.add': string;
+  'common.search': string;
+  'common.filter': string;
+  'common.actions': string;
+  'common.status': string;
+  'common.date': string;
+  'common.name': string;
+  'common.description': string;
+  'common.loading': string;
+  'common.error': string;
+  'common.success': string;
+
+  // Work Orders
+  'workOrders.title': string;
+  'workOrders.new': string;
+  'workOrders.status.open': string;
+  'workOrders.status.inProgress': string;
+  'workOrders.status.completed': string;
+  'workOrders.status.cancelled': string;
+
+  // Procedures
+  'procedures.title': string;
+  'procedures.new': string;
+  'procedures.steps': string;
+  'procedures.duration': string;
+
+  // Translation Management
+  'translations.title': string;
+  'translations.description': string;
+  'translations.key': string;
+  'translations.value': string;
+  'translations.language': string;
+  'translations.save': string;
+  'translations.search': string;
+  'translations.filter': string;
+  'translations.filterByLanguage': string;
+  'translations.refresh': string;
+}
+
+export const translations: Record<Language, TranslationKeys> = {
   en: {
     // Navigation
     'nav.dashboard': 'Dashboard',
     'nav.workOrders': 'Work Orders',
-    'nav.procedures': 'Procedures',
-    'nav.inventory': 'Inventory',
-    'nav.assets': 'Assets',
     'nav.purchaseOrders': 'Purchase Orders',
+    'nav.requests': 'Requests',
+    'nav.assets': 'Assets',
+    'nav.inventory': 'Inventory',
+    'nav.procedures': 'Procedures',
+    'nav.meters': 'Meters',
+    'nav.locations': 'Locations',
     'nav.reporting': 'Reporting',
+    'nav.messages': 'Messages',
     'nav.users': 'Users',
     'nav.organization': 'Organization',
     'nav.subscriptions': 'Subscriptions',
-    'nav.requests': 'Requests',
-    'nav.meters': 'Meters',
-    'nav.locations': 'Locations',
-    'nav.messages': 'Messages',
     'nav.translations': 'Translations',
 
     // Sidebar groups
@@ -27,103 +106,75 @@ export const translations: Translations = {
     'sidebar.collaboration': 'Collaboration',
     'sidebar.administration': 'Administration',
 
-    // Authentication
-    'auth.login': 'Log In',
-    'auth.signup': 'Sign Up',
-    'auth.signOut': 'Sign out',
-    'auth.email': 'Email',
-    'auth.password': 'Password',
-    'auth.confirmPassword': 'Confirm Password',
-    'auth.fullName': 'Full Name',
-    'auth.welcomeBack': 'Welcome back',
-    'auth.signInToAccount': 'Sign in to your account',
-    'auth.noAccount': "Don't have an account?",
-    'auth.createAccount': 'Create account',
-    'auth.joinSupplyMantix': 'Join SupplyMantix',
-    'auth.alreadyHaveAccount': 'Already have an account?',
-    'auth.getStarted': 'Get Started',
-    'auth.forgotPassword': 'Forgot password?',
-
-    // Landing page
-    'landing.hero.title': 'Unify Your Maintenance & Supply Chain Operations',
-    'landing.hero.subtitle': 'Transform your maintenance workflows with our intelligent, cloud-native platform that seamlessly connects work orders, inventory, and analytics.',
-    'landing.hero.getStarted': 'Get Started Free',
-    'landing.hero.watchDemo': 'Watch Demo',
-    'landing.features.title': 'Everything You Need',
-    'landing.features.subtitle': 'In One Platform',
-    'landing.features.description': 'Powerful modules that work together seamlessly to optimize your entire operation',
-    'landing.features.workOrders.title': 'Work Orders',
-    'landing.features.workOrders.description': 'Streamline maintenance requests and execution with intelligent routing',
-    'landing.features.inventory.title': 'Smart Inventory',
-    'landing.features.inventory.description': 'AI-powered inventory management with auto-replenishment',
-    'landing.features.maintenance.title': 'Preventive Maintenance',
-    'landing.features.maintenance.description': 'Automated scheduling with predictive analytics',
-    'landing.features.procurement.title': 'Purchase Orders',
-    'landing.features.procurement.description': 'Streamlined procurement with vendor collaboration',
-    'landing.features.procedures.title': 'Digital Procedures',
-    'landing.features.procedures.description': 'Interactive checklists with compliance tracking',
-    'landing.features.analytics.title': 'Real-time Analytics',
-    'landing.features.analytics.description': 'Advanced insights with customizable dashboards',
-    'landing.benefits.title': 'Why Choose SupplyMantix?',
-    'landing.benefits.subtitle': 'Experience the future of maintenance and supply chain management',
-    'landing.benefits.improvement.title': 'Drive Continuous Improvement',
-    'landing.benefits.improvement.description': 'Leverage data-driven insights to optimize your operations and reduce downtime by up to 40%',
-    'landing.benefits.standardize.title': 'Standardize Operations',
-    'landing.benefits.standardize.description': 'Ensure consistent execution across teams with digital procedures and automated workflows',
-    'landing.benefits.performance.title': 'Accelerate Performance',
-    'landing.benefits.performance.description': 'Reduce MTTR and improve asset reliability with intelligent maintenance scheduling',
-    'landing.cta.title': 'Ready to Transform Your Operations?',
-    'landing.cta.subtitle': 'Join industry leaders who\'ve already reduced downtime and increased efficiency with SupplyMantix',
-    'landing.cta.startTrial': 'Start Your Free Trial',
-    'landing.cta.scheduleDemo': 'Schedule Demo',
-    'landing.cta.freeTrial': '14-day free trial',
-    'landing.cta.noCard': 'No credit card required',
-    'landing.cta.cancelAnytime': 'Cancel anytime',
-
-    // Admin panel
-    'admin.translations': 'Translation Management',
-    'admin.translations.title': 'Manage Translations',
-    'admin.translations.subtitle': 'Customize application text for different languages',
-    'admin.translations.language': 'Language',
-    'admin.translations.key': 'Translation Key',
-    'admin.translations.value': 'Value',
-    'admin.translations.search': 'Search translations...',
-    'admin.translations.filter': 'Filter by category',
-    'admin.translations.all': 'All Categories',
-    'admin.translations.updated': 'Translation updated successfully',
-    'admin.translations.export': 'Export',
-    'admin.translations.import': 'Import',
+    // Organization
+    'organization.title': 'Organization Settings',
+    'organization.description': 'Manage your organization settings, branding, members, and billing',
+    'organization.tabs.settings': 'Settings',
+    'organization.tabs.branding': 'Branding',
+    'organization.tabs.members': 'Members',
+    'organization.tabs.subscription': 'Subscription',
+    'organization.tabs.billing': 'Billing',
+    'organization.settings.general': 'General Settings',
 
     // Common
-    'common.search': 'Search work orders, assets, procedures...',
     'common.save': 'Save',
     'common.cancel': 'Cancel',
-    'common.delete': 'Delete',
     'common.edit': 'Edit',
-    'common.create': 'Create',
+    'common.delete': 'Delete',
+    'common.add': 'Add',
+    'common.search': 'Search',
+    'common.filter': 'Filter',
+    'common.actions': 'Actions',
+    'common.status': 'Status',
+    'common.date': 'Date',
+    'common.name': 'Name',
+    'common.description': 'Description',
     'common.loading': 'Loading...',
     'common.error': 'Error',
     'common.success': 'Success',
-    'common.profile': 'Profile',
-    'common.settings': 'Settings',
-    'common.notifications': 'Notifications',
+
+    // Work Orders
+    'workOrders.title': 'Work Orders',
+    'workOrders.new': 'New Work Order',
+    'workOrders.status.open': 'Open',
+    'workOrders.status.inProgress': 'In Progress',
+    'workOrders.status.completed': 'Completed',
+    'workOrders.status.cancelled': 'Cancelled',
+
+    // Procedures
+    'procedures.title': 'Procedures',
+    'procedures.new': 'New Procedure',
+    'procedures.steps': 'Steps',
+    'procedures.duration': 'Duration',
+
+    // Translation Management
+    'translations.title': 'Translation Management',
+    'translations.description': 'Manage translations for different languages',
+    'translations.key': 'Translation Key',
+    'translations.value': 'Translation Value',
+    'translations.language': 'Language',
+    'translations.save': 'Save Translation',
+    'translations.search': 'Search translations...',
+    'translations.filter': 'Filter',
+    'translations.filterByLanguage': 'Filter by language',
+    'translations.refresh': 'Refresh Translations',
   },
   fr: {
     // Navigation
     'nav.dashboard': 'Tableau de bord',
     'nav.workOrders': 'Ordres de travail',
-    'nav.procedures': 'Procédures',
-    'nav.inventory': 'Inventaire',
-    'nav.assets': 'Actifs',
     'nav.purchaseOrders': 'Bons de commande',
+    'nav.requests': 'Demandes',
+    'nav.assets': 'Actifs',
+    'nav.inventory': 'Inventaire',
+    'nav.procedures': 'Procédures',
+    'nav.meters': 'Compteurs',
+    'nav.locations': 'Emplacements',
     'nav.reporting': 'Rapports',
+    'nav.messages': 'Messages',
     'nav.users': 'Utilisateurs',
     'nav.organization': 'Organisation',
     'nav.subscriptions': 'Abonnements',
-    'nav.requests': 'Demandes',
-    'nav.meters': 'Compteurs',
-    'nav.locations': 'Emplacements',
-    'nav.messages': 'Messages',
     'nav.translations': 'Traductions',
 
     // Sidebar groups
@@ -133,103 +184,75 @@ export const translations: Translations = {
     'sidebar.collaboration': 'Collaboration',
     'sidebar.administration': 'Administration',
 
-    // Authentication
-    'auth.login': 'Se connecter',
-    'auth.signup': "S'inscrire",
-    'auth.signOut': 'Se déconnecter',
-    'auth.email': 'E-mail',
-    'auth.password': 'Mot de passe',
-    'auth.confirmPassword': 'Confirmer le mot de passe',
-    'auth.fullName': 'Nom complet',
-    'auth.welcomeBack': 'Bon retour',
-    'auth.signInToAccount': 'Connectez-vous à votre compte',
-    'auth.noAccount': "Vous n'avez pas de compte ?",
-    'auth.createAccount': 'Créer un compte',
-    'auth.joinSupplyMantix': 'Rejoignez SupplyMantix',
-    'auth.alreadyHaveAccount': 'Vous avez déjà un compte ?',
-    'auth.getStarted': 'Commencer',
-    'auth.forgotPassword': 'Mot de passe oublié ?',
-
-    // Landing page
-    'landing.hero.title': 'Unifiez vos opérations de maintenance et de chaîne d\'approvisionnement',
-    'landing.hero.subtitle': 'Transformez vos flux de travail de maintenance avec notre plateforme intelligente native cloud qui connecte de manière transparente les ordres de travail, l\'inventaire et l\'analyse.',
-    'landing.hero.getStarted': 'Commencer gratuitement',
-    'landing.hero.watchDemo': 'Voir la démo',
-    'landing.features.title': 'Tout ce dont vous avez besoin',
-    'landing.features.subtitle': 'Dans une seule plateforme',
-    'landing.features.description': 'Des modules puissants qui fonctionnent ensemble de manière transparente pour optimiser toute votre opération',
-    'landing.features.workOrders.title': 'Ordres de travail',
-    'landing.features.workOrders.description': 'Rationalisez les demandes et l\'exécution de maintenance avec un routage intelligent',
-    'landing.features.inventory.title': 'Inventaire intelligent',
-    'landing.features.inventory.description': 'Gestion d\'inventaire alimentée par l\'IA avec réapprovisionnement automatique',
-    'landing.features.maintenance.title': 'Maintenance préventive',
-    'landing.features.maintenance.description': 'Planification automatisée avec analyse prédictive',
-    'landing.features.procurement.title': 'Bons de commande',
-    'landing.features.procurement.description': 'Approvisionnement rationalisé avec collaboration des fournisseurs',
-    'landing.features.procedures.title': 'Procédures numériques',
-    'landing.features.procedures.description': 'Listes de contrôle interactives avec suivi de conformité',
-    'landing.features.analytics.title': 'Analyse en temps réel',
-    'landing.features.analytics.description': 'Insights avancés avec tableaux de bord personnalisables',
-    'landing.benefits.title': 'Pourquoi choisir SupplyMantix ?',
-    'landing.benefits.subtitle': 'Découvrez l\'avenir de la gestion de la maintenance et de la chaîne d\'approvisionnement',
-    'landing.benefits.improvement.title': 'Favoriser l\'amélioration continue',
-    'landing.benefits.improvement.description': 'Tirez parti des insights basés sur les données pour optimiser vos opérations et réduire les temps d\'arrêt jusqu\'à 40%',
-    'landing.benefits.standardize.title': 'Standardiser les opérations',
-    'landing.benefits.standardize.description': 'Assurez une exécution cohérente entre les équipes avec des procédures numériques et des flux de travail automatisés',
-    'landing.benefits.performance.title': 'Accélérer les performances',
-    'landing.benefits.performance.description': 'Réduisez le MTTR et améliorez la fiabilité des actifs avec une planification de maintenance intelligente',
-    'landing.cta.title': 'Prêt à transformer vos opérations ?',
-    'landing.cta.subtitle': 'Rejoignez les leaders de l\'industrie qui ont déjà réduit les temps d\'arrêt et augmenté l\'efficacité avec SupplyMantix',
-    'landing.cta.startTrial': 'Commencez votre essai gratuit',
-    'landing.cta.scheduleDemo': 'Planifier une démo',
-    'landing.cta.freeTrial': 'Essai gratuit de 14 jours',
-    'landing.cta.noCard': 'Aucune carte de crédit requise',
-    'landing.cta.cancelAnytime': 'Annulez à tout moment',
-
-    // Admin panel
-    'admin.translations': 'Gestion des traductions',
-    'admin.translations.title': 'Gérer les traductions',
-    'admin.translations.subtitle': 'Personnalisez le texte de l\'application pour différentes langues',
-    'admin.translations.language': 'Langue',
-    'admin.translations.key': 'Clé de traduction',
-    'admin.translations.value': 'Valeur',
-    'admin.translations.search': 'Rechercher des traductions...',
-    'admin.translations.filter': 'Filtrer par catégorie',
-    'admin.translations.all': 'Toutes les catégories',
-    'admin.translations.updated': 'Traduction mise à jour avec succès',
-    'admin.translations.export': 'Exporter',
-    'admin.translations.import': 'Importer',
+    // Organization
+    'organization.title': 'Paramètres de l\'organisation',
+    'organization.description': 'Gérez les paramètres, l\'image de marque, les membres et la facturation de votre organisation',
+    'organization.tabs.settings': 'Paramètres',
+    'organization.tabs.branding': 'Image de marque',
+    'organization.tabs.members': 'Membres',
+    'organization.tabs.subscription': 'Abonnement',
+    'organization.tabs.billing': 'Facturation',
+    'organization.settings.general': 'Paramètres généraux',
 
     // Common
-    'common.search': 'Rechercher des ordres de travail, actifs, procédures...',
     'common.save': 'Enregistrer',
     'common.cancel': 'Annuler',
-    'common.delete': 'Supprimer',
     'common.edit': 'Modifier',
-    'common.create': 'Créer',
+    'common.delete': 'Supprimer',
+    'common.add': 'Ajouter',
+    'common.search': 'Rechercher',
+    'common.filter': 'Filtrer',
+    'common.actions': 'Actions',
+    'common.status': 'Statut',
+    'common.date': 'Date',
+    'common.name': 'Nom',
+    'common.description': 'Description',
     'common.loading': 'Chargement...',
     'common.error': 'Erreur',
     'common.success': 'Succès',
-    'common.profile': 'Profil',
-    'common.settings': 'Paramètres',
-    'common.notifications': 'Notifications',
+
+    // Work Orders
+    'workOrders.title': 'Ordres de travail',
+    'workOrders.new': 'Nouvel ordre de travail',
+    'workOrders.status.open': 'Ouvert',
+    'workOrders.status.inProgress': 'En cours',
+    'workOrders.status.completed': 'Terminé',
+    'workOrders.status.cancelled': 'Annulé',
+
+    // Procedures
+    'procedures.title': 'Procédures',
+    'procedures.new': 'Nouvelle procédure',
+    'procedures.steps': 'Étapes',
+    'procedures.duration': 'Durée',
+
+    // Translation Management
+    'translations.title': 'Gestion des traductions',
+    'translations.description': 'Gérer les traductions pour différentes langues',
+    'translations.key': 'Clé de traduction',
+    'translations.value': 'Valeur de traduction',
+    'translations.language': 'Langue',
+    'translations.save': 'Enregistrer la traduction',
+    'translations.search': 'Rechercher des traductions...',
+    'translations.filter': 'Filtrer',
+    'translations.filterByLanguage': 'Filtrer par langue',
+    'translations.refresh': 'Actualiser les traductions',
   },
   no: {
     // Navigation
-    'nav.dashboard': 'Kontrollpanel',
+    'nav.dashboard': 'Dashbord',
     'nav.workOrders': 'Arbeidsordrer',
-    'nav.procedures': 'Prosedyrer',
-    'nav.inventory': 'Inventar',
-    'nav.assets': 'Aktiva',
     'nav.purchaseOrders': 'Innkjøpsordrer',
+    'nav.requests': 'Forespørsler',
+    'nav.assets': 'Eiendeler',
+    'nav.inventory': 'Lager',
+    'nav.procedures': 'Prosedyrer',
+    'nav.meters': 'Målere',
+    'nav.locations': 'Lokasjoner',
     'nav.reporting': 'Rapportering',
+    'nav.messages': 'Meldinger',
     'nav.users': 'Brukere',
     'nav.organization': 'Organisasjon',
     'nav.subscriptions': 'Abonnementer',
-    'nav.requests': 'Forespørsler',
-    'nav.meters': 'Målere',
-    'nav.locations': 'Lokasjoner',
-    'nav.messages': 'Meldinger',
     'nav.translations': 'Oversettelser',
 
     // Sidebar groups
@@ -239,85 +262,57 @@ export const translations: Translations = {
     'sidebar.collaboration': 'Samarbeid',
     'sidebar.administration': 'Administrasjon',
 
-    // Authentication
-    'auth.login': 'Logg inn',
-    'auth.signup': 'Registrer deg',
-    'auth.signOut': 'Logg ut',
-    'auth.email': 'E-post',
-    'auth.password': 'Passord',
-    'auth.confirmPassword': 'Bekreft passord',
-    'auth.fullName': 'Fullt navn',
-    'auth.welcomeBack': 'Velkommen tilbake',
-    'auth.signInToAccount': 'Logg inn på kontoen din',
-    'auth.noAccount': 'Har du ikke en konto?',
-    'auth.createAccount': 'Opprett konto',
-    'auth.joinSupplyMantix': 'Bli med i SupplyMantix',
-    'auth.alreadyHaveAccount': 'Har du allerede en konto?',
-    'auth.getStarted': 'Kom i gang',
-    'auth.forgotPassword': 'Glemt passord?',
-
-    // Landing page
-    'landing.hero.title': 'Forene dine vedlikeholds- og forsyningskjedeoperasjoner',
-    'landing.hero.subtitle': 'Transformer dine vedlikeholdsarbeidsflyter med vår intelligente, sky-native plattform som sømløst kobler arbeidsordrer, inventar og analyse.',
-    'landing.hero.getStarted': 'Kom i gang gratis',
-    'landing.hero.watchDemo': 'Se demo',
-    'landing.features.title': 'Alt du trenger',
-    'landing.features.subtitle': 'I én plattform',
-    'landing.features.description': 'Kraftige moduler som fungerer sømløst sammen for å optimalisere hele operasjonen din',
-    'landing.features.workOrders.title': 'Arbeidsordrer',
-    'landing.features.workOrders.description': 'Strømlinje vedlikeholdsforespørsler og utførelse med intelligent ruting',
-    'landing.features.inventory.title': 'Smart inventar',
-    'landing.features.inventory.description': 'AI-drevet inventarstyring med automatisk etterfylling',
-    'landing.features.maintenance.title': 'Forebyggende vedlikehold',
-    'landing.features.maintenance.description': 'Automatisert planlegging med prediktiv analyse',
-    'landing.features.procurement.title': 'Innkjøpsordrer',
-    'landing.features.procurement.description': 'Strømlinjeformet innkjøp med leverandørsamarbeid',
-    'landing.features.procedures.title': 'Digitale prosedyrer',
-    'landing.features.procedures.description': 'Interaktive sjekklister med overholdelsesporing',
-    'landing.features.analytics.title': 'Sanntidsanalyse',
-    'landing.features.analytics.description': 'Avanserte innsikter med tilpassbare dashboards',
-    'landing.benefits.title': 'Hvorfor velge SupplyMantix?',
-    'landing.benefits.subtitle': 'Opplev fremtiden for vedlikeholds- og forsyningskjedestyring',
-    'landing.benefits.improvement.title': 'Driv kontinuerlig forbedring',
-    'landing.benefits.improvement.description': 'Utnytt datadrevne innsikter for å optimalisere operasjonene dine og redusere nedetid med opptil 40%',
-    'landing.benefits.standardize.title': 'Standardiser operasjoner',
-    'landing.benefits.standardize.description': 'Sikre konsistent utførelse på tvers av team med digitale prosedyrer og automatiserte arbeidsflyter',
-    'landing.benefits.performance.title': 'Akseler ytelse',
-    'landing.benefits.performance.description': 'Reduser MTTR og forbedre aktiva pålitelighet med intelligent vedlikeholdsplanlegging',
-    'landing.cta.title': 'Klar til å transformere operasjonene dine?',
-    'landing.cta.subtitle': 'Bli med bransjledere som allerede har redusert nedetid og økt effektivitet med SupplyMantix',
-    'landing.cta.startTrial': 'Start din gratis prøveperiode',
-    'landing.cta.scheduleDemo': 'Planlegg demo',
-    'landing.cta.freeTrial': '14-dagers gratis prøveperiode',
-    'landing.cta.noCard': 'Ingen kredittkort påkrevd',
-    'landing.cta.cancelAnytime': 'Avbryt når som helst',
-
-    // Admin panel
-    'admin.translations': 'Oversettelsesstyring',
-    'admin.translations.title': 'Administrer oversettelser',
-    'admin.translations.subtitle': 'Tilpass applikasjonstekst for forskjellige språk',
-    'admin.translations.language': 'Språk',
-    'admin.translations.key': 'Oversettelsesnøkkel',
-    'admin.translations.value': 'Verdi',
-    'admin.translations.search': 'Søk oversettelser...',
-    'admin.translations.filter': 'Filtrer etter kategori',
-    'admin.translations.all': 'Alle kategorier',
-    'admin.translations.updated': 'Oversettelse oppdatert vellykket',
-    'admin.translations.export': 'Eksporter',
-    'admin.translations.import': 'Importer',
+    // Organization
+    'organization.title': 'Organisasjonsinnstillinger',
+    'organization.description': 'Administrer organisasjonsinnstillinger, merkevarebygging, medlemmer og fakturering',
+    'organization.tabs.settings': 'Innstillinger',
+    'organization.tabs.branding': 'Merkevarebygging',
+    'organization.tabs.members': 'Medlemmer',
+    'organization.tabs.subscription': 'Abonnement',
+    'organization.tabs.billing': 'Fakturering',
+    'organization.settings.general': 'Generelle innstillinger',
 
     // Common
-    'common.search': 'Søk arbeidsordrer, aktiva, prosedyrer...',
     'common.save': 'Lagre',
     'common.cancel': 'Avbryt',
-    'common.delete': 'Slett',
     'common.edit': 'Rediger',
-    'common.create': 'Opprett',
+    'common.delete': 'Slett',
+    'common.add': 'Legg til',
+    'common.search': 'Søk',
+    'common.filter': 'Filter',
+    'common.actions': 'Handlinger',
+    'common.status': 'Status',
+    'common.date': 'Dato',
+    'common.name': 'Navn',
+    'common.description': 'Beskrivelse',
     'common.loading': 'Laster...',
     'common.error': 'Feil',
     'common.success': 'Suksess',
-    'common.profile': 'Profil',
-    'common.settings': 'Innstillinger',
-    'common.notifications': 'Varsler',
+
+    // Work Orders
+    'workOrders.title': 'Arbeidsordrer',
+    'workOrders.new': 'Ny arbeidsordre',
+    'workOrders.status.open': 'Åpen',
+    'workOrders.status.inProgress': 'Pågår',
+    'workOrders.status.completed': 'Fullført',
+    'workOrders.status.cancelled': 'Avbrutt',
+
+    // Procedures
+    'procedures.title': 'Prosedyrer',
+    'procedures.new': 'Ny prosedyre',
+    'procedures.steps': 'Trinn',
+    'procedures.duration': 'Varighet',
+
+    // Translation Management
+    'translations.title': 'Oversettelsesadministrasjon',
+    'translations.description': 'Administrer oversettelser for forskjellige språk',
+    'translations.key': 'Oversettelsesnøkkel',
+    'translations.value': 'Oversettelsesverdi',
+    'translations.language': 'Språk',
+    'translations.save': 'Lagre oversettelse',
+    'translations.search': 'Søk oversettelser...',
+    'translations.filter': 'Filter',
+    'translations.filterByLanguage': 'Filtrer etter språk',
+    'translations.refresh': 'Oppdater oversettelser',
   },
 };

@@ -13,6 +13,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import WorkOrders from "./pages/WorkOrders";
 import Procedures from "./pages/Procedures";
+import Organization from "./pages/Organization";
 import TranslationManagement from "./pages/TranslationManagement";
 import NotFound from "./pages/NotFound";
 
@@ -47,6 +48,11 @@ const App = () => (
                   <Procedures />
                 </ProtectedRoute>
               } />
+              <Route path="/dashboard/organization" element={
+                <ProtectedRoute>
+                  <Organization />
+                </ProtectedRoute>
+              } />
               <Route path="/dashboard/translations" element={
                 <ProtectedRoute>
                   <TranslationManagement />
@@ -55,11 +61,6 @@ const App = () => (
               
               {/* Protected placeholder routes for other modules */}
               <Route path="/dashboard/users" element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="/dashboard/organization" element={
                 <ProtectedRoute>
                   <Dashboard />
                 </ProtectedRoute>
