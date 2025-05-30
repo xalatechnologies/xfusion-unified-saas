@@ -422,7 +422,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_user_tenant_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      user_has_tenant_access: {
+        Args: { tenant_uuid: string }
+        Returns: boolean
+      }
     }
     Enums: {
       asset_status: "active" | "maintenance" | "out_of_service" | "retired"

@@ -2,7 +2,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
-import { databaseApi } from '@/lib/database';
 
 interface AuthContextType {
   user: User | null;
@@ -39,20 +38,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         // Handle successful signup confirmation or sign in
         if (event === 'SIGNED_IN' && session?.user) {
-          // Check if user already has tenant records
-          try {
-            const existingUser = await databaseApi.getUsers();
-            const userExists = existingUser?.some(u => u.id === session.user.id);
-            
-            if (!userExists) {
-              console.log('Creating tenant and organization for new user');
-              await createUserTenantAndOrganization(session.user);
-            } else {
-              console.log('User already has tenant/organization records');
+          // Use setTimeout to avoid blocking the auth state change
+          setTimeout(async () => {
+            try {
+              await handleUserSetup(session.user);
+            } catch (error) {
+              console.error('Error in user setup:', error);
             }
-          } catch (error) {
-            console.error('Error checking/creating user records:', error);
-          }
+          }, 0);
         }
       }
     );
@@ -67,6 +60,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => subscription.unsubscribe();
   }, []);
 
+  const handleUserSetup = async (user: User) => {
+    try {
+      // First check if user already exists in our users table
+      const { data: existingUser, error: userCheckError } = await supabase
+        .from('users')
+        .select('id, tenant_id')
+        .eq('id', user.id)
+        .single();
+
+      if (userCheckError && userCheckError.code !== 'PGRST116') {
+        console.error('Error checking user existence:', userCheckError);
+        return;
+      }
+
+      if (existingUser) {
+        console.log('User already exists with tenant:', existingUser.tenant_id);
+        return;
+      }
+
+      console.log('Creating tenant and organization for new user');
+      await createUserTenantAndOrganization(user);
+    } catch (error) {
+      console.error('Error in handleUserSetup:', error);
+    }
+  };
+
   const createUserTenantAndOrganization = async (user: User) => {
     try {
       const firstName = user.user_metadata?.first_name || '';
@@ -75,33 +94,60 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       console.log('Creating tenant with name:', company);
       
-      // Create tenant
-      const tenant = await databaseApi.createTenant({
-        name: company || 'Default Organization'
-      });
+      // Create tenant first
+      const { data: tenant, error: tenantError } = await supabase
+        .from('tenants')
+        .insert({
+          name: company || 'Default Organization'
+        })
+        .select()
+        .single();
+
+      if (tenantError) {
+        console.error('Error creating tenant:', tenantError);
+        throw tenantError;
+      }
 
       console.log('Created tenant:', tenant.id);
 
       // Create organization
-      const organization = await databaseApi.createOrganization({
-        name: company || 'Default Organization',
-        created_by: user.id,
-        contact: {
-          email: user.email,
-          phone: null,
-          address: null
-        }
-      });
+      const { data: organization, error: orgError } = await supabase
+        .from('organizations')
+        .insert({
+          name: company || 'Default Organization',
+          created_by: user.id,
+          contact: {
+            email: user.email,
+            phone: null,
+            address: null
+          }
+        })
+        .select()
+        .single();
+
+      if (orgError) {
+        console.error('Error creating organization:', orgError);
+        throw orgError;
+      }
 
       console.log('Created organization:', organization.id);
 
       // Create user record with admin role
-      await databaseApi.createUser({
-        id: user.id,
-        email: user.email!,
-        tenant_id: tenant.id,
-        role: 'admin'
-      });
+      const { data: userRecord, error: userError } = await supabase
+        .from('users')
+        .insert({
+          id: user.id,
+          email: user.email!,
+          tenant_id: tenant.id,
+          role: 'admin'
+        })
+        .select()
+        .single();
+
+      if (userError) {
+        console.error('Error creating user record:', userError);
+        throw userError;
+      }
 
       console.log('Created user record with admin role');
 
