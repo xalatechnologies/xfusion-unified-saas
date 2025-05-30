@@ -38,11 +38,11 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
   return (
     <div className="w-full p-6 space-y-6">
       <Card className="shadow-sm border-0 bg-gray-50/30">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-medium text-gray-900">
+        <CardHeader className="pb-4 text-left">
+          <CardTitle className="text-lg font-medium text-gray-900 text-left">
             Basic Information
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground text-left">
             Update your organization's core details and public information
           </p>
         </CardHeader>
@@ -59,11 +59,11 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
       </Card>
 
       <Card className="shadow-sm border-0 bg-gray-50/30">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-medium text-gray-900">
+        <CardHeader className="pb-4 text-left">
+          <CardTitle className="text-lg font-medium text-gray-900 text-left">
             Contact Information
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground text-left">
             Provide contact details for your organization
           </p>
         </CardHeader>
@@ -80,11 +80,11 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
       </Card>
 
       <Card className="shadow-sm border-0 bg-gray-50/30">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-medium text-gray-900">
+        <CardHeader className="pb-4 text-left">
+          <CardTitle className="text-lg font-medium text-gray-900 text-left">
             Language & Localization
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground text-left">
             Set your organization's default language and regional preferences
           </p>
         </CardHeader>

@@ -31,12 +31,12 @@ export const OrganizationBranding = ({ organizationId }: OrganizationBrandingPro
     <div className="space-y-6">
       {/* Logo & Visual Assets */}
       <Card className="shadow-sm border-0 bg-gray-50/30">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-medium text-gray-900 flex items-center">
+        <CardHeader className="pb-4 text-left">
+          <CardTitle className="text-lg font-medium text-gray-900 flex items-center text-left">
             <Image className="w-5 h-5 mr-2 text-blue-600" />
             Logo & Visual Assets
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground text-left">
             Upload your organization's logo and favicon for consistent branding
           </p>
         </CardHeader>
@@ -81,12 +81,12 @@ export const OrganizationBranding = ({ organizationId }: OrganizationBrandingPro
 
       {/* Color Scheme */}
       <Card className="shadow-sm border-0 bg-gray-50/30">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-medium text-gray-900 flex items-center">
+        <CardHeader className="pb-4 text-left">
+          <CardTitle className="text-lg font-medium text-gray-900 flex items-center text-left">
             <Palette className="w-5 h-5 mr-2 text-blue-600" />
             Color Scheme
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground text-left">
             Define your brand colors for a consistent visual identity
           </p>
         </CardHeader>
@@ -153,11 +153,11 @@ export const OrganizationBranding = ({ organizationId }: OrganizationBrandingPro
 
       {/* Preview */}
       <Card className="shadow-sm border-0 bg-gray-50/30">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-medium text-gray-900">
+        <CardHeader className="pb-4 text-left">
+          <CardTitle className="text-lg font-medium text-gray-900 text-left">
             Brand Preview
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground text-left">
             See how your branding will appear in the application
           </p>
         </CardHeader>

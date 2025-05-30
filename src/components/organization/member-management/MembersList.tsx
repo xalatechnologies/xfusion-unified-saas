@@ -35,15 +35,15 @@ export const MembersList = ({ organizationId }: MembersListProps) => {
 
   return (
     <Card className="shadow-sm border-0 bg-gray-50/30">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-lg font-medium text-gray-900 flex items-center">
+      <CardHeader className="pb-4 text-left">
+        <CardTitle className="text-lg font-medium text-gray-900 flex items-center text-left">
           <Users className="w-5 h-5 mr-2 text-blue-600" />
           Organization Members
           <Badge variant="secondary" className="ml-2">
             {members?.length || 0}
           </Badge>
         </CardTitle>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground text-left">
           Manage roles and permissions for organization members
         </p>
       </CardHeader>
