@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -38,13 +39,13 @@ export const databaseApi = {
     return data;
   },
 
-  // Organization Members
+  // Organization Members - Fixed query to resolve relationship ambiguity
   async getOrganizationMembers(organizationId: string) {
     const { data, error } = await supabase
       .from("organization_members")
       .select(`
         *,
-        user:users(email)
+        user:user_id(email)
       `)
       .eq("organization_id", organizationId)
       .order("created_at", { ascending: false });

@@ -6,32 +6,47 @@ import { Label } from "@/components/ui/label";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { Upload, X } from "lucide-react";
+import { useOrganizations, useUpdateOrganization } from "@/hooks/useDatabase";
+import { Upload, Palette } from "lucide-react";
 
-export const OrganizationBranding = () => {
+interface OrganizationBrandingProps {
+  organizationId: string;
+}
+
+export const OrganizationBranding = ({ organizationId }: OrganizationBrandingProps) => {
   const { t } = useLanguage();
   const { toast } = useToast();
-  const [branding, setBranding] = useState({
-    primaryColor: "#3b82f6",
-    secondaryColor: "#8b5cf6",
-    logoUrl: "",
-    favicon: "",
+  
+  const { data: organizations } = useOrganizations();
+  const updateOrganization = useUpdateOrganization();
+  
+  const currentOrganization = organizations?.find(org => org.id === organizationId);
+  const currentBranding = currentOrganization?.branding as any || {};
+  
+  const [formData, setFormData] = useState({
+    primaryColor: currentBranding.primaryColor || "#3B82F6",
+    secondaryColor: currentBranding.secondaryColor || "#6B7280",
+    logo: currentBranding.logo || "",
   });
 
-  const handleSave = () => {
-    toast({
-      title: "Branding Updated",
-      description: "Organization branding has been saved successfully.",
-    });
-  };
-
-  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      // TODO: Implement file upload
+  const handleSave = async () => {
+    try {
+      await updateOrganization.mutateAsync({
+        id: organizationId,
+        updates: {
+          branding: formData,
+        },
+      });
+      
       toast({
-        title: "Logo Uploaded",
-        description: "Logo will be processed and updated shortly.",
+        title: "Branding Updated",
+        description: "Your organization branding has been saved successfully.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update organization branding.",
+        variant: "destructive",
       });
     }
   };
@@ -40,48 +55,49 @@ export const OrganizationBranding = () => {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Logo & Images</CardTitle>
+          <CardTitle className="flex items-center space-x-2">
+            <Palette className="w-5 h-5" />
+            <span>Brand Colors</span>
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label>Organization Logo</Label>
-            <div className="flex items-center space-x-4">
-              <div className="w-20 h-20 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
-                {branding.logoUrl ? (
-                  <img src={branding.logoUrl} alt="Logo" className="w-full h-full object-contain" />
-                ) : (
-                  <Upload className="w-8 h-8 text-gray-400" />
-                )}
-              </div>
-              <div className="space-y-2">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleLogoUpload}
-                  className="hidden"
-                  id="logo-upload"
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="primary-color">Primary Color</Label>
+              <div className="flex space-x-2">
+                <Input
+                  id="primary-color"
+                  type="color"
+                  value={formData.primaryColor}
+                  onChange={(e) => setFormData({ ...formData, primaryColor: e.target.value })}
+                  className="w-16 h-10"
                 />
-                <Label htmlFor="logo-upload" className="cursor-pointer">
-                  <Button variant="outline" asChild>
-                    <span>Upload Logo</span>
-                  </Button>
-                </Label>
-                <p className="text-sm text-gray-600">PNG, JPG up to 2MB</p>
+                <Input
+                  value={formData.primaryColor}
+                  onChange={(e) => setFormData({ ...formData, primaryColor: e.target.value })}
+                  placeholder="#3B82F6"
+                  className="flex-1"
+                />
               </div>
             </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Favicon</Label>
-            <div className="flex items-center space-x-4">
-              <div className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center">
-                {branding.favicon ? (
-                  <img src={branding.favicon} alt="Favicon" className="w-full h-full object-contain" />
-                ) : (
-                  <div className="w-4 h-4 bg-gray-300 rounded-sm"></div>
-                )}
+            
+            <div className="space-y-2">
+              <Label htmlFor="secondary-color">Secondary Color</Label>
+              <div className="flex space-x-2">
+                <Input
+                  id="secondary-color"
+                  type="color"
+                  value={formData.secondaryColor}
+                  onChange={(e) => setFormData({ ...formData, secondaryColor: e.target.value })}
+                  className="w-16 h-10"
+                />
+                <Input
+                  value={formData.secondaryColor}
+                  onChange={(e) => setFormData({ ...formData, secondaryColor: e.target.value })}
+                  placeholder="#6B7280"
+                  className="flex-1"
+                />
               </div>
-              <Button variant="outline" size="sm">Upload Favicon</Button>
             </div>
           </div>
         </CardContent>
@@ -89,68 +105,44 @@ export const OrganizationBranding = () => {
 
       <Card>
         <CardHeader>
-          <CardTitle>Color Theme</CardTitle>
+          <CardTitle className="flex items-center space-x-2">
+            <Upload className="w-5 h-5" />
+            <span>Logo</span>
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="logo-url">Logo URL</Label>
+            <Input
+              id="logo-url"
+              value={formData.logo}
+              onChange={(e) => setFormData({ ...formData, logo: e.target.value })}
+              placeholder="https://example.com/logo.png"
+            />
+          </div>
+          
+          {formData.logo && (
             <div className="space-y-2">
-              <Label htmlFor="primary-color">Primary Color</Label>
-              <div className="flex items-center space-x-2">
-                <Input
-                  id="primary-color"
-                  type="color"
-                  value={branding.primaryColor}
-                  onChange={(e) => setBranding({ ...branding, primaryColor: e.target.value })}
-                  className="w-12 h-10 p-1"
-                />
-                <Input
-                  value={branding.primaryColor}
-                  onChange={(e) => setBranding({ ...branding, primaryColor: e.target.value })}
-                  placeholder="#3b82f6"
+              <Label>Preview</Label>
+              <div className="border rounded-lg p-4 bg-gray-50">
+                <img
+                  src={formData.logo}
+                  alt="Logo preview"
+                  className="max-h-20 object-contain"
                 />
               </div>
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="secondary-color">Secondary Color</Label>
-              <div className="flex items-center space-x-2">
-                <Input
-                  id="secondary-color"
-                  type="color"
-                  value={branding.secondaryColor}
-                  onChange={(e) => setBranding({ ...branding, secondaryColor: e.target.value })}
-                  className="w-12 h-10 p-1"
-                />
-                <Input
-                  value={branding.secondaryColor}
-                  onChange={(e) => setBranding({ ...branding, secondaryColor: e.target.value })}
-                  placeholder="#8b5cf6"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="p-4 border rounded-lg bg-gray-50">
-            <h4 className="font-medium mb-2">Preview</h4>
-            <div className="flex space-x-2">
-              <div 
-                className="w-16 h-8 rounded"
-                style={{ backgroundColor: branding.primaryColor }}
-              ></div>
-              <div 
-                className="w-16 h-8 rounded"
-                style={{ backgroundColor: branding.secondaryColor }}
-              ></div>
-            </div>
-          </div>
+          )}
+          
+          <Button 
+            onClick={handleSave} 
+            className="bg-blue-600 hover:bg-blue-700"
+            disabled={updateOrganization.isPending}
+          >
+            {updateOrganization.isPending ? "Saving..." : "Save Changes"}
+          </Button>
         </CardContent>
       </Card>
-
-      <div className="flex justify-end">
-        <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700">
-          Save Branding
-        </Button>
-      </div>
     </div>
   );
 };
