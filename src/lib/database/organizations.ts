@@ -47,17 +47,51 @@ export const organizationsApi = {
   },
 
   async getOrganizationMembers(organizationId: string) {
-    const { data, error } = await supabase
+    // First get the organization members
+    const { data: members, error: membersError } = await supabase
       .from("organization_members")
-      .select(`
-        *,
-        users!organization_members_user_id_fkey(email)
-      `)
+      .select("*")
       .eq("organization_id", organizationId)
       .order("created_at", { ascending: false });
     
-    if (error) throw error;
-    return data;
+    if (membersError) {
+      console.error("Error fetching organization members:", membersError);
+      throw membersError;
+    }
+
+    // Then get user details for each member
+    if (!members || members.length === 0) {
+      return [];
+    }
+
+    const userIds = members.filter(m => m.user_id).map(m => m.user_id);
+    
+    if (userIds.length === 0) {
+      return members.map(member => ({
+        ...member,
+        users: null
+      }));
+    }
+
+    const { data: users, error: usersError } = await supabase
+      .from("users")
+      .select("id, email")
+      .in("id", userIds);
+
+    if (usersError) {
+      console.error("Error fetching users:", usersError);
+      // Return members without user data if user fetch fails
+      return members.map(member => ({
+        ...member,
+        users: null
+      }));
+    }
+
+    // Combine the data
+    return members.map(member => ({
+      ...member,
+      users: users?.find(user => user.id === member.user_id) || null
+    }));
   },
 
   async inviteOrganizationMember(member: Tables["organization_members"]["Insert"]) {

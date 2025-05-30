@@ -665,8 +665,16 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string
       }
+      user_can_update_organization: {
+        Args: { org_id: string; user_id: string }
+        Returns: boolean
+      }
       user_has_tenant_access: {
         Args: { tenant_uuid: string }
+        Returns: boolean
+      }
+      user_is_organization_member: {
+        Args: { org_id: string; user_id: string }
         Returns: boolean
       }
     }
