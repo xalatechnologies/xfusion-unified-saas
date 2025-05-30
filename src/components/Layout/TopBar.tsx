@@ -5,11 +5,14 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { LogOut, User } from "lucide-react";
 
 export const TopBar = () => {
   const { user, signOut } = useAuth();
+  const { t } = useLanguage();
 
   const handleSignOut = async () => {
     await signOut();
@@ -42,12 +45,15 @@ export const TopBar = () => {
       <div className="flex-1 max-w-lg mx-8">
         <Input
           type="search"
-          placeholder="Search work orders, assets, procedures..."
+          placeholder={t('common.search')}
           className="w-full"
         />
       </div>
 
       <div className="flex items-center space-x-4">
+        {/* Language Selector */}
+        <LanguageSelector />
+
         {/* Notifications */}
         <Button variant="ghost" size="sm" className="relative">
           <span className="text-lg">🔔</span>
@@ -74,12 +80,12 @@ export const TopBar = () => {
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuItem>
               <User className="mr-2 h-4 w-4" />
-              Profile
+              {t('common.profile')}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleSignOut} className="text-red-600">
               <LogOut className="mr-2 h-4 w-4" />
-              Sign out
+              {t('auth.signOut')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -2,8 +2,12 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { LanguageSelector } from "@/components/LanguageSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header = () => {
+  const { t } = useLanguage();
+
   return (
     <motion.header 
       initial={{ y: -100, opacity: 0 }}
@@ -42,17 +46,18 @@ const Header = () => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
+            <LanguageSelector />
             <Link to="/login">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button variant="ghost" className="text-slate-600 hover:text-slate-900 font-medium">
-                  Log In
+                  {t('auth.login')}
                 </Button>
               </motion.div>
             </Link>
             <Link to="/signup">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200">
-                  Get Started Free
+                  {t('auth.getStarted')}
                 </Button>
               </motion.div>
             </Link>
