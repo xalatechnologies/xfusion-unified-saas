@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -39,107 +38,18 @@ export const billingApi = {
   async getSubscriptionTemplates() {
     console.log("Getting subscription templates...");
     
-    // Check authentication status first
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    console.log("Current user:", { user: user?.email, error: authError });
-    
-    // Try to check table permissions with a simple count first
-    const { count, error: countError } = await supabase
-      .from("subscriptions")
-      .select("*", { count: 'exact', head: true });
-    
-    console.log("Subscriptions table access test:", { count, countError });
-    
-    // Check if we can access the table schema
-    try {
-      const { data: schemaTest, error: schemaError } = await supabase
-        .from("subscriptions")
-        .select("id")
-        .limit(1);
-      
-      console.log("Schema access test:", { data: schemaTest, error: schemaError });
-    } catch (err) {
-      console.error("Schema access error:", err);
-    }
-    
-    // Try to get ALL subscriptions to see what's in the table
-    const { data: allSubscriptions, error: allError } = await supabase
-      .from("subscriptions")
-      .select("*");
-    
-    console.log("ALL subscriptions query:", { 
-      data: allSubscriptions, 
-      error: allError,
-      dataLength: allSubscriptions?.length,
-      errorCode: allError?.code,
-      errorMessage: allError?.message
-    });
-    
-    if (allSubscriptions && allSubscriptions.length > 0) {
-      console.log("All subscription statuses found:", allSubscriptions.map(s => ({ 
-        id: s.id, 
-        plan_id: s.plan_id, 
-        status: s.status,
-        plan_name: s.plan_name 
-      })));
-    }
-    
-    // Now try the original query with template filter
     const { data, error } = await supabase
       .from("subscriptions")
       .select("*")
       .eq("status", "template")
       .order("price_monthly", { ascending: true });
     
-    console.log("Template-filtered query result:", { 
-      data, 
-      error,
-      dataLength: data?.length,
-      errorCode: error?.code,
-      errorMessage: error?.message
-    });
-    
-    // Also try a case-insensitive search
-    const { data: caseInsensitiveData, error: caseInsensitiveError } = await supabase
-      .from("subscriptions")
-      .select("*")
-      .ilike("status", "template")
-      .order("price_monthly", { ascending: true });
-    
-    console.log("Case-insensitive template query:", { 
-      data: caseInsensitiveData, 
-      error: caseInsensitiveError,
-      dataLength: caseInsensitiveData?.length
-    });
-    
     if (error) {
       console.error("Error getting subscription templates:", error);
-      console.error("Error details:", {
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-        code: error.code
-      });
       throw error;
     }
     
-    console.log("Final subscription templates count:", data?.length || 0);
-    
-    // Log each template for debugging
-    if (data && data.length > 0) {
-      console.log("Found templates:", data.map(t => ({ 
-        id: t.id, 
-        plan_id: t.plan_id, 
-        plan_name: t.plan_name, 
-        status: t.status 
-      })));
-    } else {
-      console.warn("No subscription templates found. This might indicate:");
-      console.warn("1. RLS policy blocking access");
-      console.warn("2. No records with status='template' exist");
-      console.warn("3. Table permissions issue");
-    }
-    
+    console.log("Found subscription templates:", data?.length || 0);
     return data || [];
   },
 
