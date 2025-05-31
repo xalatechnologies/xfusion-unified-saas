@@ -23,8 +23,21 @@ const getIconForPlan = (planId: string) => {
 };
 
 export const CurrentSubscriptionCard = ({ orgSubscription, memberCount }: CurrentSubscriptionCardProps) => {
+  // Add null checks for subscription data
+  if (!orgSubscription || !orgSubscription.subscriptions) {
+    return (
+      <Card>
+        <CardContent className="p-6">
+          <div className="text-center text-gray-500">
+            No subscription information available
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   const subscription = orgSubscription.subscriptions;
-  const Icon = getIconForPlan(subscription.plan_id);
+  const Icon = getIconForPlan(subscription?.plan_id || 'basic');
 
   return (
     <Card>
@@ -36,14 +49,14 @@ export const CurrentSubscriptionCard = ({ orgSubscription, memberCount }: Curren
           <div className="flex items-center space-x-3">
             <Icon className="w-8 h-8 text-blue-600" />
             <div className="text-left">
-              <h3 className="font-semibold text-lg">{subscription.plan_name}</h3>
+              <h3 className="font-semibold text-lg">{subscription?.plan_name || 'Unknown Plan'}</h3>
               <p className="text-gray-600">
-                Active since {new Date(orgSubscription.created_at || '').toLocaleDateString()}
+                Active since {orgSubscription.created_at ? new Date(orgSubscription.created_at).toLocaleDateString() : 'Unknown'}
               </p>
               <div className="flex items-center space-x-2 mt-1">
                 <Users className="w-4 h-4 text-gray-500" />
                 <span className="text-sm text-gray-600">
-                  {memberCount} of {subscription.max_users === -1 ? 'unlimited' : subscription.max_users} members
+                  {memberCount} of {subscription?.max_users === -1 ? 'unlimited' : subscription?.max_users || 0} members
                 </span>
               </div>
               {orgSubscription.current_period_end && (
@@ -60,7 +73,7 @@ export const CurrentSubscriptionCard = ({ orgSubscription, memberCount }: Curren
           </div>
           <div className="text-right">
             <p className="text-2xl font-bold">
-              ${subscription.price_monthly || 0}
+              ${subscription?.price_monthly || 0}
             </p>
             <p className="text-gray-600">per month</p>
             <Badge className={`mt-1 ${
@@ -68,7 +81,7 @@ export const CurrentSubscriptionCard = ({ orgSubscription, memberCount }: Curren
               orgSubscription.status === 'trialing' ? 'bg-blue-100 text-blue-800' :
               'bg-gray-100 text-gray-800'
             }`}>
-              {orgSubscription.status}
+              {orgSubscription.status || 'Unknown'}
             </Badge>
           </div>
         </div>
