@@ -2,20 +2,28 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Users } from "lucide-react";
-import { subscriptionPlans } from "./subscriptionPlans";
+import { Users, Crown, Zap, Building } from "lucide-react";
 
 interface CurrentSubscriptionCardProps {
   subscription: any;
   memberCount: number;
 }
 
-export const CurrentSubscriptionCard = ({ subscription, memberCount }: CurrentSubscriptionCardProps) => {
-  const currentPlan = subscriptionPlans.find(p => p.id === subscription.plan_id);
-  
-  if (!currentPlan) return null;
+const getIconForPlan = (planId: string) => {
+  switch (planId) {
+    case 'basic':
+      return Zap;
+    case 'professional':
+      return Crown;
+    case 'enterprise':
+      return Building;
+    default:
+      return Zap;
+  }
+};
 
-  const Icon = currentPlan.icon;
+export const CurrentSubscriptionCard = ({ subscription, memberCount }: CurrentSubscriptionCardProps) => {
+  const Icon = getIconForPlan(subscription.plan_id);
 
   return (
     <Card>

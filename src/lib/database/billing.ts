@@ -16,6 +16,17 @@ export const billingApi = {
     return data;
   },
 
+  async getSubscriptionTemplates() {
+    const { data, error } = await supabase
+      .from("subscriptions")
+      .select("*")
+      .eq("status", "template")
+      .order("price_monthly", { ascending: true });
+    
+    if (error) throw error;
+    return data;
+  },
+
   async createSubscription(subscription: Tables["subscriptions"]["Insert"]) {
     // First, mark any existing active subscriptions as cancelled
     if (subscription.organization_id && subscription.status === 'active') {

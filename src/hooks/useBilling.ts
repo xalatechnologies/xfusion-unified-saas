@@ -11,6 +11,13 @@ export const useSubscriptions = (organizationId: string) => {
   });
 };
 
+export const useSubscriptionTemplates = () => {
+  return useQuery({
+    queryKey: ["subscription-templates"],
+    queryFn: () => databaseApi.getSubscriptionTemplates(),
+  });
+};
+
 export const useCreateSubscription = () => {
   const queryClient = useQueryClient();
   
