@@ -1,29 +1,20 @@
+
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { billingApi } from "@/lib/database/billing";
+import { databaseApi } from "@/lib/database";
 
-// Current Subscription (the one the organization is actually on)
-export const useCurrentSubscription = (organizationId: string) => {
-  return useQuery({
-    queryKey: ["current-subscription", organizationId],
-    queryFn: () => billingApi.getCurrentSubscription(organizationId),
-    enabled: !!organizationId,
-  });
-};
-
-// All subscriptions for an organization (historical)
+// Subscriptions
 export const useSubscriptions = (organizationId: string) => {
   return useQuery({
     queryKey: ["subscriptions", organizationId],
-    queryFn: () => billingApi.getSubscriptions(organizationId),
+    queryFn: () => databaseApi.getSubscriptions(organizationId),
     enabled: !!organizationId,
   });
 };
 
-// Available subscription templates/plans
 export const useSubscriptionTemplates = () => {
   return useQuery({
     queryKey: ["subscription-templates"],
-    queryFn: () => billingApi.getSubscriptionTemplates(),
+    queryFn: () => databaseApi.getSubscriptionTemplates(),
   });
 };
 
@@ -31,10 +22,9 @@ export const useCreateSubscription = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: billingApi.createSubscription,
+    mutationFn: databaseApi.createSubscription,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["subscriptions", data.organization_id] });
-      queryClient.invalidateQueries({ queryKey: ["current-subscription", data.organization_id] });
       queryClient.invalidateQueries({ queryKey: ["organizations"] });
     },
   });
@@ -45,10 +35,9 @@ export const useUpdateSubscription = () => {
   
   return useMutation({
     mutationFn: ({ id, updates }: { id: string; updates: any }) => 
-      billingApi.updateSubscription(id, updates),
+      databaseApi.updateSubscription(id, updates),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["subscriptions", data.organization_id] });
-      queryClient.invalidateQueries({ queryKey: ["current-subscription", data.organization_id] });
       queryClient.invalidateQueries({ queryKey: ["organizations"] });
     },
   });
@@ -58,10 +47,9 @@ export const useCancelSubscription = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: billingApi.cancelSubscription,
+    mutationFn: databaseApi.cancelSubscription,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["subscriptions", data.organization_id] });
-      queryClient.invalidateQueries({ queryKey: ["current-subscription", data.organization_id] });
       queryClient.invalidateQueries({ queryKey: ["organizations"] });
     },
   });
@@ -71,7 +59,7 @@ export const useCancelSubscription = () => {
 export const useBillingInformation = (organizationId: string) => {
   return useQuery({
     queryKey: ["billing-information", organizationId],
-    queryFn: () => billingApi.getBillingInformation(organizationId),
+    queryFn: () => databaseApi.getBillingInformation(organizationId),
     enabled: !!organizationId,
   });
 };
@@ -80,7 +68,7 @@ export const useCreateBillingInformation = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: billingApi.createBillingInformation,
+    mutationFn: databaseApi.createBillingInformation,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["billing-information", data.organization_id] });
     },
@@ -91,7 +79,7 @@ export const useCreateBillingInformation = () => {
 export const useInvoices = (organizationId: string) => {
   return useQuery({
     queryKey: ["invoices", organizationId],
-    queryFn: () => billingApi.getInvoices(organizationId),
+    queryFn: () => databaseApi.getInvoices(organizationId),
     enabled: !!organizationId,
   });
 };
