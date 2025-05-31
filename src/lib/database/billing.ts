@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -39,18 +38,39 @@ export const billingApi = {
   async getSubscriptionTemplates() {
     console.log("Getting subscription templates...");
     
+    // First, let's try to get ALL subscriptions to see what's in the table
+    const { data: allSubscriptions, error: allError } = await supabase
+      .from("subscriptions")
+      .select("*");
+    
+    console.log("ALL subscriptions in database:", { data: allSubscriptions, error: allError });
+    
+    if (allSubscriptions && allSubscriptions.length > 0) {
+      console.log("All subscription statuses found:", allSubscriptions.map(s => ({ 
+        id: s.id, 
+        plan_id: s.plan_id, 
+        status: s.status,
+        plan_name: s.plan_name 
+      })));
+    }
+    
+    // Now try the original query
     const { data, error } = await supabase
       .from("subscriptions")
       .select("*")
       .eq("status", "template")
       .order("price_monthly", { ascending: true });
     
-    console.log("Subscription templates query result:", { data, error });
-    console.log("Query details:", {
-      table: "subscriptions",
-      filter: "status = 'template'",
-      orderBy: "price_monthly ASC"
-    });
+    console.log("Template-filtered query result:", { data, error });
+    
+    // Also try a case-insensitive search
+    const { data: caseInsensitiveData, error: caseInsensitiveError } = await supabase
+      .from("subscriptions")
+      .select("*")
+      .ilike("status", "template")
+      .order("price_monthly", { ascending: true });
+    
+    console.log("Case-insensitive template query:", { data: caseInsensitiveData, error: caseInsensitiveError });
     
     if (error) {
       console.error("Error getting subscription templates:", error);
@@ -63,7 +83,7 @@ export const billingApi = {
       throw error;
     }
     
-    console.log("Subscription templates count:", data?.length || 0);
+    console.log("Final subscription templates count:", data?.length || 0);
     
     // Log each template for debugging
     if (data && data.length > 0) {
