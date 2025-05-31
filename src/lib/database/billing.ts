@@ -13,27 +13,29 @@ export const billingApi = {
       .order("created_at", { ascending: false });
     
     if (error) throw error;
+    return data;
+  },
+
+  async getCurrentSubscription(organizationId: string) {
+    // First get the organization's current_subscription_id
+    const { data: orgData, error: orgError } = await supabase
+      .from("organizations")
+      .select("current_subscription_id")
+      .eq("id", organizationId)
+      .single();
     
-    // If we have subscriptions, make sure the organization's current_subscription_id is set to the active one
-    if (data && data.length > 0) {
-      const activeSubscription = data.find(sub => sub.status === 'active' || sub.status === 'trialing');
-      if (activeSubscription) {
-        // Update the organization's current_subscription_id if it's not set
-        const { data: orgData, error: orgError } = await supabase
-          .from("organizations")
-          .select("current_subscription_id")
-          .eq("id", organizationId)
-          .single();
-        
-        if (!orgError && orgData && !orgData.current_subscription_id) {
-          await supabase
-            .from("organizations")
-            .update({ current_subscription_id: activeSubscription.id })
-            .eq("id", organizationId);
-        }
-      }
+    if (orgError || !orgData?.current_subscription_id) {
+      return null;
     }
+
+    // Then fetch the actual subscription
+    const { data, error } = await supabase
+      .from("subscriptions")
+      .select("*")
+      .eq("id", orgData.current_subscription_id)
+      .single();
     
+    if (error) throw error;
     return data;
   },
 

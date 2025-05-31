@@ -1,13 +1,11 @@
 
 import { useOrganizationMembers } from "./useOrganizations";
-import { useSubscriptions } from "./useBilling";
+import { useCurrentSubscription } from "./useBilling";
 
 export const useSubscriptionLimits = (organizationId: string) => {
-  const { data: subscriptions } = useSubscriptions(organizationId);
+  const { data: currentSubscription } = useCurrentSubscription(organizationId);
   const { data: members } = useOrganizationMembers(organizationId);
   
-  // Get the active subscription (status = 'active' or 'trialing')
-  const currentSubscription = subscriptions?.find(sub => sub.status === 'active' || sub.status === 'trialing') || subscriptions?.[0];
   const memberCount = members?.length || 0;
   
   const canAddMember = () => {
@@ -32,7 +30,7 @@ export const useSubscriptionLimits = (organizationId: string) => {
     isAtLimit: isAtLimit(),
     memberCount,
     maxUsers: currentSubscription?.max_users || 0,
-    currentPlan: currentSubscription?.plan_name || 'Unknown',
+    currentPlan: currentSubscription?.plan_name || 'No Plan',
     currentSubscription,
   };
 };
