@@ -22,10 +22,13 @@ export const SubscriptionPlansGrid = ({
     templatesLoading, 
     error, 
     currentSubscription,
-    memberCount 
+    memberCount,
+    dataType: typeof subscriptionTemplates,
+    isArray: Array.isArray(subscriptionTemplates)
   });
 
   if (templatesLoading) {
+    console.log("Templates are loading...");
     return (
       <div>
         <h3 className="text-xl font-semibold mb-4 text-left">Available Plans</h3>
@@ -53,15 +56,32 @@ export const SubscriptionPlansGrid = ({
     );
   }
 
+  // More detailed logging
+  console.log("Raw subscription templates data:", subscriptionTemplates);
+  console.log("Templates array check:", {
+    isNull: subscriptionTemplates === null,
+    isUndefined: subscriptionTemplates === undefined,
+    length: subscriptionTemplates?.length,
+    firstItem: subscriptionTemplates?.[0]
+  });
+
   if (!subscriptionTemplates || subscriptionTemplates.length === 0) {
-    console.warn("No subscription templates found. Data:", subscriptionTemplates);
+    console.warn("No subscription templates found. Detailed data:", {
+      data: subscriptionTemplates,
+      type: typeof subscriptionTemplates,
+      isArray: Array.isArray(subscriptionTemplates),
+      keys: subscriptionTemplates ? Object.keys(subscriptionTemplates) : 'N/A'
+    });
+    
     return (
       <div>
         <h3 className="text-xl font-semibold mb-4 text-left">Available Plans</h3>
         <div className="text-center text-gray-500">
           <p>No subscription plans available</p>
           <p className="text-sm mt-2">Debug: Templates count = {subscriptionTemplates?.length || 0}</p>
-          <p className="text-xs mt-1">Check console for API details</p>
+          <p className="text-xs mt-1">Check console for detailed API debugging</p>
+          <p className="text-xs mt-1">Data type: {typeof subscriptionTemplates}</p>
+          <p className="text-xs mt-1">Is Array: {Array.isArray(subscriptionTemplates) ? 'Yes' : 'No'}</p>
         </div>
       </div>
     );
@@ -69,8 +89,13 @@ export const SubscriptionPlansGrid = ({
 
   // Filter out trial plans from the available templates
   const availableTemplates = subscriptionTemplates.filter(plan => plan.plan_id !== 'trial');
-
-  console.log("Rendering subscription templates:", availableTemplates);
+  
+  console.log("Filtered templates (excluding trial):", availableTemplates);
+  console.log("Final templates to render:", availableTemplates.map(t => ({ 
+    id: t.id, 
+    plan_id: t.plan_id, 
+    plan_name: t.plan_name 
+  })));
 
   return (
     <div>

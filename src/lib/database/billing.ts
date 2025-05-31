@@ -46,13 +46,35 @@ export const billingApi = {
       .order("price_monthly", { ascending: true });
     
     console.log("Subscription templates query result:", { data, error });
+    console.log("Query details:", {
+      table: "subscriptions",
+      filter: "status = 'template'",
+      orderBy: "price_monthly ASC"
+    });
     
     if (error) {
       console.error("Error getting subscription templates:", error);
+      console.error("Error details:", {
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code
+      });
       throw error;
     }
     
     console.log("Subscription templates count:", data?.length || 0);
+    
+    // Log each template for debugging
+    if (data && data.length > 0) {
+      console.log("Found templates:", data.map(t => ({ 
+        id: t.id, 
+        plan_id: t.plan_id, 
+        plan_name: t.plan_name, 
+        status: t.status 
+      })));
+    }
+    
     return data || [];
   },
 
