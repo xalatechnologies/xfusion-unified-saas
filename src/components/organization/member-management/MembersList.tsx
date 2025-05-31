@@ -6,8 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Users, MoreHorizontal, Loader2, Edit, Trash2 } from "lucide-react";
+import { Users, MoreHorizontal, Loader2, Edit, Trash2, Crown, Zap, Building } from "lucide-react";
 import { useOrganizationMembers } from "@/hooks/useOrganizations";
+import { useSubscriptionLimits } from "@/hooks/useSubscriptionLimits";
 import { EditMemberDialog } from "./EditMemberDialog";
 import { RemoveMemberDialog } from "./RemoveMemberDialog";
 import { 
@@ -36,8 +37,29 @@ interface MembersListProps {
   organizationId: string;
 }
 
+const getIconForPlan = (planId: string) => {
+  switch (planId) {
+    case 'basic':
+      return Zap;
+    case 'professional':
+      return Crown;
+    case 'enterprise':
+      return Building;
+    default:
+      return Zap;
+  }
+};
+
 export const MembersList = ({ organizationId }: MembersListProps) => {
   const { data: members, isLoading: membersLoading } = useOrganizationMembers(organizationId);
+  const { 
+    memberCount, 
+    maxUsers, 
+    currentPlan, 
+    currentSubscription,
+    isAtLimit,
+    remainingSlots 
+  } = useSubscriptionLimits(organizationId);
   const [editingMember, setEditingMember] = useState<OrganizationMember | null>(null);
   const [removingMember, setRemovingMember] = useState<OrganizationMember | null>(null);
 
@@ -52,8 +74,51 @@ export const MembersList = ({ organizationId }: MembersListProps) => {
     );
   }
 
+  const Icon = getIconForPlan(currentSubscription?.subscriptions?.plan_id || 'basic');
+
   return (
     <>
+      {/* Subscription Info Card */}
+      {currentSubscription && (
+        <Card className="shadow-sm border-0 bg-blue-50/50 mb-6">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <Icon className="w-6 h-6 text-blue-600" />
+                <div>
+                  <h3 className="font-medium text-gray-900">{currentPlan} Plan</h3>
+                  <div className="flex items-center space-x-2 text-sm text-gray-600">
+                    <Users className="w-4 h-4" />
+                    <span>
+                      {memberCount} of {maxUsers === -1 ? 'unlimited' : maxUsers} members
+                    </span>
+                    {!isAtLimit && maxUsers !== -1 && (
+                      <Badge variant="secondary" className="text-xs">
+                        {remainingSlots} slots remaining
+                      </Badge>
+                    )}
+                    {isAtLimit && (
+                      <Badge variant="destructive" className="text-xs">
+                        At member limit
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="text-right">
+                <Badge className={`${
+                  currentSubscription.status === 'active' ? 'bg-green-100 text-green-800' :
+                  currentSubscription.status === 'trialing' ? 'bg-blue-100 text-blue-800' :
+                  'bg-gray-100 text-gray-800'
+                }`}>
+                  {currentSubscription.status || 'Unknown'}
+                </Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       <Card className="shadow-sm border-0 bg-gray-50/30">
         <CardHeader className="pb-4 text-left">
           <CardTitle className="text-lg font-medium text-gray-900 flex items-center text-left">
