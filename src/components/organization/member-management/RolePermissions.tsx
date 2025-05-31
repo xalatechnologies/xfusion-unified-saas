@@ -63,7 +63,7 @@ export const RolePermissions = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {rolePermissions.map(({ role, permissions }) => {
             const RoleIcon = getRoleIcon(role);
             const iconColor = getRoleIconColor(role);
@@ -74,7 +74,7 @@ export const RolePermissions = () => {
                 <CardHeader className="pb-3">
                   <div className="flex items-center space-x-2">
                     <RoleIcon className={`w-5 h-5 ${iconColor}`} />
-                    <CardTitle className="text-sm font-semibold text-gray-900">
+                    <CardTitle className="text-base font-semibold text-gray-900">
                       {roleName}
                     </CardTitle>
                   </div>
@@ -84,7 +84,7 @@ export const RolePermissions = () => {
                     {permissions.map((permission, index) => (
                       <li key={index} className="flex items-start space-x-2">
                         <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0" />
-                        <span className="text-xs text-gray-600 leading-relaxed text-left">
+                        <span className="text-sm text-gray-600 leading-relaxed text-left">
                           {permission}
                         </span>
                       </li>
