@@ -1,4 +1,3 @@
-
 import { DashboardLayout } from "@/components/Layout/DashboardLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -9,6 +8,7 @@ import { OrganizationBilling } from "@/components/organization/OrganizationBilli
 import { OrganizationMembers } from "@/components/organization/OrganizationMembers";
 import { useOrganizations } from "@/hooks/useOrganizations";
 import { Building2, Loader2 } from "lucide-react";
+import { PageHeader } from "@/components/ui/page-header";
 
 export default function Organization() {
   const { t } = useLanguage();
@@ -44,18 +44,14 @@ export default function Organization() {
     <DashboardLayout>
       <div className="w-full space-y-6">
         {/* Header */}
-        <div className="flex items-center space-x-3 pb-4">
-          <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-lg">
-            <Building2 className="w-5 h-5 text-blue-600" />
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">
-              {t("organization.title")}
-            </h1>
-            <p className="text-gray-600 mt-1">
-              {t("organization.description")}
-            </p>
-          </div>
+        <div className="pb-4">
+          <PageHeader
+            icon={Building2}
+            title={t("organization.title")}
+            subtitle={t("organization.description")}
+            titleClassName="text-3xl font-bold text-gray-900"
+            subtitleClassName="text-gray-600 mt-1"
+          />
         </div>
 
         {/* Tabs */}
