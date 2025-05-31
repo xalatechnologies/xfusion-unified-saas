@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Users, Crown, Zap, Building } from "lucide-react";
 
 interface CurrentSubscriptionCardProps {
-  subscription: any;
+  orgSubscription: any;
   memberCount: number;
 }
 
@@ -22,7 +22,8 @@ const getIconForPlan = (planId: string) => {
   }
 };
 
-export const CurrentSubscriptionCard = ({ subscription, memberCount }: CurrentSubscriptionCardProps) => {
+export const CurrentSubscriptionCard = ({ orgSubscription, memberCount }: CurrentSubscriptionCardProps) => {
+  const subscription = orgSubscription.subscriptions;
   const Icon = getIconForPlan(subscription.plan_id);
 
   return (
@@ -37,7 +38,7 @@ export const CurrentSubscriptionCard = ({ subscription, memberCount }: CurrentSu
             <div className="text-left">
               <h3 className="font-semibold text-lg">{subscription.plan_name}</h3>
               <p className="text-gray-600">
-                Active since {new Date(subscription.created_at || '').toLocaleDateString()}
+                Active since {new Date(orgSubscription.created_at || '').toLocaleDateString()}
               </p>
               <div className="flex items-center space-x-2 mt-1">
                 <Users className="w-4 h-4 text-gray-500" />
@@ -45,9 +46,14 @@ export const CurrentSubscriptionCard = ({ subscription, memberCount }: CurrentSu
                   {memberCount} of {subscription.max_users === -1 ? 'unlimited' : subscription.max_users} members
                 </span>
               </div>
-              {subscription.current_period_end && (
+              {orgSubscription.current_period_end && (
                 <p className="text-xs text-gray-500 mt-1">
-                  Next billing: {new Date(subscription.current_period_end).toLocaleDateString()}
+                  Next billing: {new Date(orgSubscription.current_period_end).toLocaleDateString()}
+                </p>
+              )}
+              {orgSubscription.trial_end && orgSubscription.status === 'trialing' && (
+                <p className="text-xs text-orange-600 mt-1">
+                  Trial ends: {new Date(orgSubscription.trial_end).toLocaleDateString()}
                 </p>
               )}
             </div>
@@ -58,11 +64,11 @@ export const CurrentSubscriptionCard = ({ subscription, memberCount }: CurrentSu
             </p>
             <p className="text-gray-600">per month</p>
             <Badge className={`mt-1 ${
-              subscription.status === 'active' ? 'bg-green-100 text-green-800' :
-              subscription.status === 'trialing' ? 'bg-blue-100 text-blue-800' :
+              orgSubscription.status === 'active' ? 'bg-green-100 text-green-800' :
+              orgSubscription.status === 'trialing' ? 'bg-blue-100 text-blue-800' :
               'bg-gray-100 text-gray-800'
             }`}>
-              {subscription.status}
+              {orgSubscription.status}
             </Badge>
           </div>
         </div>

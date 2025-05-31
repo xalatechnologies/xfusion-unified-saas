@@ -5,35 +5,27 @@ import type { Database } from "@/integrations/supabase/types";
 type Tables = Database["public"]["Tables"];
 
 export const billingApi = {
-  async getSubscriptions(organizationId: string) {
+  async getOrganizationSubscription(organizationId: string) {
     const { data, error } = await supabase
-      .from("subscriptions")
-      .select("*")
+      .from("organization_subscriptions")
+      .select(`
+        *,
+        subscriptions (
+          id,
+          plan_id,
+          plan_name,
+          price_monthly,
+          price_yearly,
+          max_users,
+          features
+        )
+      `)
       .eq("organization_id", organizationId)
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .single();
     
     if (error) throw error;
-    
-    // If we have subscriptions, make sure the organization's current_subscription_id is set to the active one
-    if (data && data.length > 0) {
-      const activeSubscription = data.find(sub => sub.status === 'active' || sub.status === 'trialing');
-      if (activeSubscription) {
-        // Update the organization's current_subscription_id if it's not set
-        const { data: orgData, error: orgError } = await supabase
-          .from("organizations")
-          .select("current_subscription_id")
-          .eq("id", organizationId)
-          .single();
-        
-        if (!orgError && orgData && !orgData.current_subscription_id) {
-          await supabase
-            .from("organizations")
-            .update({ current_subscription_id: activeSubscription.id })
-            .eq("id", organizationId);
-        }
-      }
-    }
-    
     return data;
   },
 
@@ -42,45 +34,50 @@ export const billingApi = {
       .from("subscriptions")
       .select("*")
       .eq("status", "template")
-      .is("organization_id", null)
+      .neq("plan_id", "trial")
       .order("price_monthly", { ascending: true });
     
     if (error) throw error;
     return data || [];
   },
 
-  async createSubscription(subscription: Tables["subscriptions"]["Insert"]) {
-    // First, mark any existing active subscriptions as cancelled
-    if (subscription.organization_id && subscription.status === 'active') {
-      await supabase
-        .from("subscriptions")
-        .update({ status: 'cancelled' })
-        .eq("organization_id", subscription.organization_id)
-        .eq("status", "active");
-    }
+  async createOrganizationSubscription(organizationSubscription: {
+    organization_id: string;
+    subscription_id: string;
+    status: string;
+    billing_cycle: string;
+    current_period_start: string;
+    current_period_end: string;
+  }) {
+    // First, cancel any existing active subscriptions
+    await supabase
+      .from("organization_subscriptions")
+      .update({ status: 'cancelled' })
+      .eq("organization_id", organizationSubscription.organization_id)
+      .eq("status", "active");
 
     const { data, error } = await supabase
-      .from("subscriptions")
-      .insert(subscription)
+      .from("organization_subscriptions")
+      .insert(organizationSubscription)
       .select()
       .single();
     
     if (error) throw error;
     
     // Update the organization's current_subscription_id
-    if (data && subscription.organization_id && (subscription.status === 'active' || subscription.status === 'trialing')) {
+    if (data) {
       await supabase
         .from("organizations")
         .update({ current_subscription_id: data.id })
-        .eq("id", subscription.organization_id);
+        .eq("id", organizationSubscription.organization_id);
     }
     
     return data;
   },
 
-  async updateSubscription(id: string, updates: Tables["subscriptions"]["Update"]) {
+  async updateOrganizationSubscription(id: string, updates: any) {
     const { data, error } = await supabase
-      .from("subscriptions")
+      .from("organization_subscriptions")
       .update(updates)
       .eq("id", id)
       .select()
@@ -90,9 +87,9 @@ export const billingApi = {
     return data;
   },
 
-  async cancelSubscription(id: string) {
+  async cancelOrganizationSubscription(id: string) {
     const { data, error } = await supabase
-      .from("subscriptions")
+      .from("organization_subscriptions")
       .update({ status: 'cancelled' })
       .eq("id", id)
       .select()

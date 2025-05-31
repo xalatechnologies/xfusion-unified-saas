@@ -1,7 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { useSubscriptions, useCreateSubscription, useSubscriptionTemplates } from "@/hooks/useBilling";
+import { useOrganizationSubscription, useCreateOrganizationSubscription, useSubscriptionTemplates } from "@/hooks/useBilling";
 import { useOrganizationMembers } from "@/hooks/useOrganizations";
 import { CurrentSubscriptionCard } from "./subscription/CurrentSubscriptionCard";
 import { UserLimitWarning } from "./subscription/UserLimitWarning";
@@ -14,13 +14,12 @@ interface OrganizationSubscriptionProps {
 export const OrganizationSubscription = ({ organizationId }: OrganizationSubscriptionProps) => {
   const { toast } = useToast();
   
-  const { data: subscriptions, isLoading } = useSubscriptions(organizationId);
+  const { data: orgSubscription, isLoading } = useOrganizationSubscription(organizationId);
   const { data: subscriptionTemplates } = useSubscriptionTemplates();
   const { data: members } = useOrganizationMembers(organizationId);
-  const createSubscription = useCreateSubscription();
+  const createOrganizationSubscription = useCreateOrganizationSubscription();
   
-  // Get the active subscription (status = 'active')
-  const currentSubscription = subscriptions?.find(sub => sub.status === 'active') || subscriptions?.[0];
+  const currentSubscription = orgSubscription?.subscriptions;
   const memberCount = members?.length || 0;
 
   const handlePlanChange = async (planId: string) => {
@@ -38,22 +37,12 @@ export const OrganizationSubscription = ({ organizationId }: OrganizationSubscri
     }
 
     try {
-      // Cancel current subscription first if it exists
-      if (currentSubscription && currentSubscription.status === 'active') {
-        console.log('Cancelling current subscription:', currentSubscription.id);
-      }
-
-      // Create new subscription based on template
-      await createSubscription.mutateAsync({
+      // Create new organization subscription
+      await createOrganizationSubscription.mutateAsync({
         organization_id: organizationId,
-        plan_id: selectedTemplate.plan_id,
-        plan_name: selectedTemplate.plan_name,
-        price_monthly: selectedTemplate.price_monthly,
-        price_yearly: selectedTemplate.price_yearly,
+        subscription_id: selectedTemplate.id,
         status: 'active',
         billing_cycle: 'monthly',
-        max_users: selectedTemplate.max_users,
-        features: selectedTemplate.features,
         current_period_start: new Date().toISOString(),
         current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days from now
       });
@@ -83,9 +72,9 @@ export const OrganizationSubscription = ({ organizationId }: OrganizationSubscri
 
   return (
     <div className="space-y-6">
-      {currentSubscription && (
+      {orgSubscription && (
         <CurrentSubscriptionCard 
-          subscription={currentSubscription} 
+          orgSubscription={orgSubscription}
           memberCount={memberCount} 
         />
       )}
@@ -98,7 +87,7 @@ export const OrganizationSubscription = ({ organizationId }: OrganizationSubscri
       <SubscriptionPlansGrid
         currentSubscription={currentSubscription}
         memberCount={memberCount}
-        isLoading={createSubscription.isPending}
+        isLoading={createOrganizationSubscription.isPending}
         onPlanSelect={handlePlanChange}
       />
     </div>

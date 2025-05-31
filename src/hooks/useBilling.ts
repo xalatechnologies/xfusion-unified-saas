@@ -2,11 +2,11 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { databaseApi } from "@/lib/database";
 
-// Subscriptions
-export const useSubscriptions = (organizationId: string) => {
+// Organization Subscriptions
+export const useOrganizationSubscription = (organizationId: string) => {
   return useQuery({
-    queryKey: ["subscriptions", organizationId],
-    queryFn: () => databaseApi.getSubscriptions(organizationId),
+    queryKey: ["organization-subscription", organizationId],
+    queryFn: () => databaseApi.getOrganizationSubscription(organizationId),
     enabled: !!organizationId,
   });
 };
@@ -18,38 +18,38 @@ export const useSubscriptionTemplates = () => {
   });
 };
 
-export const useCreateSubscription = () => {
+export const useCreateOrganizationSubscription = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: databaseApi.createSubscription,
+    mutationFn: databaseApi.createOrganizationSubscription,
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["subscriptions", data.organization_id] });
+      queryClient.invalidateQueries({ queryKey: ["organization-subscription", data.organization_id] });
       queryClient.invalidateQueries({ queryKey: ["organizations"] });
     },
   });
 };
 
-export const useUpdateSubscription = () => {
+export const useUpdateOrganizationSubscription = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
     mutationFn: ({ id, updates }: { id: string; updates: any }) => 
-      databaseApi.updateSubscription(id, updates),
+      databaseApi.updateOrganizationSubscription(id, updates),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["subscriptions", data.organization_id] });
+      queryClient.invalidateQueries({ queryKey: ["organization-subscription", data.organization_id] });
       queryClient.invalidateQueries({ queryKey: ["organizations"] });
     },
   });
 };
 
-export const useCancelSubscription = () => {
+export const useCancelOrganizationSubscription = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: databaseApi.cancelSubscription,
+    mutationFn: databaseApi.cancelOrganizationSubscription,
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["subscriptions", data.organization_id] });
+      queryClient.invalidateQueries({ queryKey: ["organization-subscription", data.organization_id] });
       queryClient.invalidateQueries({ queryKey: ["organizations"] });
     },
   });
