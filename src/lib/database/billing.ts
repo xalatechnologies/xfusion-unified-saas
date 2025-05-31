@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -17,14 +16,17 @@ export const billingApi = {
   },
 
   async getSubscriptionTemplates() {
+    console.log("Fetching subscription templates...");
     const { data, error } = await supabase
       .from("subscriptions")
       .select("*")
       .eq("status", "template")
+      .is("organization_id", null)
       .order("price_monthly", { ascending: true });
     
+    console.log("Subscription templates result:", { data, error });
     if (error) throw error;
-    return data;
+    return data || [];
   },
 
   async createSubscription(subscription: Tables["subscriptions"]["Insert"]) {

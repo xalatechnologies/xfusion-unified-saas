@@ -15,7 +15,9 @@ export const SubscriptionPlansGrid = ({
   isLoading, 
   onPlanSelect 
 }: SubscriptionPlansGridProps) => {
-  const { data: subscriptionTemplates, isLoading: templatesLoading } = useSubscriptionTemplates();
+  const { data: subscriptionTemplates, isLoading: templatesLoading, error } = useSubscriptionTemplates();
+
+  console.log("SubscriptionPlansGrid:", { subscriptionTemplates, templatesLoading, error });
 
   if (templatesLoading) {
     return (
@@ -32,11 +34,25 @@ export const SubscriptionPlansGrid = ({
     );
   }
 
+  if (error) {
+    return (
+      <div>
+        <h3 className="text-xl font-semibold mb-4 text-left">Available Plans</h3>
+        <div className="text-center text-red-500">
+          Error loading subscription plans: {error.message}
+        </div>
+      </div>
+    );
+  }
+
   if (!subscriptionTemplates || subscriptionTemplates.length === 0) {
     return (
       <div>
         <h3 className="text-xl font-semibold mb-4 text-left">Available Plans</h3>
-        <div className="text-center text-gray-500">No subscription plans available</div>
+        <div className="text-center text-gray-500">
+          <p>No subscription plans available</p>
+          <p className="text-sm mt-2">Debug: Templates count = {subscriptionTemplates?.length || 0}</p>
+        </div>
       </div>
     );
   }
