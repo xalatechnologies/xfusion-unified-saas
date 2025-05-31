@@ -40,12 +40,12 @@ export const SubscriptionInfoCard = ({ organizationId }: SubscriptionInfoCardPro
   return (
     <Card className="shadow-sm border-0 bg-blue-50/50 mb-6">
       <CardContent className="p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+        <div className="flex items-center justify-between text-left">
+          <div className="flex items-center space-x-3 text-left">
             <Icon className="w-6 h-6 text-blue-600" />
-            <div>
-              <h3 className="font-medium text-gray-900">{currentPlan} Plan</h3>
-              <div className="flex items-center space-x-2 text-sm text-gray-600">
+            <div className="text-left">
+              <h3 className="font-medium text-gray-900 text-left">{currentPlan} Plan</h3>
+              <div className="flex items-center space-x-2 text-sm text-gray-600 text-left">
                 <Users className="w-4 h-4" />
                 <span>
                   {memberCount} of {maxUsers === -1 ? 'unlimited' : maxUsers} members
