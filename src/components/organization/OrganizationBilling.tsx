@@ -1,10 +1,11 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
 import { CreditCard, Download, Calendar, DollarSign } from "lucide-react";
-import { useBillingInformation, useInvoices } from "@/hooks/useBilling";
+import { useBillingInformation, useInvoices, useOrganizationSubscription } from "@/hooks/useBilling";
 
 interface OrganizationBillingProps {
   organizationId: string;
@@ -16,8 +17,10 @@ export const OrganizationBilling = ({ organizationId }: OrganizationBillingProps
   
   const { data: billingInfo, isLoading: billingLoading } = useBillingInformation(organizationId);
   const { data: invoices, isLoading: invoicesLoading } = useInvoices(organizationId);
+  const { data: orgSubscription } = useOrganizationSubscription(organizationId);
   
   const primaryBilling = billingInfo?.find(info => info.is_primary) || billingInfo?.[0];
+  const subscription = orgSubscription?.subscriptions;
 
   const handleDownloadInvoice = (invoiceId: string) => {
     toast({
@@ -47,6 +50,13 @@ export const OrganizationBilling = ({ organizationId }: OrganizationBillingProps
     sum + (invoice.amount_due - (invoice.amount_paid || 0)), 0) || 0;
 
   const nextInvoice = invoices?.find(invoice => invoice.status === 'pending');
+  
+  // Calculate next billing date and amount from subscription
+  const nextBillingDate = orgSubscription?.current_period_end ? 
+    new Date(orgSubscription.current_period_end) : null;
+  
+  const nextBillingAmount = subscription ? 
+    (orgSubscription?.billing_cycle === 'yearly' ? subscription.price_yearly : subscription.price_monthly) : 0;
 
   return (
     <div className="space-y-6">
@@ -66,18 +76,21 @@ export const OrganizationBilling = ({ organizationId }: OrganizationBillingProps
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Next Payment</CardTitle>
+            <CardTitle className="text-sm font-medium">Next Billing</CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {nextInvoice?.due_date ? 
-                new Date(nextInvoice.due_date).toLocaleDateString() : 
-                "No pending invoices"
+              {nextBillingDate ? 
+                nextBillingDate.toLocaleDateString() : 
+                "No upcoming billing"
               }
             </div>
             <p className="text-xs text-muted-foreground">
-              {nextInvoice ? `$${nextInvoice.amount_due} due` : "All caught up"}
+              {nextBillingDate && nextBillingAmount ? 
+                `$${nextBillingAmount} due (${orgSubscription?.billing_cycle || 'monthly'})` : 
+                "No active subscription"
+              }
             </p>
           </CardContent>
         </Card>
@@ -103,6 +116,46 @@ export const OrganizationBilling = ({ organizationId }: OrganizationBillingProps
           </CardContent>
         </Card>
       </div>
+
+      {/* Current Subscription Info */}
+      {orgSubscription && subscription && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Current Subscription</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+              <div>
+                <h3 className="font-semibold text-lg">{subscription.plan_name}</h3>
+                <p className="text-gray-600">
+                  Billing cycle: {orgSubscription.billing_cycle}
+                </p>
+                <p className="text-sm text-gray-500">
+                  Period: {new Date(orgSubscription.current_period_start).toLocaleDateString()} - {new Date(orgSubscription.current_period_end).toLocaleDateString()}
+                </p>
+                {orgSubscription.status === 'trialing' && orgSubscription.trial_end && (
+                  <p className="text-sm text-orange-600 mt-1">
+                    Trial ends: {new Date(orgSubscription.trial_end).toLocaleDateString()}
+                  </p>
+                )}
+              </div>
+              <div className="text-right">
+                <p className="text-2xl font-bold">
+                  ${orgSubscription.billing_cycle === 'yearly' ? subscription.price_yearly : subscription.price_monthly}
+                </p>
+                <p className="text-gray-600">per {orgSubscription.billing_cycle === 'yearly' ? 'year' : 'month'}</p>
+                <Badge className={`mt-1 ${
+                  orgSubscription.status === 'active' ? 'bg-green-100 text-green-800' :
+                  orgSubscription.status === 'trialing' ? 'bg-blue-100 text-blue-800' :
+                  'bg-gray-100 text-gray-800'
+                }`}>
+                  {orgSubscription.status}
+                </Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {primaryBilling && (
         <Card>
