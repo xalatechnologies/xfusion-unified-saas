@@ -17,7 +17,13 @@ export const SubscriptionPlansGrid = ({
 }: SubscriptionPlansGridProps) => {
   const { data: subscriptionTemplates, isLoading: templatesLoading, error } = useSubscriptionTemplates();
 
-  console.log("SubscriptionPlansGrid:", { subscriptionTemplates, templatesLoading, error });
+  console.log("SubscriptionPlansGrid render:", { 
+    subscriptionTemplates, 
+    templatesLoading, 
+    error, 
+    currentSubscription,
+    memberCount 
+  });
 
   if (templatesLoading) {
     return (
@@ -35,33 +41,42 @@ export const SubscriptionPlansGrid = ({
   }
 
   if (error) {
+    console.error("Subscription templates error:", error);
     return (
       <div>
         <h3 className="text-xl font-semibold mb-4 text-left">Available Plans</h3>
         <div className="text-center text-red-500">
-          Error loading subscription plans: {error.message}
+          <p>Error loading subscription plans: {error.message}</p>
+          <p className="text-sm mt-2">Check console for details</p>
         </div>
       </div>
     );
   }
 
   if (!subscriptionTemplates || subscriptionTemplates.length === 0) {
+    console.warn("No subscription templates found. Data:", subscriptionTemplates);
     return (
       <div>
         <h3 className="text-xl font-semibold mb-4 text-left">Available Plans</h3>
         <div className="text-center text-gray-500">
           <p>No subscription plans available</p>
           <p className="text-sm mt-2">Debug: Templates count = {subscriptionTemplates?.length || 0}</p>
+          <p className="text-xs mt-1">Check console for API details</p>
         </div>
       </div>
     );
   }
 
+  // Filter out trial plans from the available templates
+  const availableTemplates = subscriptionTemplates.filter(plan => plan.plan_id !== 'trial');
+
+  console.log("Rendering subscription templates:", availableTemplates);
+
   return (
     <div>
       <h3 className="text-xl font-semibold mb-4 text-left">Available Plans</h3>
       <div className="grid md:grid-cols-3 gap-6">
-        {subscriptionTemplates.map((plan) => (
+        {availableTemplates.map((plan) => (
           <SubscriptionPlanCard
             key={plan.id}
             plan={plan}

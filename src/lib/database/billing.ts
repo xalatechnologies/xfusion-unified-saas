@@ -6,6 +6,8 @@ type Tables = Database["public"]["Tables"];
 
 export const billingApi = {
   async getOrganizationSubscription(organizationId: string) {
+    console.log("Getting organization subscription for:", organizationId);
+    
     const { data, error } = await supabase
       .from("organization_subscriptions")
       .select(`
@@ -25,19 +27,32 @@ export const billingApi = {
       .limit(1)
       .single();
     
-    if (error) throw error;
+    if (error) {
+      console.error("Error getting organization subscription:", error);
+      throw error;
+    }
+    
+    console.log("Organization subscription data:", data);
     return data;
   },
 
   async getSubscriptionTemplates() {
+    console.log("Getting subscription templates...");
+    
     const { data, error } = await supabase
       .from("subscriptions")
       .select("*")
       .eq("status", "template")
-      .neq("plan_id", "trial")
       .order("price_monthly", { ascending: true });
     
-    if (error) throw error;
+    console.log("Subscription templates query result:", { data, error });
+    
+    if (error) {
+      console.error("Error getting subscription templates:", error);
+      throw error;
+    }
+    
+    console.log("Subscription templates count:", data?.length || 0);
     return data || [];
   },
 
@@ -49,6 +64,8 @@ export const billingApi = {
     current_period_start: string;
     current_period_end: string;
   }) {
+    console.log("Creating organization subscription:", organizationSubscription);
+    
     // First, cancel any existing active subscriptions
     await supabase
       .from("organization_subscriptions")
@@ -62,7 +79,10 @@ export const billingApi = {
       .select()
       .single();
     
-    if (error) throw error;
+    if (error) {
+      console.error("Error creating organization subscription:", error);
+      throw error;
+    }
     
     // Update the organization's current_subscription_id
     if (data) {
@@ -72,6 +92,7 @@ export const billingApi = {
         .eq("id", organizationSubscription.organization_id);
     }
     
+    console.log("Created organization subscription:", data);
     return data;
   },
 
