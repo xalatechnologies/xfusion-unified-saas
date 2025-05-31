@@ -15,9 +15,9 @@ interface OrganizationBasicInfoProps {
 
 export const OrganizationBasicInfo = ({ formData, onFormDataChange }: OrganizationBasicInfoProps) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-left">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-2">
+        <div className="space-y-2 text-left">
           <Label htmlFor="org-name" className="text-sm font-medium text-gray-700 flex items-center">
             <Building className="w-4 h-4 mr-2 text-gray-500" />
             Organization Name *
@@ -29,12 +29,12 @@ export const OrganizationBasicInfo = ({ formData, onFormDataChange }: Organizati
             placeholder="Enter your organization name"
             className="h-10 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-muted-foreground text-left">
             This name will be displayed across the platform
           </p>
         </div>
         
-        <div className="space-y-2">
+        <div className="space-y-2 text-left">
           <Label htmlFor="website" className="text-sm font-medium text-gray-700 flex items-center">
             <Globe className="w-4 h-4 mr-2 text-gray-500" />
             Website
@@ -46,13 +46,13 @@ export const OrganizationBasicInfo = ({ formData, onFormDataChange }: Organizati
             placeholder="https://your-company.com"
             className="h-10 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-muted-foreground text-left">
             Your organization's website URL
           </p>
         </div>
       </div>
       
-      <div className="space-y-2">
+      <div className="space-y-2 text-left">
         <Label htmlFor="address" className="text-sm font-medium text-gray-700 flex items-center">
           <MapPin className="w-4 h-4 mr-2 text-gray-500" />
           Address
@@ -65,7 +65,7 @@ export const OrganizationBasicInfo = ({ formData, onFormDataChange }: Organizati
           rows={3}
           className="resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-muted-foreground text-left">
           Complete mailing address for your organization
         </p>
       </div>

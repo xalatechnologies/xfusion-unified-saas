@@ -9,7 +9,7 @@ interface OrganizationMembersProps {
 
 export const OrganizationMembers = ({ organizationId }: OrganizationMembersProps) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-left">
       <MemberInviteForm organizationId={organizationId} />
       <MembersList organizationId={organizationId} />
       <RolePermissions />

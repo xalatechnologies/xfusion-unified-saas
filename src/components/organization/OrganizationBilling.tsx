@@ -40,7 +40,7 @@ export const OrganizationBilling = ({ organizationId }: OrganizationBillingProps
     return (
       <Card>
         <CardContent className="p-6">
-          <div className="text-center">Loading billing information...</div>
+          <div className="text-left">Loading billing information...</div>
         </CardContent>
       </Card>
     );
@@ -59,7 +59,7 @@ export const OrganizationBilling = ({ organizationId }: OrganizationBillingProps
     (orgSubscription?.billing_cycle === 'yearly' ? subscription.price_yearly : subscription.price_monthly) : 0;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-left">
       <div className="grid md:grid-cols-3 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -120,21 +120,21 @@ export const OrganizationBilling = ({ organizationId }: OrganizationBillingProps
       {/* Current Subscription Info */}
       {orgSubscription && subscription && (
         <Card>
-          <CardHeader>
-            <CardTitle>Current Subscription</CardTitle>
+          <CardHeader className="text-left">
+            <CardTitle className="text-left">Current Subscription</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="text-left">
             <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
-              <div>
-                <h3 className="font-semibold text-lg">{subscription.plan_name}</h3>
-                <p className="text-gray-600">
+              <div className="text-left">
+                <h3 className="font-semibold text-lg text-left">{subscription.plan_name}</h3>
+                <p className="text-gray-600 text-left">
                   Billing cycle: {orgSubscription.billing_cycle}
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 text-left">
                   Period: {new Date(orgSubscription.current_period_start).toLocaleDateString()} - {new Date(orgSubscription.current_period_end).toLocaleDateString()}
                 </p>
                 {orgSubscription.status === 'trialing' && orgSubscription.trial_end && (
-                  <p className="text-sm text-orange-600 mt-1">
+                  <p className="text-sm text-orange-600 mt-1 text-left">
                     Trial ends: {new Date(orgSubscription.trial_end).toLocaleDateString()}
                   </p>
                 )}
@@ -159,22 +159,22 @@ export const OrganizationBilling = ({ organizationId }: OrganizationBillingProps
 
       {primaryBilling && (
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
+          <CardHeader className="text-left">
+            <CardTitle className="flex items-center justify-between text-left">
               Payment Method
               <Button variant="outline" onClick={handleUpdatePayment}>
                 Update Payment Method
               </Button>
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="text-left">
             <div className="flex items-center space-x-4 p-4 border rounded-lg">
               <CreditCard className="w-8 h-8 text-gray-400" />
-              <div className="flex-1">
-                <p className="font-medium">
+              <div className="flex-1 text-left">
+                <p className="font-medium text-left">
                   {primaryBilling.card_brand} ending in {primaryBilling.card_last_four}
                 </p>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 text-left">
                   Expires {primaryBilling.card_exp_month}/{primaryBilling.card_exp_year}
                 </p>
               </div>
@@ -187,20 +187,20 @@ export const OrganizationBilling = ({ organizationId }: OrganizationBillingProps
       )}
 
       <Card>
-        <CardHeader>
-          <CardTitle>Billing History</CardTitle>
+        <CardHeader className="text-left">
+          <CardTitle className="text-left">Billing History</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="text-left">
           {invoicesLoading ? (
-            <div className="text-center py-4">Loading invoices...</div>
+            <div className="text-left py-4">Loading invoices...</div>
           ) : (
             <div className="space-y-4">
               {invoices?.map((invoice) => (
                 <div key={invoice.id} className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="flex items-center space-x-4">
-                    <div>
-                      <p className="font-medium">{invoice.invoice_number}</p>
-                      <p className="text-sm text-gray-600">
+                    <div className="text-left">
+                      <p className="font-medium text-left">{invoice.invoice_number}</p>
+                      <p className="text-sm text-gray-600 text-left">
                         {new Date(invoice.created_at || '').toLocaleDateString()}
                       </p>
                     </div>
@@ -230,7 +230,7 @@ export const OrganizationBilling = ({ organizationId }: OrganizationBillingProps
                 </div>
               ))}
               {(!invoices || invoices.length === 0) && (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-left py-8 text-gray-500">
                   No invoices found.
                 </div>
               )}

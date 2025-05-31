@@ -14,8 +14,8 @@ interface OrganizationContactInfoProps {
 
 export const OrganizationContactInfo = ({ formData, onFormDataChange }: OrganizationContactInfoProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div className="space-y-2">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+      <div className="space-y-2 text-left">
         <Label htmlFor="email" className="text-sm font-medium text-gray-700 flex items-center">
           <Mail className="w-4 h-4 mr-2 text-gray-500" />
           Email Address
@@ -28,12 +28,12 @@ export const OrganizationContactInfo = ({ formData, onFormDataChange }: Organiza
           placeholder="contact@company.com"
           className="h-10 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-muted-foreground text-left">
           Primary contact email
         </p>
       </div>
       
-      <div className="space-y-2">
+      <div className="space-y-2 text-left">
         <Label htmlFor="phone" className="text-sm font-medium text-gray-700 flex items-center">
           <Phone className="w-4 h-4 mr-2 text-gray-500" />
           Phone Number
@@ -46,12 +46,12 @@ export const OrganizationContactInfo = ({ formData, onFormDataChange }: Organiza
           placeholder="+1 (555) 123-4567"
           className="h-10 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-muted-foreground text-left">
           Main business phone
         </p>
       </div>
       
-      <div className="space-y-2">
+      <div className="space-y-2 text-left">
         <Label htmlFor="fax" className="text-sm font-medium text-gray-700 flex items-center">
           <Printer className="w-4 h-4 mr-2 text-gray-500" />
           Fax Number
@@ -64,7 +64,7 @@ export const OrganizationContactInfo = ({ formData, onFormDataChange }: Organiza
           placeholder="+1 (555) 123-4568"
           className="h-10 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-muted-foreground text-left">
           Fax number (optional)
         </p>
       </div>

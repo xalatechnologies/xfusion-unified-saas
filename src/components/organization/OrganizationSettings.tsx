@@ -36,17 +36,17 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
   };
 
   return (
-    <div className="w-full p-6 space-y-6">
+    <div className="w-full p-6 space-y-6 text-left">
       <Card className="shadow-sm border-0 bg-gray-50/30">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-medium text-gray-900">
+        <CardHeader className="pb-4 text-left">
+          <CardTitle className="text-lg font-medium text-gray-900 text-left">
             Basic Information
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground text-left">
             Update your organization's core details and public information
           </p>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 text-left">
           <OrganizationBasicInfo
             formData={{
               name: formData.name,
@@ -59,15 +59,15 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
       </Card>
 
       <Card className="shadow-sm border-0 bg-gray-50/30">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-medium text-gray-900">
+        <CardHeader className="pb-4 text-left">
+          <CardTitle className="text-lg font-medium text-gray-900 text-left">
             Contact Information
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground text-left">
             Provide contact details for your organization
           </p>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 text-left">
           <OrganizationContactInfo
             formData={{
               email: formData.email,
@@ -80,15 +80,15 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
       </Card>
 
       <Card className="shadow-sm border-0 bg-gray-50/30">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-medium text-gray-900">
+        <CardHeader className="pb-4 text-left">
+          <CardTitle className="text-lg font-medium text-gray-900 text-left">
             Language & Localization
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground text-left">
             Set your organization's default language and regional preferences
           </p>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 text-left">
           <OrganizationLanguageSettings
             defaultLanguage={formData.defaultLanguage}
             onLanguageChange={(language) => updateFormData({ defaultLanguage: language })}
@@ -97,7 +97,7 @@ export const OrganizationSettings = ({ organizationId }: OrganizationSettingsPro
       </Card>
 
       <div className="flex items-center justify-between pt-6 border-t bg-gray-50/50 -mx-6 px-6 py-4 rounded-b-lg">
-        <div className="text-sm text-muted-foreground">
+        <div className="text-sm text-muted-foreground text-left">
           Changes will be saved immediately and applied to all organization members.
         </div>
         <Button 
