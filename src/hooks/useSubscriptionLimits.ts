@@ -6,7 +6,8 @@ export const useSubscriptionLimits = (organizationId: string) => {
   const { data: subscriptions } = useSubscriptions(organizationId);
   const { data: members } = useOrganizationMembers(organizationId);
   
-  const currentSubscription = subscriptions?.[0];
+  // Get the active subscription (status = 'active' or 'trialing')
+  const currentSubscription = subscriptions?.find(sub => sub.status === 'active' || sub.status === 'trialing') || subscriptions?.[0];
   const memberCount = members?.length || 0;
   
   const canAddMember = () => {

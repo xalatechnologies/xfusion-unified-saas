@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -12,6 +13,27 @@ export const billingApi = {
       .order("created_at", { ascending: false });
     
     if (error) throw error;
+    
+    // If we have subscriptions, make sure the organization's current_subscription_id is set to the active one
+    if (data && data.length > 0) {
+      const activeSubscription = data.find(sub => sub.status === 'active' || sub.status === 'trialing');
+      if (activeSubscription) {
+        // Update the organization's current_subscription_id if it's not set
+        const { data: orgData, error: orgError } = await supabase
+          .from("organizations")
+          .select("current_subscription_id")
+          .eq("id", organizationId)
+          .single();
+        
+        if (!orgError && orgData && !orgData.current_subscription_id) {
+          await supabase
+            .from("organizations")
+            .update({ current_subscription_id: activeSubscription.id })
+            .eq("id", organizationId);
+        }
+      }
+    }
+    
     return data;
   },
 
@@ -44,6 +66,15 @@ export const billingApi = {
       .single();
     
     if (error) throw error;
+    
+    // Update the organization's current_subscription_id
+    if (data && subscription.organization_id && (subscription.status === 'active' || subscription.status === 'trialing')) {
+      await supabase
+        .from("organizations")
+        .update({ current_subscription_id: data.id })
+        .eq("id", subscription.organization_id);
+    }
+    
     return data;
   },
 
@@ -68,6 +99,15 @@ export const billingApi = {
       .single();
     
     if (error) throw error;
+    
+    // Clear the organization's current_subscription_id if this was the current subscription
+    if (data) {
+      await supabase
+        .from("organizations")
+        .update({ current_subscription_id: null })
+        .eq("current_subscription_id", data.id);
+    }
+    
     return data;
   },
 
