@@ -17,6 +17,15 @@ export const billingApi = {
 
   async getSubscriptionTemplates() {
     console.log("Fetching subscription templates...");
+    
+    // First, let's try to get all subscriptions to see what's in the database
+    const { data: allData, error: allError } = await supabase
+      .from("subscriptions")
+      .select("*");
+    
+    console.log("All subscriptions in database:", { allData, allError });
+    
+    // Now try the specific query for templates
     const { data, error } = await supabase
       .from("subscriptions")
       .select("*")
@@ -25,6 +34,16 @@ export const billingApi = {
       .order("price_monthly", { ascending: true });
     
     console.log("Subscription templates result:", { data, error });
+    
+    // Also try without the organization_id filter to debug
+    const { data: dataWithoutOrgFilter, error: errorWithoutOrgFilter } = await supabase
+      .from("subscriptions")
+      .select("*")
+      .eq("status", "template")
+      .order("price_monthly", { ascending: true });
+    
+    console.log("Templates without org filter:", { dataWithoutOrgFilter, errorWithoutOrgFilter });
+    
     if (error) throw error;
     return data || [];
   },
