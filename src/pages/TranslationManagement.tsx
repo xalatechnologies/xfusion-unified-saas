@@ -5,7 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
 import { Language, TranslationKeys } from "@/types/i18n";
 import { toast } from "sonner";
-import { DashboardLayout } from "@/components/Layout/DashboardLayout";
+import { SaasAdminLayout } from "@/apps/saas-admin/layout/SaasAdminLayout";
 import { TranslationFilters } from "@/components/translations/TranslationFilters";
 import { TranslationList } from "@/components/translations/TranslationList";
 
@@ -86,7 +86,7 @@ const TranslationManagement = () => {
   };
 
   return (
-    <DashboardLayout>
+    <SaasAdminLayout>
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold">{t('admin.translations.title')}</h1>
@@ -118,7 +118,7 @@ const TranslationManagement = () => {
           </CardContent>
         </Card>
       </div>
-    </DashboardLayout>
+    </SaasAdminLayout>
   );
 };
 
