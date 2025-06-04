@@ -1,8 +1,6 @@
 
-import React, { useState } from "react";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/Layout/AppSidebar";
-import { TopBar } from "@/components/Layout/TopBar";
+import React from "react";
+import { SupplyMantixLayout } from "@/apps/supplymantix/layout/SupplyMantixLayout";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -10,16 +8,8 @@ interface DashboardLayoutProps {
 
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-gray-50">
-        <AppSidebar />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <TopBar />
-          <main className="flex-1 overflow-y-auto p-6">
-            {children}
-          </main>
-        </div>
-      </div>
-    </SidebarProvider>
+    <SupplyMantixLayout>
+      {children}
+    </SupplyMantixLayout>
   );
 };

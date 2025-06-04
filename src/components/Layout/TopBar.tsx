@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { ApplicationSwitcher } from "@/shared/components/ApplicationSwitcher";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LogOut, User } from "lucide-react";
@@ -55,7 +55,10 @@ export const TopBar = () => {
 
   return (
     <header className="h-16 border-b border-gray-200 bg-white flex items-center justify-between px-6">
-      <SidebarTrigger />
+      <div className="flex items-center space-x-4">
+        <SidebarTrigger />
+        <ApplicationSwitcher />
+      </div>
 
       {/* Global Search */}
       <div className="flex-1 max-w-lg mx-8">
