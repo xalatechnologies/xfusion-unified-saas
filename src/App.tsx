@@ -17,6 +17,7 @@ import Procedures from "@/pages/Procedures";
 import TranslationManagement from "@/pages/TranslationManagement";
 import InviteAccept from "@/pages/InviteAccept";
 import NotFound from "@/pages/NotFound";
+import SaasDashboard from "@/pages/SaasDashboard";
 
 import "./App.css";
 
@@ -50,14 +51,6 @@ function App() {
                 }
               />
               <Route
-                path="/dashboard/organization"
-                element={
-                  <ProtectedRoute>
-                    <Organization />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
                 path="/dashboard/procedures"
                 element={
                   <ProtectedRoute>
@@ -65,11 +58,68 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              {/* SAAS Dashboard Routes */}
               <Route
-                path="/dashboard/translations"
+                path="/saas"
+                element={
+                  <ProtectedRoute>
+                    <SaasDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/saas/organizations"
+                element={
+                  <ProtectedRoute>
+                    <SaasDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/saas/users"
+                element={
+                  <ProtectedRoute>
+                    <SaasDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/saas/subscriptions"
+                element={
+                  <ProtectedRoute>
+                    <SaasDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/saas/billing"
+                element={
+                  <ProtectedRoute>
+                    <SaasDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/saas/analytics"
+                element={
+                  <ProtectedRoute>
+                    <SaasDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/saas/translations"
                 element={
                   <ProtectedRoute>
                     <TranslationManagement />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/saas/settings"
+                element={
+                  <ProtectedRoute>
+                    <SaasDashboard />
                   </ProtectedRoute>
                 }
               />

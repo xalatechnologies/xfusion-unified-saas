@@ -1,6 +1,5 @@
 
 import { 
-  Building2, 
   Wrench, 
   DollarSign, 
   FileText, 
@@ -11,7 +10,6 @@ import {
   MapPin, 
   TrendingUp, 
   MessageSquare,
-  Languages,
   LayoutDashboard
 } from "lucide-react";
 
@@ -81,18 +79,6 @@ export const menuItems = [
     url: "/dashboard/messages",
     icon: MessageSquare,
     group: "sidebar.collaboration"
-  },
-  {
-    title: "nav.organization",
-    url: "/dashboard/organization", 
-    icon: Building2,
-    group: "sidebar.administration"
-  },
-  {
-    title: "nav.translations",
-    url: "/dashboard/translations",
-    icon: Languages,
-    group: "sidebar.administration"
   }
 ];
 
