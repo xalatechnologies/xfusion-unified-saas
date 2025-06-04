@@ -1,21 +1,18 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { OrganizationSettings } from "@/components/organization/OrganizationSettings";
-import { OrganizationBranding } from "@/components/organization/OrganizationBranding";
-import { OrganizationSubscription } from "@/components/organization/OrganizationSubscription";
-import { OrganizationBilling } from "@/components/organization/OrganizationBilling";
-import { OrganizationMembers } from "@/components/organization/OrganizationMembers";
 import { useOrganizations } from "@/hooks/useOrganizations";
 import { Building2, Loader2 } from "lucide-react";
 import { PageHeader } from "@/components/ui/page-header";
+import { OrganizationsOverview } from "./organizations/OrganizationsOverview";
+import { UsersOverview } from "./users/UsersOverview";
+import { SubscriptionsOverview } from "./subscriptions/SubscriptionsOverview";
+import { BillingOverview } from "./billing/BillingOverview";
+import { SystemOverview } from "./system/SystemOverview";
 
 export function SaasDashboard() {
   const { t } = useLanguage();
   const { data: organizations, isLoading } = useOrganizations();
-  
-  // For now, use the first organization. In a real app, this would come from user context
-  const currentOrganization = organizations?.[0];
 
   if (isLoading) {
     return (
@@ -24,14 +21,6 @@ export function SaasDashboard() {
           <Loader2 className="w-5 h-5 animate-spin" />
           <span className="text-lg">Loading SAAS dashboard...</span>
         </div>
-      </div>
-    );
-  }
-
-  if (!currentOrganization) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-lg text-muted-foreground">No organization found</div>
       </div>
     );
   }
@@ -88,38 +77,23 @@ export function SaasDashboard() {
 
         <div className="bg-white rounded-b-lg border border-t-0 border-gray-200 min-h-[600px]">
           <TabsContent value="organizations" className="mt-0 p-6">
-            <div className="text-left py-8">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Organizations Management</h3>
-              <p className="text-gray-600">View and manage all organizations in the system</p>
-            </div>
+            <OrganizationsOverview />
           </TabsContent>
 
           <TabsContent value="users" className="mt-0 p-6">
-            <div className="text-left py-8">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Users Management</h3>
-              <p className="text-gray-600">View and manage all users across organizations</p>
-            </div>
+            <UsersOverview />
           </TabsContent>
 
           <TabsContent value="subscriptions" className="mt-0 p-6">
-            <div className="text-left py-8">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Subscriptions Overview</h3>
-              <p className="text-gray-600">Monitor and manage all subscription plans and billing</p>
-            </div>
+            <SubscriptionsOverview />
           </TabsContent>
 
           <TabsContent value="billing" className="mt-0 p-6">
-            <div className="text-left py-8">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Global Billing</h3>
-              <p className="text-gray-600">Overview of all billing activities and revenue</p>
-            </div>
+            <BillingOverview />
           </TabsContent>
 
           <TabsContent value="system" className="mt-0 p-6">
-            <div className="text-left py-8">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">System Settings</h3>
-              <p className="text-gray-600">Manage translations, system configuration and settings</p>
-            </div>
+            <SystemOverview />
           </TabsContent>
         </div>
       </Tabs>
