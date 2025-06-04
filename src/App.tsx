@@ -18,6 +18,12 @@ import TranslationManagement from "@/pages/TranslationManagement";
 import InviteAccept from "@/pages/InviteAccept";
 import NotFound from "@/pages/NotFound";
 import SaasDashboard from "@/pages/SaasDashboard";
+import SaasOrganizations from "@/pages/SaasOrganizations";
+import SaasUsers from "@/pages/SaasUsers";
+import SaasSubscriptions from "@/pages/SaasSubscriptions";
+import SaasBilling from "@/pages/SaasBilling";
+import SaasAnalytics from "@/pages/SaasAnalytics";
+import SaasSettings from "@/pages/SaasSettings";
 
 import "./App.css";
 
@@ -71,7 +77,7 @@ function App() {
                 path="/saas/organizations"
                 element={
                   <ProtectedRoute>
-                    <SaasDashboard />
+                    <SaasOrganizations />
                   </ProtectedRoute>
                 }
               />
@@ -79,7 +85,7 @@ function App() {
                 path="/saas/users"
                 element={
                   <ProtectedRoute>
-                    <SaasDashboard />
+                    <SaasUsers />
                   </ProtectedRoute>
                 }
               />
@@ -87,7 +93,7 @@ function App() {
                 path="/saas/subscriptions"
                 element={
                   <ProtectedRoute>
-                    <SaasDashboard />
+                    <SaasSubscriptions />
                   </ProtectedRoute>
                 }
               />
@@ -95,7 +101,7 @@ function App() {
                 path="/saas/billing"
                 element={
                   <ProtectedRoute>
-                    <SaasDashboard />
+                    <SaasBilling />
                   </ProtectedRoute>
                 }
               />
@@ -103,7 +109,7 @@ function App() {
                 path="/saas/analytics"
                 element={
                   <ProtectedRoute>
-                    <SaasDashboard />
+                    <SaasAnalytics />
                   </ProtectedRoute>
                 }
               />
@@ -119,7 +125,7 @@ function App() {
                 path="/saas/settings"
                 element={
                   <ProtectedRoute>
-                    <SaasDashboard />
+                    <SaasSettings />
                   </ProtectedRoute>
                 }
               />
