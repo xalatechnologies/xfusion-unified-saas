@@ -34,21 +34,21 @@ export default function SaasSettings() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="platform-name" className="text-left">Platform Name</Label>
+                <Label htmlFor="platform-name" className="text-left block">Platform Name</Label>
                 <Input id="platform-name" defaultValue="SupplyMantix" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="support-email" className="text-left">Support Email</Label>
+                <Label htmlFor="support-email" className="text-left block">Support Email</Label>
                 <Input id="support-email" defaultValue="support@supplymantix.com" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="company-url" className="text-left">Company Website</Label>
+                <Label htmlFor="company-url" className="text-left block">Company Website</Label>
                 <Input id="company-url" defaultValue="https://supplymantix.com" />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label>Maintenance Mode</Label>
-                  <p className="text-sm text-gray-500">Temporarily disable platform access</p>
+                  <Label className="text-left block">Maintenance Mode</Label>
+                  <p className="text-sm text-gray-500 text-left">Temporarily disable platform access</p>
                 </div>
                 <Switch />
               </div>
@@ -66,26 +66,26 @@ export default function SaasSettings() {
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label>Two-Factor Authentication</Label>
-                  <p className="text-sm text-gray-500">Require 2FA for all admin accounts</p>
+                  <Label className="text-left block">Two-Factor Authentication</Label>
+                  <p className="text-sm text-gray-500 text-left">Require 2FA for all admin accounts</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label>Session Timeout</Label>
-                  <p className="text-sm text-gray-500">Auto-logout after inactivity</p>
+                  <Label className="text-left block">Session Timeout</Label>
+                  <p className="text-sm text-gray-500 text-left">Auto-logout after inactivity</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="session-duration" className="text-left">Session Duration (hours)</Label>
+                <Label htmlFor="session-duration" className="text-left block">Session Duration (hours)</Label>
                 <Input id="session-duration" type="number" defaultValue="8" />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label>Password Complexity</Label>
-                  <p className="text-sm text-gray-500">Enforce strong password requirements</p>
+                  <Label className="text-left block">Password Complexity</Label>
+                  <p className="text-sm text-gray-500 text-left">Enforce strong password requirements</p>
                 </div>
                 <Switch defaultChecked />
               </div>
@@ -105,21 +105,21 @@ export default function SaasSettings() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="smtp-host" className="text-left">SMTP Host</Label>
+                <Label htmlFor="smtp-host" className="text-left block">SMTP Host</Label>
                 <Input id="smtp-host" defaultValue="smtp.sendgrid.net" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="smtp-port" className="text-left">SMTP Port</Label>
+                <Label htmlFor="smtp-port" className="text-left block">SMTP Port</Label>
                 <Input id="smtp-port" type="number" defaultValue="587" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="from-email" className="text-left">From Email</Label>
+                <Label htmlFor="from-email" className="text-left block">From Email</Label>
                 <Input id="from-email" defaultValue="noreply@supplymantix.com" />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label>Email Verification Required</Label>
-                  <p className="text-sm text-gray-500">Require email verification for new users</p>
+                  <Label className="text-left block">Email Verification Required</Label>
+                  <p className="text-sm text-gray-500 text-left">Require email verification for new users</p>
                 </div>
                 <Switch defaultChecked />
               </div>
@@ -140,29 +140,29 @@ export default function SaasSettings() {
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label>New User Registration</Label>
-                  <p className="text-sm text-gray-500">Notify admins of new sign-ups</p>
+                  <Label className="text-left block">New User Registration</Label>
+                  <p className="text-sm text-gray-500 text-left">Notify admins of new sign-ups</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label>Failed Payment Alerts</Label>
-                  <p className="text-sm text-gray-500">Alert when payments fail</p>
+                  <Label className="text-left block">Failed Payment Alerts</Label>
+                  <p className="text-sm text-gray-500 text-left">Alert when payments fail</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label>System Health Monitoring</Label>
-                  <p className="text-sm text-gray-500">Alerts for system issues</p>
+                  <Label className="text-left block">System Health Monitoring</Label>
+                  <p className="text-sm text-gray-500 text-left">Alerts for system issues</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label>Weekly Usage Reports</Label>
-                  <p className="text-sm text-gray-500">Send usage summaries to admins</p>
+                  <Label className="text-left block">Weekly Usage Reports</Label>
+                  <p className="text-sm text-gray-500 text-left">Send usage summaries to admins</p>
                 </div>
                 <Switch />
               </div>
