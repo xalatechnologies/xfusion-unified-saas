@@ -34,8 +34,8 @@ export default function SaasUsers() {
           icon={Users}
           title="User Management"
           subtitle="Monitor and manage all users across your platform"
-          titleClassName="text-3xl font-bold text-gray-900"
-          subtitleClassName="text-gray-600 mt-1"
+          titleClassName="text-3xl font-bold text-gray-900 text-left"
+          subtitleClassName="text-gray-600 mt-1 text-left"
         />
 
         {/* Stats Overview */}
@@ -43,7 +43,7 @@ export default function SaasUsers() {
           <Card className="border-l-4 border-l-blue-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Total Users</p>
                   <p className="text-3xl font-bold text-gray-900">{userStats.total.toLocaleString()}</p>
                 </div>
@@ -55,7 +55,7 @@ export default function SaasUsers() {
           <Card className="border-l-4 border-l-green-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Active Users</p>
                   <p className="text-3xl font-bold text-gray-900">{userStats.active.toLocaleString()}</p>
                 </div>
@@ -67,7 +67,7 @@ export default function SaasUsers() {
           <Card className="border-l-4 border-l-orange-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Pending Invites</p>
                   <p className="text-3xl font-bold text-gray-900">{userStats.pending}</p>
                 </div>
@@ -79,7 +79,7 @@ export default function SaasUsers() {
           <Card className="border-l-4 border-l-red-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Suspended</p>
                   <p className="text-3xl font-bold text-gray-900">{userStats.suspended}</p>
                 </div>
@@ -93,9 +93,9 @@ export default function SaasUsers() {
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-xl">All Users</CardTitle>
-                <CardDescription>
+              <div className="text-left">
+                <CardTitle className="text-xl text-left">All Users</CardTitle>
+                <CardDescription className="text-left">
                   Manage user accounts, permissions, and access across all organizations
                 </CardDescription>
               </div>
@@ -124,30 +124,30 @@ export default function SaasUsers() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>User</TableHead>
-                    <TableHead>Organization</TableHead>
-                    <TableHead>Role</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Joined</TableHead>
-                    <TableHead className="w-[70px]">Actions</TableHead>
+                    <TableHead className="text-left">User</TableHead>
+                    <TableHead className="text-left">Organization</TableHead>
+                    <TableHead className="text-left">Role</TableHead>
+                    <TableHead className="text-left">Status</TableHead>
+                    <TableHead className="text-left">Joined</TableHead>
+                    <TableHead className="w-[70px] text-left">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {recentUsers.map((user) => (
                     <TableRow key={user.id}>
-                      <TableCell>
+                      <TableCell className="text-left">
                         <div>
                           <div className="font-medium text-gray-900">{user.name}</div>
                           <div className="text-sm text-gray-500">{user.email}</div>
                         </div>
                       </TableCell>
-                      <TableCell>{user.org}</TableCell>
-                      <TableCell>
+                      <TableCell className="text-left">{user.org}</TableCell>
+                      <TableCell className="text-left">
                         <Badge variant={user.role === 'admin' ? 'default' : 'secondary'}>
                           {user.role}
                         </Badge>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="text-left">
                         <Badge 
                           variant={user.status === 'active' ? 'default' : 
                                   user.status === 'pending' ? 'secondary' : 'destructive'}
@@ -155,8 +155,8 @@ export default function SaasUsers() {
                           {user.status}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-sm text-gray-500">{user.joined}</TableCell>
-                      <TableCell>
+                      <TableCell className="text-sm text-gray-500 text-left">{user.joined}</TableCell>
+                      <TableCell className="text-left">
                         <Button variant="ghost" size="sm">
                           <MoreHorizontal className="w-4 h-4" />
                         </Button>

@@ -30,8 +30,8 @@ export default function SaasBilling() {
           icon={Receipt}
           title="Billing & Payments"
           subtitle="Manage invoicing, payment tracking, and financial reconciliation"
-          titleClassName="text-3xl font-bold text-gray-900"
-          subtitleClassName="text-gray-600 mt-1"
+          titleClassName="text-3xl font-bold text-gray-900 text-left"
+          subtitleClassName="text-gray-600 mt-1 text-left"
         />
 
         {/* Billing Metrics */}
@@ -39,7 +39,7 @@ export default function SaasBilling() {
           <Card className="border-l-4 border-l-green-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Total Revenue</p>
                   <p className="text-3xl font-bold text-gray-900">${billingStats.totalRevenue.toLocaleString()}</p>
                   <p className="text-sm text-green-600 mt-1">This month</p>
@@ -52,7 +52,7 @@ export default function SaasBilling() {
           <Card className="border-l-4 border-l-orange-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Pending Invoices</p>
                   <p className="text-3xl font-bold text-gray-900">{billingStats.pendingInvoices}</p>
                   <p className="text-sm text-orange-600 mt-1">Awaiting payment</p>
@@ -65,7 +65,7 @@ export default function SaasBilling() {
           <Card className="border-l-4 border-l-red-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Overdue Amount</p>
                   <p className="text-3xl font-bold text-gray-900">${billingStats.overdueAmount.toLocaleString()}</p>
                   <p className="text-sm text-red-600 mt-1">Requires attention</p>
@@ -78,7 +78,7 @@ export default function SaasBilling() {
           <Card className="border-l-4 border-l-blue-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Collection Rate</p>
                   <p className="text-3xl font-bold text-gray-900">{billingStats.collectionRate}%</p>
                   <p className="text-sm text-blue-600 mt-1">Success rate</p>
@@ -93,8 +93,8 @@ export default function SaasBilling() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Payment Configuration</CardTitle>
-              <CardDescription>Manage payment gateways and billing settings</CardDescription>
+              <CardTitle className="text-lg text-left">Payment Configuration</CardTitle>
+              <CardDescription className="text-left">Manage payment gateways and billing settings</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between p-4 border rounded-lg">
@@ -102,7 +102,7 @@ export default function SaasBilling() {
                   <div className="w-8 h-8 bg-blue-100 rounded flex items-center justify-center">
                     <CreditCard className="w-4 h-4 text-blue-600" />
                   </div>
-                  <div>
+                  <div className="text-left">
                     <p className="font-medium">Stripe</p>
                     <p className="text-sm text-gray-500">Primary payment processor</p>
                   </div>
@@ -115,7 +115,7 @@ export default function SaasBilling() {
                   <div className="w-8 h-8 bg-purple-100 rounded flex items-center justify-center">
                     <Receipt className="w-4 h-4 text-purple-600" />
                   </div>
-                  <div>
+                  <div className="text-left">
                     <p className="font-medium">PayPal</p>
                     <p className="text-sm text-gray-500">Alternative payment method</p>
                   </div>
@@ -127,8 +127,8 @@ export default function SaasBilling() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Billing Automation</CardTitle>
-              <CardDescription>Configure automated billing and reminder settings</CardDescription>
+              <CardTitle className="text-lg text-left">Billing Automation</CardTitle>
+              <CardDescription className="text-left">Configure automated billing and reminder settings</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
@@ -157,9 +157,9 @@ export default function SaasBilling() {
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-xl">Recent Invoices</CardTitle>
-                <CardDescription>
+              <div className="text-left">
+                <CardTitle className="text-xl text-left">Recent Invoices</CardTitle>
+                <CardDescription className="text-left">
                   Track payment status and manage billing for all customers
                 </CardDescription>
               </div>
@@ -179,22 +179,22 @@ export default function SaasBilling() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Invoice ID</TableHead>
-                    <TableHead>Organization</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Due Date</TableHead>
-                    <TableHead>Paid Date</TableHead>
-                    <TableHead className="w-[70px]">Actions</TableHead>
+                    <TableHead className="text-left">Invoice ID</TableHead>
+                    <TableHead className="text-left">Organization</TableHead>
+                    <TableHead className="text-left">Amount</TableHead>
+                    <TableHead className="text-left">Status</TableHead>
+                    <TableHead className="text-left">Due Date</TableHead>
+                    <TableHead className="text-left">Paid Date</TableHead>
+                    <TableHead className="w-[70px] text-left">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {recentInvoices.map((invoice) => (
                     <TableRow key={invoice.id}>
-                      <TableCell className="font-mono text-sm">{invoice.id}</TableCell>
-                      <TableCell className="font-medium">{invoice.org}</TableCell>
-                      <TableCell className="font-medium">${invoice.amount.toLocaleString()}</TableCell>
-                      <TableCell>
+                      <TableCell className="font-mono text-sm text-left">{invoice.id}</TableCell>
+                      <TableCell className="font-medium text-left">{invoice.org}</TableCell>
+                      <TableCell className="font-medium text-left">${invoice.amount.toLocaleString()}</TableCell>
+                      <TableCell className="text-left">
                         <Badge 
                           variant={
                             invoice.status === 'paid' ? 'default' : 
@@ -204,11 +204,11 @@ export default function SaasBilling() {
                           {invoice.status}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-sm text-gray-500">{invoice.dueDate}</TableCell>
-                      <TableCell className="text-sm text-gray-500">
+                      <TableCell className="text-sm text-gray-500 text-left">{invoice.dueDate}</TableCell>
+                      <TableCell className="text-sm text-gray-500 text-left">
                         {invoice.paidDate || '-'}
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="text-left">
                         <Button variant="ghost" size="sm">
                           <MoreHorizontal className="w-4 h-4" />
                         </Button>

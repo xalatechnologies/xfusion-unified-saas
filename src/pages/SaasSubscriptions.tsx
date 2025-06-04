@@ -30,8 +30,8 @@ export default function SaasSubscriptions() {
           icon={CreditCard}
           title="Subscription Management"
           subtitle="Monitor subscription plans, billing cycles, and revenue metrics"
-          titleClassName="text-3xl font-bold text-gray-900"
-          subtitleClassName="text-gray-600 mt-1"
+          titleClassName="text-3xl font-bold text-gray-900 text-left"
+          subtitleClassName="text-gray-600 mt-1 text-left"
         />
 
         {/* Revenue Metrics */}
@@ -39,7 +39,7 @@ export default function SaasSubscriptions() {
           <Card className="border-l-4 border-l-green-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Total MRR</p>
                   <p className="text-3xl font-bold text-gray-900">${subscriptionStats.totalRevenue.toLocaleString()}</p>
                   <p className="text-sm text-green-600 mt-1">+12.5% from last month</p>
@@ -52,7 +52,7 @@ export default function SaasSubscriptions() {
           <Card className="border-l-4 border-l-blue-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Active Subscriptions</p>
                   <p className="text-3xl font-bold text-gray-900">{subscriptionStats.activeSubscriptions}</p>
                   <p className="text-sm text-blue-600 mt-1">+8 this month</p>
@@ -65,7 +65,7 @@ export default function SaasSubscriptions() {
           <Card className="border-l-4 border-l-purple-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Average Revenue</p>
                   <p className="text-3xl font-bold text-gray-900">${subscriptionStats.avgRevenue}</p>
                   <p className="text-sm text-purple-600 mt-1">per customer</p>
@@ -78,7 +78,7 @@ export default function SaasSubscriptions() {
           <Card className="border-l-4 border-l-orange-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Churn Rate</p>
                   <p className="text-3xl font-bold text-gray-900">{subscriptionStats.churnRate}%</p>
                   <p className="text-sm text-orange-600 mt-1">monthly</p>
@@ -92,10 +92,10 @@ export default function SaasSubscriptions() {
         {/* Subscription Plans Overview */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-lg">Basic Plan</CardTitle>
-              <CardDescription>Perfect for small teams getting started</CardDescription>
-              <div className="text-3xl font-bold text-blue-600">$29/mo</div>
+            <CardHeader className="text-left">
+              <CardTitle className="text-lg text-left">Basic Plan</CardTitle>
+              <CardDescription className="text-left">Perfect for small teams getting started</CardDescription>
+              <div className="text-3xl font-bold text-blue-600 text-left">$29/mo</div>
             </CardHeader>
             <CardContent>
               <div className="space-y-2 text-sm">
@@ -112,10 +112,10 @@ export default function SaasSubscriptions() {
           </Card>
 
           <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-lg">Professional Plan</CardTitle>
-              <CardDescription>Advanced features for growing businesses</CardDescription>
-              <div className="text-3xl font-bold text-purple-600">$99/mo</div>
+            <CardHeader className="text-left">
+              <CardTitle className="text-lg text-left">Professional Plan</CardTitle>
+              <CardDescription className="text-left">Advanced features for growing businesses</CardDescription>
+              <div className="text-3xl font-bold text-purple-600 text-left">$99/mo</div>
             </CardHeader>
             <CardContent>
               <div className="space-y-2 text-sm">
@@ -132,10 +132,10 @@ export default function SaasSubscriptions() {
           </Card>
 
           <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-lg">Enterprise Plan</CardTitle>
-              <CardDescription>Full-featured solution for large organizations</CardDescription>
-              <div className="text-3xl font-bold text-orange-600">$299/mo</div>
+            <CardHeader className="text-left">
+              <CardTitle className="text-lg text-left">Enterprise Plan</CardTitle>
+              <CardDescription className="text-left">Full-featured solution for large organizations</CardDescription>
+              <div className="text-3xl font-bold text-orange-600 text-left">$299/mo</div>
             </CardHeader>
             <CardContent>
               <div className="space-y-2 text-sm">
@@ -156,9 +156,9 @@ export default function SaasSubscriptions() {
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-xl">Active Subscriptions</CardTitle>
-                <CardDescription>
+              <div className="text-left">
+                <CardTitle className="text-xl text-left">Active Subscriptions</CardTitle>
+                <CardDescription className="text-left">
                   Monitor all subscription details, billing cycles, and customer information
                 </CardDescription>
               </div>
@@ -173,35 +173,35 @@ export default function SaasSubscriptions() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Organization</TableHead>
-                    <TableHead>Plan</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>MRR</TableHead>
-                    <TableHead>Users</TableHead>
-                    <TableHead>Next Billing</TableHead>
-                    <TableHead className="w-[70px]">Actions</TableHead>
+                    <TableHead className="text-left">Organization</TableHead>
+                    <TableHead className="text-left">Plan</TableHead>
+                    <TableHead className="text-left">Status</TableHead>
+                    <TableHead className="text-left">MRR</TableHead>
+                    <TableHead className="text-left">Users</TableHead>
+                    <TableHead className="text-left">Next Billing</TableHead>
+                    <TableHead className="w-[70px] text-left">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {subscriptions.map((sub) => (
                     <TableRow key={sub.id}>
-                      <TableCell className="font-medium">{sub.org}</TableCell>
-                      <TableCell>
+                      <TableCell className="font-medium text-left">{sub.org}</TableCell>
+                      <TableCell className="text-left">
                         <Badge variant="outline">{sub.plan}</Badge>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="text-left">
                         <Badge 
                           variant={sub.status === 'active' ? 'default' : 'secondary'}
                         >
                           {sub.status}
                         </Badge>
                       </TableCell>
-                      <TableCell className="font-medium text-green-600">
+                      <TableCell className="font-medium text-green-600 text-left">
                         ${sub.mrr > 0 ? sub.mrr.toLocaleString() : '0'}
                       </TableCell>
-                      <TableCell>{sub.users}</TableCell>
-                      <TableCell className="text-sm text-gray-500">{sub.nextBilling}</TableCell>
-                      <TableCell>
+                      <TableCell className="text-left">{sub.users}</TableCell>
+                      <TableCell className="text-sm text-gray-500 text-left">{sub.nextBilling}</TableCell>
+                      <TableCell className="text-left">
                         <Button variant="ghost" size="sm">
                           <MoreHorizontal className="w-4 h-4" />
                         </Button>

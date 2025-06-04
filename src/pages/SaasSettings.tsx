@@ -18,35 +18,35 @@ export default function SaasSettings() {
           icon={Settings}
           title="System Settings"
           subtitle="Configure platform-wide settings, security, and system preferences"
-          titleClassName="text-3xl font-bold text-gray-900"
-          subtitleClassName="text-gray-600 mt-1"
+          titleClassName="text-3xl font-bold text-gray-900 text-left"
+          subtitleClassName="text-gray-600 mt-1 text-left"
         />
 
         {/* System Configuration */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
+              <CardTitle className="flex items-center space-x-2 text-left">
                 <Globe className="w-5 h-5" />
                 <span>General Settings</span>
               </CardTitle>
-              <CardDescription>Basic platform configuration and branding</CardDescription>
+              <CardDescription className="text-left">Basic platform configuration and branding</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="platform-name">Platform Name</Label>
+                <Label htmlFor="platform-name" className="text-left">Platform Name</Label>
                 <Input id="platform-name" defaultValue="SupplyMantix" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="support-email">Support Email</Label>
+                <Label htmlFor="support-email" className="text-left">Support Email</Label>
                 <Input id="support-email" defaultValue="support@supplymantix.com" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="company-url">Company Website</Label>
+                <Label htmlFor="company-url" className="text-left">Company Website</Label>
                 <Input id="company-url" defaultValue="https://supplymantix.com" />
               </div>
               <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+                <div className="space-y-0.5 text-left">
                   <Label>Maintenance Mode</Label>
                   <p className="text-sm text-gray-500">Temporarily disable platform access</p>
                 </div>
@@ -57,33 +57,33 @@ export default function SaasSettings() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
+              <CardTitle className="flex items-center space-x-2 text-left">
                 <Shield className="w-5 h-5" />
                 <span>Security Settings</span>
               </CardTitle>
-              <CardDescription>Authentication and security configuration</CardDescription>
+              <CardDescription className="text-left">Authentication and security configuration</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+                <div className="space-y-0.5 text-left">
                   <Label>Two-Factor Authentication</Label>
                   <p className="text-sm text-gray-500">Require 2FA for all admin accounts</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+                <div className="space-y-0.5 text-left">
                   <Label>Session Timeout</Label>
                   <p className="text-sm text-gray-500">Auto-logout after inactivity</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="session-duration">Session Duration (hours)</Label>
+                <Label htmlFor="session-duration" className="text-left">Session Duration (hours)</Label>
                 <Input id="session-duration" type="number" defaultValue="8" />
               </div>
               <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+                <div className="space-y-0.5 text-left">
                   <Label>Password Complexity</Label>
                   <p className="text-sm text-gray-500">Enforce strong password requirements</p>
                 </div>
@@ -97,27 +97,27 @@ export default function SaasSettings() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
+              <CardTitle className="flex items-center space-x-2 text-left">
                 <Mail className="w-5 h-5" />
                 <span>Email Configuration</span>
               </CardTitle>
-              <CardDescription>SMTP settings and email templates</CardDescription>
+              <CardDescription className="text-left">SMTP settings and email templates</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="smtp-host">SMTP Host</Label>
+                <Label htmlFor="smtp-host" className="text-left">SMTP Host</Label>
                 <Input id="smtp-host" defaultValue="smtp.sendgrid.net" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="smtp-port">SMTP Port</Label>
+                <Label htmlFor="smtp-port" className="text-left">SMTP Port</Label>
                 <Input id="smtp-port" type="number" defaultValue="587" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="from-email">From Email</Label>
+                <Label htmlFor="from-email" className="text-left">From Email</Label>
                 <Input id="from-email" defaultValue="noreply@supplymantix.com" />
               </div>
               <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+                <div className="space-y-0.5 text-left">
                   <Label>Email Verification Required</Label>
                   <p className="text-sm text-gray-500">Require email verification for new users</p>
                 </div>
@@ -131,36 +131,36 @@ export default function SaasSettings() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
+              <CardTitle className="flex items-center space-x-2 text-left">
                 <Bell className="w-5 h-5" />
                 <span>Notification Settings</span>
               </CardTitle>
-              <CardDescription>Configure system-wide notification preferences</CardDescription>
+              <CardDescription className="text-left">Configure system-wide notification preferences</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+                <div className="space-y-0.5 text-left">
                   <Label>New User Registration</Label>
                   <p className="text-sm text-gray-500">Notify admins of new sign-ups</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+                <div className="space-y-0.5 text-left">
                   <Label>Failed Payment Alerts</Label>
                   <p className="text-sm text-gray-500">Alert when payments fail</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+                <div className="space-y-0.5 text-left">
                   <Label>System Health Monitoring</Label>
                   <p className="text-sm text-gray-500">Alerts for system issues</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+                <div className="space-y-0.5 text-left">
                   <Label>Weekly Usage Reports</Label>
                   <p className="text-sm text-gray-500">Send usage summaries to admins</p>
                 </div>
@@ -173,11 +173,11 @@ export default function SaasSettings() {
         {/* System Status & Performance */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
+            <CardTitle className="flex items-center space-x-2 text-left">
               <Database className="w-5 h-5" />
               <span>System Status & Performance</span>
             </CardTitle>
-            <CardDescription>Monitor system health and performance metrics</CardDescription>
+            <CardDescription className="text-left">Monitor system health and performance metrics</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -201,7 +201,7 @@ export default function SaasSettings() {
             <Separator className="my-6" />
             
             <div className="space-y-4">
-              <h4 className="font-medium">System Actions</h4>
+              <h4 className="font-medium text-left">System Actions</h4>
               <div className="flex flex-wrap gap-3">
                 <Button variant="outline">
                   <Database className="w-4 h-4 mr-2" />

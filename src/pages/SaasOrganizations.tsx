@@ -40,8 +40,8 @@ export default function SaasOrganizations() {
           icon={Building2}
           title="Organization Management"
           subtitle="Monitor and manage all organizations across your platform"
-          titleClassName="text-3xl font-bold text-gray-900"
-          subtitleClassName="text-gray-600 mt-1"
+          titleClassName="text-3xl font-bold text-gray-900 text-left"
+          subtitleClassName="text-gray-600 mt-1 text-left"
         />
 
         {/* Stats Overview */}
@@ -49,7 +49,7 @@ export default function SaasOrganizations() {
           <Card className="border-l-4 border-l-blue-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Total Organizations</p>
                   <p className="text-3xl font-bold text-gray-900">{organizationStats.total}</p>
                 </div>
@@ -61,7 +61,7 @@ export default function SaasOrganizations() {
           <Card className="border-l-4 border-l-green-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Active Subscriptions</p>
                   <p className="text-3xl font-bold text-gray-900">{organizationStats.active}</p>
                 </div>
@@ -73,7 +73,7 @@ export default function SaasOrganizations() {
           <Card className="border-l-4 border-l-orange-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Trial Organizations</p>
                   <p className="text-3xl font-bold text-gray-900">{organizationStats.trial}</p>
                 </div>
@@ -85,7 +85,7 @@ export default function SaasOrganizations() {
           <Card className="border-l-4 border-l-purple-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Conversion Rate</p>
                   <p className="text-3xl font-bold text-gray-900">{organizationStats.conversionRate}%</p>
                 </div>
@@ -98,10 +98,10 @@ export default function SaasOrganizations() {
         {/* Organization Plans Overview */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-lg">Basic Plan</CardTitle>
-              <CardDescription>Perfect for small teams getting started</CardDescription>
-              <div className="text-3xl font-bold text-blue-600">$29/mo</div>
+            <CardHeader className="text-left">
+              <CardTitle className="text-lg text-left">Basic Plan</CardTitle>
+              <CardDescription className="text-left">Perfect for small teams getting started</CardDescription>
+              <div className="text-3xl font-bold text-blue-600 text-left">$29/mo</div>
             </CardHeader>
             <CardContent>
               <div className="space-y-2 text-sm">
@@ -122,10 +122,10 @@ export default function SaasOrganizations() {
           </Card>
 
           <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-lg">Professional Plan</CardTitle>
-              <CardDescription>Advanced features for growing businesses</CardDescription>
-              <div className="text-3xl font-bold text-purple-600">$99/mo</div>
+            <CardHeader className="text-left">
+              <CardTitle className="text-lg text-left">Professional Plan</CardTitle>
+              <CardDescription className="text-left">Advanced features for growing businesses</CardDescription>
+              <div className="text-3xl font-bold text-purple-600 text-left">$99/mo</div>
             </CardHeader>
             <CardContent>
               <div className="space-y-2 text-sm">
@@ -146,10 +146,10 @@ export default function SaasOrganizations() {
           </Card>
 
           <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-lg">Enterprise Plan</CardTitle>
-              <CardDescription>Full-featured solution for large organizations</CardDescription>
-              <div className="text-3xl font-bold text-orange-600">$299/mo</div>
+            <CardHeader className="text-left">
+              <CardTitle className="text-lg text-left">Enterprise Plan</CardTitle>
+              <CardDescription className="text-left">Full-featured solution for large organizations</CardDescription>
+              <div className="text-3xl font-bold text-orange-600 text-left">$299/mo</div>
             </CardHeader>
             <CardContent>
               <div className="space-y-2 text-sm">
@@ -174,9 +174,9 @@ export default function SaasOrganizations() {
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-xl">All Organizations</CardTitle>
-                <CardDescription>
+              <div className="text-left">
+                <CardTitle className="text-xl text-left">All Organizations</CardTitle>
+                <CardDescription className="text-left">
                   Manage organizations, their subscriptions, and member access
                 </CardDescription>
               </div>
@@ -205,45 +205,45 @@ export default function SaasOrganizations() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Organization</TableHead>
-                    <TableHead>Plan</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Users</TableHead>
-                    <TableHead>Revenue</TableHead>
-                    <TableHead>Created</TableHead>
-                    <TableHead className="w-[70px]">Actions</TableHead>
+                    <TableHead className="text-left">Organization</TableHead>
+                    <TableHead className="text-left">Plan</TableHead>
+                    <TableHead className="text-left">Status</TableHead>
+                    <TableHead className="text-left">Users</TableHead>
+                    <TableHead className="text-left">Revenue</TableHead>
+                    <TableHead className="text-left">Created</TableHead>
+                    <TableHead className="w-[70px] text-left">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredOrganizations.map((org) => (
                     <TableRow key={org.id}>
-                      <TableCell>
+                      <TableCell className="text-left">
                         <div>
                           <div className="font-medium text-gray-900">{org.name}</div>
                           <div className="text-sm text-gray-500">{org.email}</div>
                         </div>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="text-left">
                         <Badge variant="outline">{org.plan}</Badge>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="text-left">
                         <Badge 
                           variant={org.status === 'active' ? 'default' : 'secondary'}
                         >
                           {org.status}
                         </Badge>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="text-left">
                         <div className="flex items-center space-x-1">
                           <Users className="w-4 h-4 text-gray-400" />
                           <span>{org.users}</span>
                         </div>
                       </TableCell>
-                      <TableCell className="font-medium text-green-600">
+                      <TableCell className="font-medium text-green-600 text-left">
                         ${org.revenue > 0 ? org.revenue.toLocaleString() : '0'}/mo
                       </TableCell>
-                      <TableCell className="text-sm text-gray-500">{org.created}</TableCell>
-                      <TableCell>
+                      <TableCell className="text-sm text-gray-500 text-left">{org.created}</TableCell>
+                      <TableCell className="text-left">
                         <Button variant="ghost" size="sm">
                           <MoreHorizontal className="w-4 h-4" />
                         </Button>

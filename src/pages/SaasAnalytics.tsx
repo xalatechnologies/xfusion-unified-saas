@@ -25,8 +25,8 @@ export default function SaasAnalytics() {
           icon={BarChart3}
           title="Advanced Analytics"
           subtitle="Deep dive into platform metrics, user behavior, and business performance"
-          titleClassName="text-3xl font-bold text-gray-900"
-          subtitleClassName="text-gray-600 mt-1"
+          titleClassName="text-3xl font-bold text-gray-900 text-left"
+          subtitleClassName="text-gray-600 mt-1 text-left"
         />
 
         {/* Key Performance Indicators */}
@@ -34,7 +34,7 @@ export default function SaasAnalytics() {
           <Card className="border-l-4 border-l-blue-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Total Users</p>
                   <p className="text-3xl font-bold text-gray-900">{analyticsData.totalUsers.toLocaleString()}</p>
                   <div className="flex items-center mt-1">
@@ -50,7 +50,7 @@ export default function SaasAnalytics() {
           <Card className="border-l-4 border-l-green-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Monthly Revenue</p>
                   <p className="text-3xl font-bold text-gray-900">${analyticsData.revenue.toLocaleString()}</p>
                   <div className="flex items-center mt-1">
@@ -66,7 +66,7 @@ export default function SaasAnalytics() {
           <Card className="border-l-4 border-l-purple-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Conversion Rate</p>
                   <p className="text-3xl font-bold text-gray-900">{analyticsData.conversionRate}%</p>
                   <div className="flex items-center mt-1">
@@ -82,7 +82,7 @@ export default function SaasAnalytics() {
           <Card className="border-l-4 border-l-orange-500">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-left">
                   <p className="text-sm font-medium text-gray-600">Churn Rate</p>
                   <p className="text-3xl font-bold text-gray-900">{analyticsData.churnRate}%</p>
                   <div className="flex items-center mt-1">
@@ -100,8 +100,8 @@ export default function SaasAnalytics() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Revenue Trends</CardTitle>
-              <CardDescription>Monthly recurring revenue and growth patterns</CardDescription>
+              <CardTitle className="text-lg text-left">Revenue Trends</CardTitle>
+              <CardDescription className="text-left">Monthly recurring revenue and growth patterns</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
@@ -116,8 +116,8 @@ export default function SaasAnalytics() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">User Growth</CardTitle>
-              <CardDescription>User acquisition and retention metrics</CardDescription>
+              <CardTitle className="text-lg text-left">User Growth</CardTitle>
+              <CardDescription className="text-left">User acquisition and retention metrics</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
@@ -135,8 +135,8 @@ export default function SaasAnalytics() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Feature Usage</CardTitle>
-              <CardDescription>Most popular platform features</CardDescription>
+              <CardTitle className="text-lg text-left">Feature Usage</CardTitle>
+              <CardDescription className="text-left">Most popular platform features</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
@@ -180,8 +180,8 @@ export default function SaasAnalytics() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Geographic Distribution</CardTitle>
-              <CardDescription>Users by region</CardDescription>
+              <CardTitle className="text-lg text-left">Geographic Distribution</CardTitle>
+              <CardDescription className="text-left">Users by region</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex items-center justify-between">
@@ -205,8 +205,8 @@ export default function SaasAnalytics() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Performance Metrics</CardTitle>
-              <CardDescription>System health indicators</CardDescription>
+              <CardTitle className="text-lg text-left">Performance Metrics</CardTitle>
+              <CardDescription className="text-left">System health indicators</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="text-center p-3 bg-green-50 rounded-lg">
@@ -229,9 +229,9 @@ export default function SaasAnalytics() {
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-xl">Generate Reports</CardTitle>
-                <CardDescription>
+              <div className="text-left">
+                <CardTitle className="text-xl text-left">Generate Reports</CardTitle>
+                <CardDescription className="text-left">
                   Export detailed analytics reports for stakeholders and compliance
                 </CardDescription>
               </div>
