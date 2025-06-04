@@ -1,5 +1,5 @@
 
-import { DashboardLayout } from "@/components/Layout/SaasDashboardLayout";
+import { SaasDashboardLayout } from "@/components/Layout/SaasDashboardLayout";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { OrganizationSettings } from "@/components/organization/OrganizationSettings";
@@ -20,29 +20,29 @@ export default function SaasDashboard() {
 
   if (isLoading) {
     return (
-      <DashboardLayout>
+      <SaasDashboardLayout>
         <div className="flex items-center justify-center h-64">
           <div className="flex items-center space-x-2 text-muted-foreground">
             <Loader2 className="w-5 h-5 animate-spin" />
             <span className="text-lg">Loading SAAS dashboard...</span>
           </div>
         </div>
-      </DashboardLayout>
+      </SaasDashboardLayout>
     );
   }
 
   if (!currentOrganization) {
     return (
-      <DashboardLayout>
+      <SaasDashboardLayout>
         <div className="flex items-center justify-center h-64">
           <div className="text-lg text-muted-foreground">No organization found</div>
         </div>
-      </DashboardLayout>
+      </SaasDashboardLayout>
     );
   }
 
   return (
-    <DashboardLayout>
+    <SaasDashboardLayout>
       <div className="w-full space-y-6">
         {/* Header */}
         <div className="pb-4">
@@ -94,35 +94,35 @@ export default function SaasDashboard() {
 
           <div className="bg-white rounded-b-lg border border-t-0 border-gray-200 min-h-[600px]">
             <TabsContent value="organizations" className="mt-0 p-6">
-              <div className="text-center py-8">
+              <div className="text-left py-8">
                 <h3 className="text-lg font-medium text-gray-900 mb-2">Organizations Management</h3>
                 <p className="text-gray-600">View and manage all organizations in the system</p>
               </div>
             </TabsContent>
 
             <TabsContent value="users" className="mt-0 p-6">
-              <div className="text-center py-8">
+              <div className="text-left py-8">
                 <h3 className="text-lg font-medium text-gray-900 mb-2">Users Management</h3>
                 <p className="text-gray-600">View and manage all users across organizations</p>
               </div>
             </TabsContent>
 
             <TabsContent value="subscriptions" className="mt-0 p-6">
-              <div className="text-center py-8">
+              <div className="text-left py-8">
                 <h3 className="text-lg font-medium text-gray-900 mb-2">Subscriptions Overview</h3>
                 <p className="text-gray-600">Monitor and manage all subscription plans and billing</p>
               </div>
             </TabsContent>
 
             <TabsContent value="billing" className="mt-0 p-6">
-              <div className="text-center py-8">
+              <div className="text-left py-8">
                 <h3 className="text-lg font-medium text-gray-900 mb-2">Global Billing</h3>
                 <p className="text-gray-600">Overview of all billing activities and revenue</p>
               </div>
             </TabsContent>
 
             <TabsContent value="system" className="mt-0 p-6">
-              <div className="text-center py-8">
+              <div className="text-left py-8">
                 <h3 className="text-lg font-medium text-gray-900 mb-2">System Settings</h3>
                 <p className="text-gray-600">Manage translations, system configuration and settings</p>
               </div>
@@ -130,6 +130,6 @@ export default function SaasDashboard() {
           </div>
         </Tabs>
       </div>
-    </DashboardLayout>
+    </SaasDashboardLayout>
   );
 }
