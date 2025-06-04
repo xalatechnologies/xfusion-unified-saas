@@ -47,8 +47,8 @@ export function SaasDashboard() {
           icon={Activity}
           title="SAAS Analytics Dashboard"
           subtitle="Monitor your platform's performance and growth metrics"
-          titleClassName="text-3xl font-bold text-gray-900"
-          subtitleClassName="text-gray-600 mt-1"
+          titleClassName="text-3xl font-bold text-gray-900 text-left"
+          subtitleClassName="text-gray-600 mt-1 text-left"
         />
       </div>
 
@@ -57,7 +57,7 @@ export function SaasDashboard() {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <div>
+              <div className="text-left">
                 <p className="text-sm font-medium text-gray-600">Total Organizations</p>
                 <p className="text-3xl font-bold text-gray-900">{totalOrgs}</p>
                 <p className="text-xs text-green-600 mt-1">+12% from last month</p>
@@ -70,7 +70,7 @@ export function SaasDashboard() {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <div>
+              <div className="text-left">
                 <p className="text-sm font-medium text-gray-600">Total Users</p>
                 <p className="text-3xl font-bold text-gray-900">{totalUsers}</p>
                 <p className="text-xs text-green-600 mt-1">+8% from last month</p>
@@ -83,7 +83,7 @@ export function SaasDashboard() {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <div>
+              <div className="text-left">
                 <p className="text-sm font-medium text-gray-600">Active Subscriptions</p>
                 <p className="text-3xl font-bold text-gray-900">{activeSubscriptions}</p>
                 <p className="text-xs text-green-600 mt-1">+15% from last month</p>
@@ -96,7 +96,7 @@ export function SaasDashboard() {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <div>
+              <div className="text-left">
                 <p className="text-sm font-medium text-gray-600">Monthly Revenue</p>
                 <p className="text-3xl font-bold text-gray-900">${monthlyRevenue.toLocaleString()}</p>
                 <p className="text-xs text-green-600 mt-1">+22% from last month</p>
@@ -112,7 +112,7 @@ export function SaasDashboard() {
         {/* Revenue Trend */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-left">
               <TrendingUp className="w-5 h-5" />
               Revenue Trend
             </CardTitle>
@@ -140,7 +140,7 @@ export function SaasDashboard() {
         {/* Subscription Growth */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-left">
               <CreditCard className="w-5 h-5" />
               Subscription Growth
             </CardTitle>
@@ -168,38 +168,38 @@ export function SaasDashboard() {
       {/* Recent Activity */}
       <Card>
         <CardHeader>
-          <CardTitle>Recent Platform Activity</CardTitle>
+          <CardTitle className="text-left">Recent Platform Activity</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 border rounded-lg">
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-3 text-left">
                 <Building2 className="w-5 h-5 text-blue-600" />
-                <div>
-                  <p className="font-medium">New organization registered</p>
-                  <p className="text-sm text-gray-600">Acme Corp joined the platform</p>
+                <div className="text-left">
+                  <p className="font-medium text-left">New organization registered</p>
+                  <p className="text-sm text-gray-600 text-left">Acme Corp joined the platform</p>
                 </div>
               </div>
               <span className="text-sm text-gray-500">2 hours ago</span>
             </div>
             
             <div className="flex items-center justify-between p-4 border rounded-lg">
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-3 text-left">
                 <CreditCard className="w-5 h-5 text-green-600" />
-                <div>
-                  <p className="font-medium">Subscription upgraded</p>
-                  <p className="text-sm text-gray-600">TechStart Inc upgraded to Enterprise plan</p>
+                <div className="text-left">
+                  <p className="font-medium text-left">Subscription upgraded</p>
+                  <p className="text-sm text-gray-600 text-left">TechStart Inc upgraded to Enterprise plan</p>
                 </div>
               </div>
               <span className="text-sm text-gray-500">4 hours ago</span>
             </div>
             
             <div className="flex items-center justify-between p-4 border rounded-lg">
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-3 text-left">
                 <Users className="w-5 h-5 text-purple-600" />
-                <div>
-                  <p className="font-medium">Bulk user invite</p>
-                  <p className="text-sm text-gray-600">Global Solutions invited 15 new users</p>
+                <div className="text-left">
+                  <p className="font-medium text-left">Bulk user invite</p>
+                  <p className="text-sm text-gray-600 text-left">Global Solutions invited 15 new users</p>
                 </div>
               </div>
               <span className="text-sm text-gray-500">1 day ago</span>
