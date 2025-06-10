@@ -19,7 +19,9 @@ export const useUserRole = () => {
       }
 
       try {
+        console.log('Fetching user system role for user:', user.id);
         const role = await databaseApi.getUserSystemRole();
+        console.log('Received role:', role);
         setSystemRole(role as SystemRole || 'user');
       } catch (error) {
         console.error('Error fetching user role:', error);
