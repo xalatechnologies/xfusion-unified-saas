@@ -13,40 +13,12 @@ import { Crown, Wrench, Building2, ChevronDown } from "lucide-react";
 import { applications } from "../config/applications";
 import { useCurrentApplication } from "../hooks/useCurrentApplication";
 import { useAuth } from "@/contexts/AuthContext";
+import { useUserRole } from "@/hooks/useUserRole";
 
 const iconMap = {
   Crown,
   Wrench,
   Building2
-};
-
-// Helper function to determine user role
-const getUserRole = (user: any): string => {
-  // Check user metadata for role
-  const userRole = user?.user_metadata?.role;
-  
-  console.log('User metadata:', user?.user_metadata);
-  console.log('Detected user role from metadata:', userRole);
-  
-  // For demo purposes, let's also check the email domain
-  const email = user?.email;
-  console.log('User email:', email);
-  
-  // If no role in metadata, we'll determine based on email or default to organization_admin for testing
-  if (userRole) {
-    if (userRole === 'super_admin') return 'super_admin';
-    if (userRole === 'organization_admin' || userRole === 'admin') return 'organization_admin';
-    return 'user';
-  }
-  
-  // Temporary logic for testing - you can remove this later
-  // For now, let's assume users are organization_admin so you can see the switcher
-  if (email?.includes('@xala.no')) {
-    return 'organization_admin'; // This will give access to both org-admin and main app
-  }
-  
-  // Default to organization_admin for testing
-  return 'organization_admin';
 };
 
 // Helper function to check if user can access an application
@@ -64,6 +36,7 @@ export const ApplicationSwitcher = () => {
   const navigate = useNavigate();
   const { currentApp } = useCurrentApplication();
   const { user } = useAuth();
+  const { systemRole, loading } = useUserRole();
   
   const handleApplicationSwitch = (appId: string) => {
     const app = applications.find(a => a.id === appId);
@@ -72,14 +45,14 @@ export const ApplicationSwitcher = () => {
     }
   };
 
-  if (!currentApp || !user) return null;
+  if (!currentApp || !user || loading) return null;
 
-  const userRole = getUserRole(user);
+  const userRole = systemRole || 'user';
   const accessibleApps = applications.filter(app => 
     app.enabled && canAccessApplication(userRole, app.requiredRole || 'user')
   );
 
-  console.log('Current user role:', userRole);
+  console.log('Current user system role:', userRole);
   console.log('Accessible apps:', accessibleApps);
   console.log('Current app:', currentApp);
 

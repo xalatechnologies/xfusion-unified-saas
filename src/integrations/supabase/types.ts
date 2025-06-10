@@ -834,6 +834,36 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          assigned_at: string | null
+          assigned_by: string | null
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          assigned_at?: string | null
+          assigned_by?: string | null
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          assigned_at?: string | null
+          assigned_by?: string | null
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           created_at: string | null
@@ -1062,6 +1092,14 @@ export type Database = {
         Args: { token_param: string; user_id_param: string }
         Returns: boolean
       }
+      assign_system_role: {
+        Args: {
+          target_user_id: string
+          new_role: Database["public"]["Enums"]["app_role"]
+          assigned_by_user_id?: string
+        }
+        Returns: undefined
+      }
       copy_asset_procedures_to_work_order: {
         Args: { asset_id_param: string; work_order_id_param: string }
         Returns: undefined
@@ -1085,6 +1123,10 @@ export type Database = {
           invitation_expires_at: string
           organization_name: string
         }[]
+      }
+      get_user_system_role: {
+        Args: { user_id_param?: string }
+        Returns: Database["public"]["Enums"]["app_role"]
       }
       get_user_tenant_id: {
         Args: Record<PropertyKey, never>
@@ -1115,6 +1157,10 @@ export type Database = {
         Args: { tenant_uuid: string }
         Returns: boolean
       }
+      user_is_org_admin: {
+        Args: { user_id_param?: string }
+        Returns: boolean
+      }
       user_is_organization_member: {
         Args: { org_id: string; user_id: string }
         Returns: boolean
@@ -1125,6 +1171,7 @@ export type Database = {
       }
     }
     Enums: {
+      app_role: "super_admin" | "organization_admin" | "user"
       asset_status: "active" | "maintenance" | "out_of_service" | "retired"
       organization_role:
         | "owner"
@@ -1272,6 +1319,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["super_admin", "organization_admin", "user"],
       asset_status: ["active", "maintenance", "out_of_service", "retired"],
       organization_role: [
         "owner",
