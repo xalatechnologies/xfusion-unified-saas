@@ -1,18 +1,10 @@
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MoreHorizontal, Edit, Trash2, Shield, UserX, UserCheck } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+import { UserActions } from "./UserActions";
 
 interface UsersTableProps {
   users: any[];
@@ -20,9 +12,19 @@ interface UsersTableProps {
   onUserSelect: (userId: string, selected: boolean) => void;
   onSelectAll: (selected: boolean) => void;
   onEditUser: (user: any) => void;
+  onChangePassword: (user: any) => void;
+  onChangeAvatar: (user: any) => void;
 }
 
-export function UsersTable({ users, selectedUsers, onUserSelect, onSelectAll, onEditUser }: UsersTableProps) {
+export function UsersTable({ 
+  users, 
+  selectedUsers, 
+  onUserSelect, 
+  onSelectAll, 
+  onEditUser,
+  onChangePassword,
+  onChangeAvatar 
+}: UsersTableProps) {
   const allSelected = users.length > 0 && selectedUsers.length === users.length;
   const someSelected = selectedUsers.length > 0 && selectedUsers.length < users.length;
 
@@ -115,36 +117,12 @@ export function UsersTable({ users, selectedUsers, onUserSelect, onSelectAll, on
                 <span className="text-sm text-gray-600">2 days ago</span> {/* Mock data */}
               </TableCell>
               <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm">
-                      <MoreHorizontal className="w-4 h-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => onEditUser(user)}>
-                      <Edit className="w-4 h-4 mr-2" />
-                      Edit User
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Shield className="w-4 h-4 mr-2" />
-                      Manage Roles
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <UserCheck className="w-4 h-4 mr-2" />
-                      Activate User
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="text-orange-600">
-                      <UserX className="w-4 h-4 mr-2" />
-                      Suspend User
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="text-red-600">
-                      <Trash2 className="w-4 h-4 mr-2" />
-                      Delete User
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <UserActions
+                  user={user}
+                  onEditUser={onEditUser}
+                  onChangePassword={onChangePassword}
+                  onChangeAvatar={onChangeAvatar}
+                />
               </TableCell>
             </TableRow>
           ))}

@@ -4,14 +4,16 @@ import { useUsers } from "@/hooks/useUsers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { UserPlus, Search, Filter, Download, MoreHorizontal } from "lucide-react";
+import { UserPlus, Search } from "lucide-react";
 import { UserStatsCards } from "./UserStatsCards";
 import { UserFilters } from "./UserFilters";
 import { UsersTable } from "./UsersTable";
 import { CreateUserDialog } from "./CreateUserDialog";
 import { EditUserDialog } from "./EditUserDialog";
+import { ChangePasswordDialog } from "./ChangePasswordDialog";
+import { ChangeAvatarDialog } from "./ChangeAvatarDialog";
 import { UserBulkActions } from "./UserBulkActions";
+import { UserExport } from "./UserExport";
 
 export function UserManagement() {
   const { data: users, isLoading } = useUsers();
@@ -19,6 +21,8 @@ export function UserManagement() {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [editingUser, setEditingUser] = useState<any>(null);
+  const [passwordUser, setPasswordUser] = useState<any>(null);
+  const [avatarUser, setAvatarUser] = useState<any>(null);
   const [filters, setFilters] = useState({
     status: "all",
     role: "all",
@@ -74,10 +78,7 @@ export function UserManagement() {
           <p className="text-gray-600 mt-1">Manage all users across your platform</p>
         </div>
         <div className="flex items-center gap-3">
-          <Button variant="outline" size="sm">
-            <Download className="w-4 h-4 mr-2" />
-            Export
-          </Button>
+          <UserExport users={filteredUsers} selectedUsers={selectedUsers} />
           <Button onClick={() => setShowCreateDialog(true)}>
             <UserPlus className="w-4 h-4 mr-2" />
             Create User
@@ -124,6 +125,8 @@ export function UserManagement() {
             onUserSelect={handleUserSelect}
             onSelectAll={handleSelectAll}
             onEditUser={setEditingUser}
+            onChangePassword={setPasswordUser}
+            onChangeAvatar={setAvatarUser}
           />
         </CardContent>
       </Card>
@@ -139,6 +142,22 @@ export function UserManagement() {
           user={editingUser}
           open={!!editingUser}
           onOpenChange={(open) => !open && setEditingUser(null)}
+        />
+      )}
+
+      {passwordUser && (
+        <ChangePasswordDialog
+          user={passwordUser}
+          open={!!passwordUser}
+          onOpenChange={(open) => !open && setPasswordUser(null)}
+        />
+      )}
+
+      {avatarUser && (
+        <ChangeAvatarDialog
+          user={avatarUser}
+          open={!!avatarUser}
+          onOpenChange={(open) => !open && setAvatarUser(null)}
         />
       )}
     </div>
