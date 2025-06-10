@@ -225,69 +225,89 @@ export function UsersTable({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {users.map((user) => (
-                <TableRow
-                  key={user.id}
-                  className="transition hover:bg-blue-50 cursor-pointer group focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2 border-b border-gray-100"
-                  tabIndex={0}
-                  aria-label={`User ${getUserDisplayName(user)}`}
-                >
-                  <TableCell className="py-4 px-6">
-                    <Checkbox
-                      checked={selectedUsers.includes(user.id)}
-                      onCheckedChange={(checked) => onUserSelect(user.id, !!checked)}
-                      aria-label={`Select user ${getUserDisplayName(user)}`}
-                    />
-                  </TableCell>
-                  <TableCell className="py-4 px-6">
-                    <div className="flex items-center space-x-3">
-                      <div className="relative">
-                        <Avatar className="h-10 w-10 border-2 border-white group-hover:border-blue-400 transition">
-                          <AvatarImage src={user.avatar_url || ""} alt={getUserDisplayName(user)} />
-                          <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-700 text-white text-lg border-2 border-white shadow">
-                            {getUserInitials(user)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <span className="absolute -bottom-1 -right-1 block w-3 h-3 rounded-full border-2 border-white bg-green-500" aria-label="Online"></span>
-                      </div>
-                      <div>
-                        <div className="font-semibold text-gray-900 text-base flex items-center">
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <span>{getUserDisplayName(user)}</span>
-                              </TooltipTrigger>
-                              <TooltipContent side="top">{user.email}</TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
+              {users.map((user) => {
+                const isSelected = selectedUsers.includes(user.id);
+                return (
+                  <TableRow
+                    key={user.id}
+                    role="row"
+                    aria-checked={isSelected}
+                    tabIndex={0}
+                    className={`transition cursor-pointer group focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2 ${
+                      isSelected ? "bg-blue-100/60" : "hover:bg-blue-50"
+                    }`}
+                    onClick={(e) => {
+                      // Prevent toggling if clicking on a button or link inside the row
+                      if ((e.target as HTMLElement).closest("button, a, [role='button']")) return;
+                      onUserSelect(user.id, !isSelected);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === " " || e.key === "Enter") {
+                        e.preventDefault();
+                        onUserSelect(user.id, !isSelected);
+                      }
+                    }}
+                  >
+                    <TableCell className="py-4 px-6 align-middle">
+                      <Checkbox
+                        checked={isSelected}
+                        onCheckedChange={(checked) => onUserSelect(user.id, !!checked)}
+                        aria-label={`Select user ${getUserDisplayName(user)}`}
+                        role="checkbox"
+                        aria-checked={isSelected}
+                        tabIndex={-1}
+                      />
+                    </TableCell>
+                    <TableCell className="py-4 px-6 align-middle">
+                      <div className="flex items-center space-x-3">
+                        <div className="relative">
+                          <Avatar className="h-10 w-10 border-2 border-white group-hover:border-blue-400 transition">
+                            <AvatarImage src={user.avatar_url || ""} alt={getUserDisplayName(user)} />
+                            <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-700 text-white text-lg border-2 border-white shadow">
+                              {getUserInitials(user)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <span className="absolute -bottom-1 -right-1 block w-3 h-3 rounded-full border-2 border-white bg-green-500" aria-label="Online"></span>
                         </div>
-                        <div className="text-xs text-gray-400">ID: {user.id.slice(0, 8)}...</div>
+                        <div>
+                          <div className="font-semibold text-gray-900 text-base flex items-center">
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <span>{getUserDisplayName(user)}</span>
+                                </TooltipTrigger>
+                                <TooltipContent side="top">{user.email}</TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          </div>
+                          <div className="text-xs text-gray-400">ID: {user.id.slice(0, 8)}...</div>
+                        </div>
                       </div>
-                    </div>
-                  </TableCell>
-                  <TableCell className="py-4 px-6">{getRoleBadge(user.systemRole)}</TableCell>
-                  <TableCell className="py-4 px-6">{getStatusBadge(user.status)}</TableCell>
-                  <TableCell className="py-4 px-6">
-                    <span className="text-base text-gray-700">—</span>
-                  </TableCell>
-                  <TableCell className="py-4 px-6">
-                    <span className="text-base text-gray-700">
-                      {user.created_at ? format(new Date(user.created_at), "MMM dd, yyyy") : "—"}
-                    </span>
-                  </TableCell>
-                  <TableCell className="py-4 px-6">
-                    <span className="text-base text-gray-700">—</span>
-                  </TableCell>
-                  <TableCell className="py-4 px-6">
-                    <UserActions
-                      user={user}
-                      onEditUser={onEditUser}
-                      onChangePassword={onChangePassword}
-                      onChangeAvatar={onChangeAvatar}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
+                    </TableCell>
+                    <TableCell className="py-4 px-6 align-middle">{getRoleBadge(user.systemRole)}</TableCell>
+                    <TableCell className="py-4 px-6 align-middle">{getStatusBadge(user.status)}</TableCell>
+                    <TableCell className="py-4 px-6 align-middle">
+                      <span className="text-base text-gray-700">—</span>
+                    </TableCell>
+                    <TableCell className="py-4 px-6 align-middle">
+                      <span className="text-base text-gray-700">
+                        {user.created_at ? format(new Date(user.created_at), "MMM dd, yyyy") : "—"}
+                      </span>
+                    </TableCell>
+                    <TableCell className="py-4 px-6 align-middle">
+                      <span className="text-base text-gray-700">—</span>
+                    </TableCell>
+                    <TableCell className="py-4 px-6 align-middle">
+                      <UserActions
+                        user={user}
+                        onEditUser={onEditUser}
+                        onChangePassword={onChangePassword}
+                        onChangeAvatar={onChangeAvatar}
+                      />
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>
