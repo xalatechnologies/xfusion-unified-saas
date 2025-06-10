@@ -26,6 +26,9 @@ const getUserRole = (user: any): string => {
   // For now, we'll use user metadata or default logic
   const userRole = user?.user_metadata?.role;
   
+  console.log('User metadata:', user?.user_metadata);
+  console.log('Detected user role:', userRole);
+  
   if (userRole === 'super_admin') return 'super_admin';
   if (userRole === 'organization_admin' || userRole === 'admin') return 'organization_admin';
   return 'user';
@@ -61,8 +64,12 @@ export const ApplicationSwitcher = () => {
     app.enabled && canAccessApplication(userRole, app.requiredRole || 'user')
   );
 
-  // If user only has access to one app, don't show the switcher
-  if (accessibleApps.length <= 1) return null;
+  console.log('Current user role:', userRole);
+  console.log('Accessible apps:', accessibleApps);
+  console.log('Current app:', currentApp);
+
+  // Temporarily show switcher even for single app to debug
+  // if (accessibleApps.length <= 1) return null;
 
   const CurrentIcon = iconMap[currentApp.icon as keyof typeof iconMap] || Crown;
 
@@ -76,7 +83,7 @@ export const ApplicationSwitcher = () => {
             </div>
             <div className="hidden md:block text-left">
               <p className="text-sm font-medium text-gray-900">{currentApp.displayName}</p>
-              <p className="text-xs text-gray-500">Switch Application</p>
+              <p className="text-xs text-gray-500">Switch Application ({accessibleApps.length} apps)</p>
             </div>
             <ChevronDown className="w-4 h-4 text-gray-500" />
           </div>
@@ -85,6 +92,7 @@ export const ApplicationSwitcher = () => {
       <DropdownMenuContent align="start" className="w-64">
         <div className="px-2 py-1.5">
           <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Applications</p>
+          <p className="text-xs text-gray-400">Role: {userRole}</p>
         </div>
         <DropdownMenuSeparator />
         {accessibleApps.map((app) => {
@@ -109,6 +117,7 @@ export const ApplicationSwitcher = () => {
               <div className="flex-1 text-left">
                 <p className="text-sm font-medium">{app.displayName}</p>
                 <p className="text-xs text-gray-500">{app.description}</p>
+                <p className="text-xs text-gray-400">Required: {app.requiredRole}</p>
               </div>
             </DropdownMenuItem>
           );
