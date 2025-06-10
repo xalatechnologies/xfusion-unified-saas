@@ -89,7 +89,7 @@ export function UsersTable({
     return (
       <Badge
         variant={config.variant}
-        className="inline-flex items-center px-3 py-1 text-sm font-semibold rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+        className="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
         style={{ minWidth: 90, justifyContent: "center" }}
         aria-label={config.label}
       >
@@ -109,7 +109,7 @@ export function UsersTable({
     return (
       <Badge
         variant={config.variant}
-        className="inline-flex items-center px-3 py-1 text-sm font-semibold rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+        className="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
         style={{ minWidth: 110, justifyContent: "center" }}
         aria-label={config.label}
       >
@@ -154,11 +154,11 @@ export function UsersTable({
   // Skeleton loader rows
   if (loading) {
     return (
-      <Card className="shadow-2xl border-2 border-blue-100 rounded-2xl overflow-hidden">
+      <Card className="border border-gray-200 rounded-xl overflow-hidden bg-white">
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <table className="min-w-full">
-              <thead className="sticky top-0 bg-white z-10">
+              <thead className="sticky top-0 bg-gray-50 z-10">
                 <tr>
                   {[...Array(8)].map((_, i) => (
                     <th key={i} className="py-4 px-6">
@@ -169,7 +169,7 @@ export function UsersTable({
               </thead>
               <tbody>
                 {[...Array(6)].map((_, i) => (
-                  <tr key={i} className="border-b">
+                  <tr key={i} className="border-b border-gray-100">
                     {[...Array(8)].map((_, j) => (
                       <td key={j} className="py-5 px-6">
                         <div className="h-5 bg-gray-100 rounded animate-pulse"></div>
@@ -188,26 +188,26 @@ export function UsersTable({
   // Empty state
   if (!users.length) {
     return (
-      <Card className="shadow-2xl border-2 border-blue-100 rounded-2xl overflow-hidden">
+      <Card className="border border-gray-200 rounded-xl overflow-hidden bg-white">
         <CardContent className="flex flex-col items-center justify-center py-20">
           <img src="/empty-users.svg" alt="No users" className="w-36 h-36 mb-8 opacity-80" />
           <h2 className="text-2xl font-bold text-gray-800 mb-2">No users found</h2>
           <p className="text-lg text-gray-500 mb-6">Get started by creating your first user.</p>
-          <button className="bg-blue-700 hover:bg-blue-800 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition text-lg">Create User</button>
+          <button className="bg-blue-700 hover:bg-blue-800 text-white font-bold px-8 py-3 rounded-xl shadow transition text-lg">Create User</button>
         </CardContent>
       </Card>
     );
   }
 
   return (
-    <Card className="shadow-2xl border-2 border-blue-100 rounded-2xl overflow-hidden">
+    <Card className="border border-gray-200 rounded-xl overflow-hidden bg-white">
       <CardContent className="p-0">
         {renderQuickFilters()}
         <div className="overflow-x-auto">
           <Table className="min-w-full">
             <TableHeader>
-              <TableRow className="sticky top-0 bg-white z-10">
-                <TableHead className="w-14 text-lg font-bold text-gray-900" aria-label="Select all users">
+              <TableRow className="sticky top-0 bg-gray-50 z-10 border-b border-gray-200">
+                <TableHead className="w-14 text-base font-semibold text-gray-900" aria-label="Select all users">
                   <Checkbox
                     checked={allSelected}
                     onCheckedChange={onSelectAll}
@@ -215,20 +215,20 @@ export function UsersTable({
                     aria-label="Select all users"
                   />
                 </TableHead>
-                <TableHead className="text-lg font-bold text-gray-900">User</TableHead>
-                <TableHead className="text-lg font-bold text-gray-900">System Role</TableHead>
-                <TableHead className="text-lg font-bold text-gray-900">Status</TableHead>
-                <TableHead className="text-lg font-bold text-gray-900">Organizations</TableHead>
-                <TableHead className="text-lg font-bold text-gray-900">Created</TableHead>
-                <TableHead className="text-lg font-bold text-gray-900">Last Login</TableHead>
-                <TableHead className="w-14 text-lg font-bold text-gray-900">Actions</TableHead>
+                <TableHead className="text-base font-semibold text-gray-900">User</TableHead>
+                <TableHead className="text-base font-semibold text-gray-900">System Role</TableHead>
+                <TableHead className="text-base font-semibold text-gray-900">Status</TableHead>
+                <TableHead className="text-base font-semibold text-gray-900">Organizations</TableHead>
+                <TableHead className="text-base font-semibold text-gray-900">Created</TableHead>
+                <TableHead className="text-base font-semibold text-gray-900">Last Login</TableHead>
+                <TableHead className="w-14 text-base font-semibold text-gray-900">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {users.map((user) => (
                 <TableRow
                   key={user.id}
-                  className="transition hover:bg-blue-50 hover:shadow-lg hover:scale-[1.01] cursor-pointer group focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2"
+                  className="transition hover:bg-blue-50 cursor-pointer group focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2 border-b border-gray-100"
                   tabIndex={0}
                   aria-label={`User ${getUserDisplayName(user)}`}
                 >
@@ -240,18 +240,18 @@ export function UsersTable({
                     />
                   </TableCell>
                   <TableCell className="py-4 px-6">
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-3">
                       <div className="relative">
-                        <Avatar className="h-14 w-14 shadow-lg border-4 border-white group-hover:border-blue-400 transition">
+                        <Avatar className="h-10 w-10 border-2 border-white group-hover:border-blue-400 transition">
                           <AvatarImage src={user.avatar_url || ""} alt={getUserDisplayName(user)} />
-                          <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-700 text-white text-xl border-2 border-white shadow-xl">
+                          <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-700 text-white text-lg border-2 border-white shadow">
                             {getUserInitials(user)}
                           </AvatarFallback>
                         </Avatar>
-                        <span className="absolute -bottom-1 -right-1 block w-4 h-4 rounded-full border-2 border-white bg-green-500" aria-label="Online"></span>
+                        <span className="absolute -bottom-1 -right-1 block w-3 h-3 rounded-full border-2 border-white bg-green-500" aria-label="Online"></span>
                       </div>
                       <div>
-                        <div className="font-bold text-gray-900 text-lg flex items-center">
+                        <div className="font-semibold text-gray-900 text-base flex items-center">
                           <TooltipProvider>
                             <Tooltip>
                               <TooltipTrigger asChild>
