@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Search, Bell } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAuthActions } from "@/hooks/useAuthActions";
-import { ApplicationSwitcher } from "@/components/ApplicationSwitcher";
+import { ApplicationSwitcher } from "@/shared/components/ApplicationSwitcher";
 import {
   DropdownMenu,
   DropdownMenuContent,
