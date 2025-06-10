@@ -61,8 +61,8 @@ export function UsersTable({ users, selectedUsers, onUserSelect, onSelectAll, on
             <TableHead className="w-12">
               <Checkbox
                 checked={allSelected}
-                indeterminate={someSelected}
                 onCheckedChange={onSelectAll}
+                className={someSelected ? "data-[state=checked]:bg-primary/50" : ""}
               />
             </TableHead>
             <TableHead>User</TableHead>
