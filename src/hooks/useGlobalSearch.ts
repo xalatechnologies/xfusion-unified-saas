@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchApi, SearchResult } from "@/lib/database/search";
+import { useSearchHistory } from "./useSearchHistory";
 
 export const useGlobalSearch = () => {
   const [query, setQuery] = useState("");
@@ -9,51 +10,77 @@ export const useGlobalSearch = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [entityTypes, setEntityTypes] = useState<string[]>([
+    'organizations', 'users', 'subscriptions', 'documentation'
+  ]);
+  const [showShortcuts, setShowShortcuts] = useState(false);
+  
   const navigate = useNavigate();
   const debounceTimeoutRef = useRef<NodeJS.Timeout>();
   const currentAnalyticsIdRef = useRef<string | null>(null);
+  
+  const { 
+    recentSearches, 
+    addToHistory, 
+    clearHistory, 
+    removeFromHistory 
+  } = useSearchHistory();
 
-  const performSearch = useCallback(async (searchQuery: string) => {
+  const performSearch = useCallback(async (searchQuery: string, types: string[] = entityTypes) => {
     if (!searchQuery.trim()) {
       setResults([]);
       setIsLoading(false);
+      setShowShortcuts(false);
       return;
     }
 
     setIsLoading(true);
+    setShowShortcuts(false);
+    
     try {
-      const searchResults = await searchApi.globalSearch(searchQuery);
+      const searchResults = await searchApi.globalSearch(searchQuery, types);
       setResults(searchResults);
       setSelectedIndex(-1);
+      
+      // Add to search history
+      addToHistory(searchQuery);
     } catch (error) {
       console.error('Search failed:', error);
       setResults([]);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [entityTypes, addToHistory]);
 
-  const debouncedSearch = useCallback((searchQuery: string) => {
+  const debouncedSearch = useCallback((searchQuery: string, types: string[] = entityTypes) => {
     if (debounceTimeoutRef.current) {
       clearTimeout(debounceTimeoutRef.current);
     }
 
     debounceTimeoutRef.current = setTimeout(() => {
-      performSearch(searchQuery);
+      performSearch(searchQuery, types);
     }, 300);
-  }, [performSearch]);
+  }, [performSearch, entityTypes]);
 
   const handleQueryChange = useCallback((newQuery: string) => {
     setQuery(newQuery);
     if (newQuery.trim()) {
       setIsOpen(true);
-      debouncedSearch(newQuery);
+      debouncedSearch(newQuery, entityTypes);
     } else {
       setIsOpen(false);
       setResults([]);
       setSelectedIndex(-1);
+      setShowShortcuts(false);
     }
-  }, [debouncedSearch]);
+  }, [debouncedSearch, entityTypes]);
+
+  const handleEntityTypesChange = useCallback((types: string[]) => {
+    setEntityTypes(types);
+    if (query.trim()) {
+      debouncedSearch(query, types);
+    }
+  }, [query, debouncedSearch]);
 
   const handleResultClick = useCallback((result: SearchResult) => {
     // Log the click if we have an analytics ID
@@ -73,23 +100,34 @@ export const useGlobalSearch = () => {
     setIsOpen(false);
     setResults([]);
     setSelectedIndex(-1);
+    setShowShortcuts(false);
   }, [navigate]);
 
+  const handleRecentSearchClick = useCallback((searchQuery: string) => {
+    setQuery(searchQuery);
+    setIsOpen(true);
+    performSearch(searchQuery, entityTypes);
+  }, [performSearch, entityTypes]);
+
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
-    if (!isOpen || results.length === 0) return;
+    if (!isOpen) return;
 
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault();
-        setSelectedIndex(prev => 
-          prev < results.length - 1 ? prev + 1 : 0
-        );
+        if (results.length > 0) {
+          setSelectedIndex(prev => 
+            prev < results.length - 1 ? prev + 1 : 0
+          );
+        }
         break;
       case 'ArrowUp':
         event.preventDefault();
-        setSelectedIndex(prev => 
-          prev > 0 ? prev - 1 : results.length - 1
-        );
+        if (results.length > 0) {
+          setSelectedIndex(prev => 
+            prev > 0 ? prev - 1 : results.length - 1
+          );
+        }
         break;
       case 'Enter':
         event.preventDefault();
@@ -103,14 +141,32 @@ export const useGlobalSearch = () => {
         setIsOpen(false);
         setResults([]);
         setSelectedIndex(-1);
+        setShowShortcuts(false);
+        break;
+      case '?':
+        if (!query.trim()) {
+          event.preventDefault();
+          setShowShortcuts(true);
+        }
         break;
     }
-  }, [isOpen, results, selectedIndex, handleResultClick]);
+  }, [isOpen, results, selectedIndex, handleResultClick, query]);
 
   const handleClickOutside = useCallback(() => {
     setIsOpen(false);
     setSelectedIndex(-1);
+    setShowShortcuts(false);
   }, []);
+
+  const handleSearchFocus = useCallback(() => {
+    setIsOpen(true);
+    if (!query.trim() && recentSearches.length > 0) {
+      // Show recent searches when focused with empty query
+      setShowShortcuts(false);
+    } else if (!query.trim()) {
+      setShowShortcuts(true);
+    }
+  }, [query, recentSearches.length]);
 
   // Focus search with Cmd+K
   const handleGlobalKeyDown = useCallback((event: KeyboardEvent) => {
@@ -145,9 +201,17 @@ export const useGlobalSearch = () => {
     isLoading,
     isOpen,
     selectedIndex,
+    entityTypes,
+    recentSearches,
+    showShortcuts,
     handleQueryChange,
     handleResultClick,
     handleKeyDown,
-    handleClickOutside
+    handleClickOutside,
+    handleEntityTypesChange,
+    handleRecentSearchClick,
+    handleSearchFocus,
+    clearHistory,
+    removeFromHistory
   };
 };

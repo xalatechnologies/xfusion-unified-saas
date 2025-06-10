@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useAuthActions } from "@/hooks/useAuthActions";
 import { ApplicationSwitcher } from "@/shared/components/ApplicationSwitcher";
 import { SearchResults } from "@/components/search/SearchResults";
+import { SearchFilters } from "@/components/search/SearchFilters";
 import { useGlobalSearch } from "@/hooks/useGlobalSearch";
 import {
   DropdownMenu,
@@ -36,10 +37,18 @@ export const TopBar = () => {
     isLoading,
     isOpen,
     selectedIndex,
+    entityTypes,
+    recentSearches,
+    showShortcuts,
     handleQueryChange,
     handleResultClick,
     handleKeyDown,
-    handleClickOutside
+    handleClickOutside,
+    handleEntityTypesChange,
+    handleRecentSearchClick,
+    handleSearchFocus,
+    clearHistory,
+    removeFromHistory
   } = useGlobalSearch();
 
   const handleSignOut = async () => {
@@ -102,32 +111,51 @@ export const TopBar = () => {
             <ApplicationSwitcher />
           </div>
           
-          <div ref={searchRef} className="relative flex-1 max-w-2xl">
-            <form onSubmit={handleSearchSubmit} className="relative">
-              <div className="relative flex items-center">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search organizations, users, subscriptions..."
-                  value={query}
-                  onChange={(e) => handleQueryChange(e.target.value)}
-                  className="pl-10 pr-16 w-full focus-visible:ring-2 focus-visible:ring-primary/20 border-muted-foreground/20"
-                />
-                <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-                  <Badge variant="secondary" className="text-xs font-normal px-1.5 py-0.5">
-                    <Command className="h-3 w-3 mr-1" />
-                    K
-                  </Badge>
+          <div className="flex-1 max-w-4xl">
+            <div ref={searchRef} className="relative">
+              <form onSubmit={handleSearchSubmit} className="relative">
+                <div className="relative flex items-center">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search organizations, users, subscriptions..."
+                    value={query}
+                    onChange={(e) => handleQueryChange(e.target.value)}
+                    onFocus={handleSearchFocus}
+                    className="pl-10 pr-16 w-full focus-visible:ring-2 focus-visible:ring-primary/20 border-muted-foreground/20"
+                  />
+                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                    <Badge variant="secondary" className="text-xs font-normal px-1.5 py-0.5">
+                      <Command className="h-3 w-3 mr-1" />
+                      K
+                    </Badge>
+                  </div>
                 </div>
-              </div>
-            </form>
+              </form>
+              
+              {isOpen && (query.trim() || recentSearches.length > 0 || showShortcuts) && (
+                <SearchResults
+                  results={results}
+                  isLoading={isLoading}
+                  query={query}
+                  onResultClick={handleResultClick}
+                  selectedIndex={selectedIndex}
+                  recentSearches={recentSearches}
+                  showShortcuts={showShortcuts}
+                  onRecentSearchClick={handleRecentSearchClick}
+                  onClearHistory={clearHistory}
+                  onRemoveFromHistory={removeFromHistory}
+                />
+              )}
+            </div>
             
-            <SearchResults
-              results={results}
-              isLoading={isLoading}
-              query={query}
-              onResultClick={handleResultClick}
-              selectedIndex={selectedIndex}
-            />
+            {query.trim() && (
+              <div className="mt-2">
+                <SearchFilters
+                  selectedTypes={entityTypes}
+                  onTypesChange={handleEntityTypesChange}
+                />
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-3 flex-shrink-0">
