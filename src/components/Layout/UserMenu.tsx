@@ -1,4 +1,3 @@
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -38,14 +37,17 @@ export const UserMenu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-primary/20">
+        <Button variant="ghost" className="relative h-10 px-2 pr-4 rounded-full hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-primary/20 flex items-center gap-2">
           <Avatar className="h-9 w-9 ring-2 ring-background shadow-md">
             <AvatarImage src={user?.user_metadata?.avatar_url} alt={getUserDisplayName()} />
             <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold text-sm">
               {getUserInitials()}
             </AvatarFallback>
           </Avatar>
-          <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 bg-green-500 border-2 border-white rounded-full"></div>
+          <span className="max-w-[120px] truncate text-sm font-medium text-gray-900">
+            {getUserDisplayName()}
+          </span>
+          <div className="absolute -bottom-0.5 left-7 h-3 w-3 bg-green-500 border-2 border-white rounded-full"></div>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-72 p-2" align="end" forceMount>

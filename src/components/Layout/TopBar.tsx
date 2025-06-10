@@ -1,4 +1,3 @@
-
 import { ApplicationSwitcher } from "@/shared/components/ApplicationSwitcher";
 import { SearchBar } from "./SearchBar";
 import { HelpButton } from "./HelpButton";
@@ -11,7 +10,7 @@ import {
 export const TopBar = () => {
   return (
     <TooltipProvider>
-      <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 px-6 py-3">
+      <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 h-20 p-5">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-4 flex-shrink-0">
             <ApplicationSwitcher />

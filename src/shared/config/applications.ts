@@ -17,7 +17,7 @@ export const applications: Application[] = [
     displayName: 'SAAS Admin',
     description: 'Manage organizations, users, and system settings across all applications',
     icon: 'Crown',
-    baseRoute: '/saas',
+    baseRoute: '/saas-admin',
     enabled: true,
     requiredRole: 'super_admin'
   },

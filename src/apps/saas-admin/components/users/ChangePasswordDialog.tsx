@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { usersApi } from "@/lib/database/users";
 
 const changePasswordSchema = z.object({
   newPassword: z.string().min(8, "Password must be at least 8 characters"),
@@ -26,7 +26,7 @@ const changePasswordSchema = z.object({
 type ChangePasswordForm = z.infer<typeof changePasswordSchema>;
 
 interface ChangePasswordDialogProps {
-  user: any;
+  user: { id: string; email: string } | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
@@ -46,14 +46,12 @@ export function ChangePasswordDialog({ user, open, onOpenChange }: ChangePasswor
   const onSubmit = async (data: ChangePasswordForm) => {
     setIsSubmitting(true);
     try {
-      // Mock API call - implement actual password change logic
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      if (!user?.id) throw new Error("User ID is required");
+      await usersApi.changeUserPassword(user.id, data.newPassword);
       toast({
         title: "Password updated",
         description: `Password has been updated for ${user.email}.`
       });
-      
       onOpenChange(false);
       form.reset();
     } catch (error) {

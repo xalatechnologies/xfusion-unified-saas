@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,6 +19,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { usersApi } from "@/lib/database/users";
+import { userRolesApi } from "@/lib/database/user-roles";
 
 const editUserSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -33,7 +33,7 @@ const editUserSchema = z.object({
 type EditUserForm = z.infer<typeof editUserSchema>;
 
 interface EditUserDialogProps {
-  user: any;
+  user: { id: string; email: string; first_name?: string; last_name?: string; status?: string; systemRole?: string } | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
@@ -48,8 +48,8 @@ export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps
       email: user?.email || "",
       firstName: user?.first_name || "",
       lastName: user?.last_name || "",
-      status: "active",
-      systemRole: "user",
+      status: (user?.status as EditUserForm["status"]) || "active",
+      systemRole: (user?.systemRole as EditUserForm["systemRole"]) || "user",
       notes: ""
     }
   });
@@ -60,8 +60,8 @@ export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps
         email: user.email,
         firstName: user.first_name || "",
         lastName: user.last_name || "",
-        status: "active", // Mock data
-        systemRole: "user", // Mock data
+        status: (user.status as EditUserForm["status"]) || "active",
+        systemRole: (user.systemRole as EditUserForm["systemRole"]) || "user",
         notes: ""
       });
     }
@@ -70,20 +70,20 @@ export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps
   const onSubmit = async (data: EditUserForm) => {
     setIsSubmitting(true);
     try {
-      console.log("Updating user:", data);
-      
-      // Update user info using the database function
+      // Update user info
       await usersApi.updateUserInfo(
-        user.id,
+        user!.id,
         data.firstName,
         data.lastName
       );
-      
+      // Update status
+      await usersApi.updateUserStatus(user!.id, data.status);
+      // Update system role
+      await userRolesApi.assignSystemRole(user!.id, data.systemRole);
       toast({
         title: "User updated successfully",
         description: "The user information has been updated."
       });
-      
       onOpenChange(false);
     } catch (error) {
       console.error("Error updating user:", error);

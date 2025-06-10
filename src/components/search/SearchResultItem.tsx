@@ -1,13 +1,14 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { SearchResult } from "@/lib/database/search";
 import { 
   Building2, 
   User, 
   CreditCard, 
   FileText, 
-  ChevronRight 
+  ChevronRight, 
+  Eye 
 } from "lucide-react";
+import { SearchResultPreview } from "./SearchResultPreview";
 
 interface SearchResultItemProps {
   result: SearchResult;
@@ -61,42 +62,58 @@ const getEntityLabel = (entityType: string) => {
 };
 
 export const SearchResultItem = ({ result, onClick, isSelected }: SearchResultItemProps) => {
+  const [previewOpen, setPreviewOpen] = useState(false);
   const Icon = getEntityIcon(result.entity_type);
   const colorClass = getEntityColor(result.entity_type);
   const entityLabel = getEntityLabel(result.entity_type);
 
   return (
-    <div
-      className={`
-        flex items-center p-3 rounded-lg cursor-pointer transition-colors
-        ${isSelected 
-          ? 'bg-blue-50 border-l-4 border-l-blue-500' 
-          : 'hover:bg-gray-50'
-        }
-      `}
-      onClick={onClick}
-    >
-      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${colorClass} mr-3`}>
-        <Icon className="w-4 h-4" />
-      </div>
-      
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center space-x-2">
-          <span className="font-medium text-gray-900 truncate">
-            {result.title}
-          </span>
-          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
-            {entityLabel}
-          </span>
+    <>
+      <div
+        className={`
+          flex items-center p-3 rounded-lg cursor-pointer transition-colors
+          ${isSelected 
+            ? 'bg-blue-50 border-l-4 border-l-blue-500' 
+            : 'hover:bg-gray-50'
+          }
+        `}
+        onClick={onClick}
+        tabIndex={0}
+        role="button"
+        aria-pressed={isSelected}
+      >
+        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${colorClass} mr-3`}>
+          <Icon className="w-4 h-4" />
         </div>
-        {result.subtitle && (
-          <div className="text-sm text-gray-600 truncate mt-0.5">
-            {result.subtitle}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center space-x-2">
+            <span className="font-medium text-gray-900 truncate">
+              {result.title}
+            </span>
+            <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+              {entityLabel}
+            </span>
           </div>
-        )}
+          {result.subtitle && (
+            <div className="text-sm text-gray-600 truncate mt-0.5">
+              {result.subtitle}
+            </div>
+          )}
+        </div>
+        <button
+          type="button"
+          className="ml-2 p-1 rounded hover:bg-gray-100 focus:outline-none"
+          aria-label="Preview details"
+          onClick={e => {
+            e.stopPropagation();
+            setPreviewOpen(true);
+          }}
+        >
+          <Eye className="w-4 h-4 text-gray-400" />
+        </button>
+        <ChevronRight className="w-4 h-4 text-gray-400 ml-2" />
       </div>
-      
-      <ChevronRight className="w-4 h-4 text-gray-400 ml-2" />
-    </div>
+      <SearchResultPreview result={result} open={previewOpen} onOpenChange={setPreviewOpen} />
+    </>
   );
 };

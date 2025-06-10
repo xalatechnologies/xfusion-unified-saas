@@ -1,4 +1,3 @@
-
 import { Search, Command } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +8,6 @@ import { useRef, useEffect } from "react";
 
 export const SearchBar = () => {
   const searchRef = useRef<HTMLDivElement>(null);
-  
   const {
     query,
     results,
@@ -86,7 +84,6 @@ export const SearchBar = () => {
             </div>
           </div>
         </form>
-        
         {isOpen && (query.trim() || recentSearches.length > 0 || showShortcuts) && (
           <div className="absolute top-full left-0 right-0 z-50 mt-2">
             <SearchResults
@@ -103,7 +100,6 @@ export const SearchBar = () => {
             />
           </div>
         )}
-        
         {query.trim() && (
           <div className="absolute top-full left-0 right-0 z-40 mt-2">
             <SearchFilters

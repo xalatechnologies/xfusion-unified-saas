@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -11,6 +10,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, Edit, Trash2, Shield, UserX, UserCheck, Key, Image } from "lucide-react";
 import { usersApi } from "@/lib/database/users";
+import { useQueryClient } from "@tanstack/react-query";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface UserActionsProps {
   user: any;
@@ -21,7 +31,9 @@ interface UserActionsProps {
 
 export function UserActions({ user, onEditUser, onChangePassword, onChangeAvatar }: UserActionsProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const getUserDisplayName = (user: any) => {
     if (user?.first_name || user?.last_name) {
@@ -71,18 +83,15 @@ export function UserActions({ user, onEditUser, onChangePassword, onChangeAvatar
   };
 
   const handleDeleteUser = async () => {
-    if (!confirm(`Are you sure you want to delete ${getUserDisplayName(user)}? This action cannot be undone.`)) {
-      return;
-    }
-
     setIsLoading(true);
     try {
-      // Mock deletion - implement actual deletion logic
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await usersApi.deleteUser(user.id);
       toast({
         title: "User deleted",
         description: `${getUserDisplayName(user)} has been deleted.`
       });
+      setShowDeleteDialog(false);
+      queryClient.invalidateQueries({ queryKey: ["users"] });
     } catch (error) {
       toast({
         title: "Error",
@@ -95,44 +104,62 @@ export function UserActions({ user, onEditUser, onChangePassword, onChangeAvatar
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" disabled={isLoading}>
-          <MoreHorizontal className="w-4 h-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuItem onClick={() => onEditUser(user)}>
-          <Edit className="w-4 h-4 mr-2" />
-          Edit User
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onChangePassword(user)}>
-          <Key className="w-4 h-4 mr-2" />
-          Change Password
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onChangeAvatar(user)}>
-          <Image className="w-4 h-4 mr-2" />
-          Change Avatar
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Shield className="w-4 h-4 mr-2" />
-          Manage Roles
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleActivateUser}>
-          <UserCheck className="w-4 h-4 mr-2" />
-          Activate User
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleSuspendUser} className="text-orange-600">
-          <UserX className="w-4 h-4 mr-2" />
-          Suspend User
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleDeleteUser} className="text-red-600">
-          <Trash2 className="w-4 h-4 mr-2" />
-          Delete User
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="sm" disabled={isLoading}>
+            <MoreHorizontal className="w-4 h-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuItem onClick={() => onEditUser(user)}>
+            <Edit className="w-4 h-4 mr-2" />
+            Edit User
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onChangePassword(user)}>
+            <Key className="w-4 h-4 mr-2" />
+            Change Password
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onChangeAvatar(user)}>
+            <Image className="w-4 h-4 mr-2" />
+            Change Avatar
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Shield className="w-4 h-4 mr-2" />
+            Manage Roles
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={handleActivateUser}>
+            <UserCheck className="w-4 h-4 mr-2" />
+            Activate User
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={handleSuspendUser} className="text-orange-600">
+            <UserX className="w-4 h-4 mr-2" />
+            Suspend User
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => setShowDeleteDialog(true)} className="text-red-600">
+            <Trash2 className="w-4 h-4 mr-2" />
+            Delete User
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete User</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete <span className="font-semibold">{getUserDisplayName(user)}</span>? This action cannot be undone and the user will lose all access.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteUser} disabled={isLoading} className="bg-red-600 hover:bg-red-700">
+              {isLoading ? "Deleting..." : "Delete User"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }

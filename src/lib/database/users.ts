@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -27,11 +26,11 @@ export const usersApi = {
   },
 
   async getUsers() {
+    // Using <any, any> because users_with_role is a custom view not present in generated types
     const { data, error } = await supabase
-      .from("users")
-      .select("*")
+      .from<any, any>("users_with_role")
+      .select("id, email, first_name, last_name, avatar_url, created_at, status, system_role")
       .order("created_at", { ascending: false });
-    
     if (error) throw error;
     return data;
   },
@@ -79,5 +78,23 @@ export const usersApi = {
     
     if (error) throw error;
     return data;
+  },
+
+  async deleteUser(userId: string) {
+    const { error } = await supabase
+      .from("users")
+      .delete()
+      .eq("id", userId);
+    if (error) throw error;
+    return true;
+  },
+
+  async changeUserPassword(userId: string, newPassword: string) {
+    // This requires service role key and Supabase admin API
+    const { error } = await supabase.auth.admin.updateUserById(userId, {
+      password: newPassword
+    });
+    if (error) throw error;
+    return true;
   },
 };
