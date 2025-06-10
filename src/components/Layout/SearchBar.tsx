@@ -88,29 +88,31 @@ export const SearchBar = () => {
         </form>
         
         {isOpen && (query.trim() || recentSearches.length > 0 || showShortcuts) && (
-          <SearchResults
-            results={results}
-            isLoading={isLoading}
-            query={query}
-            onResultClick={handleResultClick}
-            selectedIndex={selectedIndex}
-            recentSearches={recentSearches}
-            showShortcuts={showShortcuts}
-            onRecentSearchClick={handleRecentSearchClick}
-            onClearHistory={clearHistory}
-            onRemoveFromHistory={removeFromHistory}
-          />
+          <div className="absolute top-full left-0 right-0 z-50 mt-2">
+            <SearchResults
+              results={results}
+              isLoading={isLoading}
+              query={query}
+              onResultClick={handleResultClick}
+              selectedIndex={selectedIndex}
+              recentSearches={recentSearches}
+              showShortcuts={showShortcuts}
+              onRecentSearchClick={handleRecentSearchClick}
+              onClearHistory={clearHistory}
+              onRemoveFromHistory={removeFromHistory}
+            />
+          </div>
+        )}
+        
+        {query.trim() && (
+          <div className="absolute top-full left-0 right-0 z-40 mt-2">
+            <SearchFilters
+              selectedTypes={entityTypes}
+              onTypesChange={handleEntityTypesChange}
+            />
+          </div>
         )}
       </div>
-      
-      {query.trim() && (
-        <div className="mt-2">
-          <SearchFilters
-            selectedTypes={entityTypes}
-            onTypesChange={handleEntityTypesChange}
-          />
-        </div>
-      )}
     </div>
   );
 };
