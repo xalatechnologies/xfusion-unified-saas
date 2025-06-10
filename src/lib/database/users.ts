@@ -47,6 +47,26 @@ export const usersApi = {
     return data;
   },
 
+  async updateUserInfo(userId: string, firstName?: string, lastName?: string, avatarUrl?: string) {
+    const { error } = await supabase.rpc('update_user_info', {
+      user_id_param: userId,
+      first_name_param: firstName || null,
+      last_name_param: lastName || null,
+      avatar_url_param: avatarUrl || null
+    });
+    
+    if (error) throw error;
+  },
+
+  async updateUserStatus(userId: string, status: string) {
+    const { error } = await supabase.rpc('update_user_status', {
+      user_id_param: userId,
+      status_param: status
+    });
+    
+    if (error) throw error;
+  },
+
   async getCurrentUser() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("No authenticated user");

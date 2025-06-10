@@ -28,8 +28,18 @@ export function UsersTable({
   const allSelected = users.length > 0 && selectedUsers.length === users.length;
   const someSelected = selectedUsers.length > 0 && selectedUsers.length < users.length;
 
-  const getUserInitials = (email: string) => {
-    return email.charAt(0).toUpperCase();
+  const getUserInitials = (user: any) => {
+    if (user.first_name && user.last_name) {
+      return `${user.first_name.charAt(0)}${user.last_name.charAt(0)}`.toUpperCase();
+    }
+    return user.email.charAt(0).toUpperCase();
+  };
+
+  const getUserDisplayName = (user: any) => {
+    if (user.first_name || user.last_name) {
+      return `${user.first_name || ''} ${user.last_name || ''}`.trim();
+    }
+    return user.email;
   };
 
   const getStatusBadge = (status: string = 'active') => {
@@ -88,14 +98,15 @@ export function UsersTable({
               <TableCell>
                 <div className="flex items-center space-x-3">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src="" alt={user.email} />
+                    <AvatarImage src={user.avatar_url || ""} alt={getUserDisplayName(user)} />
                     <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white text-sm">
-                      {getUserInitials(user.email)}
+                      {getUserInitials(user)}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <div className="font-medium text-gray-900">{user.email}</div>
-                    <div className="text-sm text-gray-500">ID: {user.id.slice(0, 8)}...</div>
+                    <div className="font-medium text-gray-900">{getUserDisplayName(user)}</div>
+                    <div className="text-sm text-gray-500">{user.email}</div>
+                    <div className="text-xs text-gray-400">ID: {user.id.slice(0, 8)}...</div>
                   </div>
                 </div>
               </TableCell>

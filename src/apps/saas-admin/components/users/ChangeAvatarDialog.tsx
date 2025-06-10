@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
+import { usersApi } from "@/lib/database/users";
 
 interface ChangeAvatarDialogProps {
   user: any;
@@ -21,8 +22,22 @@ interface ChangeAvatarDialogProps {
 
 export function ChangeAvatarDialog({ user, open, onOpenChange }: ChangeAvatarDialogProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState(user?.avatar_url || "");
   const { toast } = useToast();
+
+  const getUserInitials = (user: any) => {
+    if (user?.first_name && user?.last_name) {
+      return `${user.first_name.charAt(0)}${user.last_name.charAt(0)}`.toUpperCase();
+    }
+    return user?.email?.charAt(0).toUpperCase() || "U";
+  };
+
+  const getUserDisplayName = (user: any) => {
+    if (user?.first_name || user?.last_name) {
+      return `${user.first_name || ''} ${user.last_name || ''}`.trim();
+    }
+    return user?.email || "User";
+  };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -36,16 +51,17 @@ export function ChangeAvatarDialog({ user, open, onOpenChange }: ChangeAvatarDia
   const onSubmit = async () => {
     setIsSubmitting(true);
     try {
-      // Mock API call - implement actual avatar upload logic
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Update avatar URL in database
+      await usersApi.updateUserInfo(user.id, undefined, undefined, avatarUrl);
       
       toast({
         title: "Avatar updated",
-        description: `Avatar has been updated for ${user.email}.`
+        description: `Avatar has been updated for ${getUserDisplayName(user)}.`
       });
       
       onOpenChange(false);
     } catch (error) {
+      console.error("Error updating avatar:", error);
       toast({
         title: "Error",
         description: "Failed to update avatar.",
@@ -60,15 +76,15 @@ export function ChangeAvatarDialog({ user, open, onOpenChange }: ChangeAvatarDia
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Change Avatar for {user?.email}</DialogTitle>
+          <DialogTitle>Change Avatar for {getUserDisplayName(user)}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
           <div className="flex justify-center">
             <Avatar className="h-24 w-24">
-              <AvatarImage src={avatarUrl} alt={user?.email} />
+              <AvatarImage src={avatarUrl} alt={getUserDisplayName(user)} />
               <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white text-xl">
-                {user?.email?.charAt(0).toUpperCase()}
+                {getUserInitials(user)}
               </AvatarFallback>
             </Avatar>
           </div>

@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, Edit, Trash2, Shield, UserX, UserCheck, Key, Image } from "lucide-react";
+import { usersApi } from "@/lib/database/users";
 
 interface UserActionsProps {
   user: any;
@@ -22,16 +23,23 @@ export function UserActions({ user, onEditUser, onChangePassword, onChangeAvatar
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
+  const getUserDisplayName = (user: any) => {
+    if (user?.first_name || user?.last_name) {
+      return `${user.first_name || ''} ${user.last_name || ''}`.trim();
+    }
+    return user?.email || "User";
+  };
+
   const handleActivateUser = async () => {
     setIsLoading(true);
     try {
-      // Mock API call - implement actual activation logic
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await usersApi.updateUserStatus(user.id, 'active');
       toast({
         title: "User activated",
-        description: `${user.email} has been activated.`
+        description: `${getUserDisplayName(user)} has been activated.`
       });
     } catch (error) {
+      console.error("Error activating user:", error);
       toast({
         title: "Error",
         description: "Failed to activate user.",
@@ -45,13 +53,13 @@ export function UserActions({ user, onEditUser, onChangePassword, onChangeAvatar
   const handleSuspendUser = async () => {
     setIsLoading(true);
     try {
-      // Mock API call - implement actual suspension logic
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await usersApi.updateUserStatus(user.id, 'suspended');
       toast({
         title: "User suspended",
-        description: `${user.email} has been suspended.`
+        description: `${getUserDisplayName(user)} has been suspended.`
       });
     } catch (error) {
+      console.error("Error suspending user:", error);
       toast({
         title: "Error",
         description: "Failed to suspend user.",
@@ -63,17 +71,17 @@ export function UserActions({ user, onEditUser, onChangePassword, onChangeAvatar
   };
 
   const handleDeleteUser = async () => {
-    if (!confirm(`Are you sure you want to delete ${user.email}? This action cannot be undone.`)) {
+    if (!confirm(`Are you sure you want to delete ${getUserDisplayName(user)}? This action cannot be undone.`)) {
       return;
     }
 
     setIsLoading(true);
     try {
-      // Mock API call - implement actual deletion logic
+      // Mock deletion - implement actual deletion logic
       await new Promise(resolve => setTimeout(resolve, 1000));
       toast({
         title: "User deleted",
-        description: `${user.email} has been deleted.`
+        description: `${getUserDisplayName(user)} has been deleted.`
       });
     } catch (error) {
       toast({

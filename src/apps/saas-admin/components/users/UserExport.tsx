@@ -19,17 +19,27 @@ export function UserExport({ users, selectedUsers }: UserExportProps) {
   const [isExporting, setIsExporting] = useState(false);
   const { toast } = useToast();
 
+  const getUserDisplayName = (user: any) => {
+    if (user?.first_name || user?.last_name) {
+      return `${user.first_name || ''} ${user.last_name || ''}`.trim();
+    }
+    return user?.email || "User";
+  };
+
   const exportToCSV = async (data: any[], filename: string) => {
     setIsExporting(true);
     try {
-      const headers = ['Email', 'Created At', 'Status', 'System Role'];
+      const headers = ['Name', 'Email', 'First Name', 'Last Name', 'Created At', 'Status', 'System Role'];
       const csvContent = [
         headers.join(','),
         ...data.map(user => [
-          user.email,
-          new Date(user.created_at).toLocaleDateString(),
-          'Active', // Mock status
-          'User' // Mock role
+          `"${getUserDisplayName(user)}"`,
+          `"${user.email}"`,
+          `"${user.first_name || ''}"`,
+          `"${user.last_name || ''}"`,
+          `"${new Date(user.created_at).toLocaleDateString()}"`,
+          '"Active"', // Mock status
+          '"User"' // Mock role
         ].join(','))
       ].join('\n');
 

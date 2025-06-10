@@ -1048,21 +1048,30 @@ export type Database = {
       }
       users: {
         Row: {
+          avatar_url: string | null
           created_at: string | null
           email: string
+          first_name: string | null
           id: string
+          last_name: string | null
           tenant_id: string
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string | null
           email: string
+          first_name?: string | null
           id?: string
+          last_name?: string | null
           tenant_id: string
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string | null
           email?: string
+          first_name?: string | null
           id?: string
+          last_name?: string | null
           tenant_id?: string
         }
         Relationships: [
@@ -1409,6 +1418,19 @@ export type Database = {
           organization_count: number
           relevance: number
         }[]
+      }
+      update_user_info: {
+        Args: {
+          user_id_param: string
+          first_name_param?: string
+          last_name_param?: string
+          avatar_url_param?: string
+        }
+        Returns: undefined
+      }
+      update_user_status: {
+        Args: { user_id_param: string; status_param: string }
+        Returns: undefined
       }
       user_can_manage_organization_members: {
         Args: { org_id: string; user_id: string }
