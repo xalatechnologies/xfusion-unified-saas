@@ -18,6 +18,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { useCreateUser } from "@/hooks/useUsers";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { databaseApi } from "@/lib/database";
 
 const createUserSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -40,6 +42,7 @@ export function CreateUserDialog({ open, onOpenChange }: CreateUserDialogProps) 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const createUserMutation = useCreateUser();
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const form = useForm<CreateUserForm>({
     resolver: zodResolver(createUserSchema),
@@ -55,14 +58,26 @@ export function CreateUserDialog({ open, onOpenChange }: CreateUserDialogProps) 
   });
 
   const onSubmit = async (data: CreateUserForm) => {
+    if (!user) {
+      toast({
+        title: "Authentication error",
+        description: "You must be logged in to create users.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       console.log("Creating user with data:", data);
       
+      // Get the current user's tenant ID
+      const currentUser = await databaseApi.getCurrentUser();
+      
       // Create the user record in the database
       await createUserMutation.mutateAsync({
         email: data.email,
-        tenant_id: "00000000-0000-0000-0000-000000000000" // This should be replaced with proper tenant management
+        tenant_id: currentUser.tenant_id
       });
       
       toast({

@@ -46,4 +46,18 @@ export const usersApi = {
     if (error) throw error;
     return data;
   },
+
+  async getCurrentUser() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("No authenticated user");
+    
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
 };
