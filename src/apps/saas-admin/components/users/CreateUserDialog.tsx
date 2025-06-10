@@ -57,11 +57,13 @@ export function CreateUserDialog({ open, onOpenChange }: CreateUserDialogProps) 
   const onSubmit = async (data: CreateUserForm) => {
     setIsSubmitting(true);
     try {
-      // Here you would integrate with your user creation API
-      console.log("Creating user:", data);
+      console.log("Creating user with data:", data);
       
-      // Mock API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Create the user record in the database
+      await createUserMutation.mutateAsync({
+        email: data.email,
+        tenant_id: "00000000-0000-0000-0000-000000000000" // This should be replaced with proper tenant management
+      });
       
       toast({
         title: "User created successfully",
@@ -71,6 +73,7 @@ export function CreateUserDialog({ open, onOpenChange }: CreateUserDialogProps) 
       onOpenChange(false);
       form.reset();
     } catch (error) {
+      console.error("Error creating user:", error);
       toast({
         title: "Error creating user",
         description: "There was an error creating the user. Please try again.",

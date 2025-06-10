@@ -36,6 +36,10 @@ export const useCreateUser = () => {
     mutationFn: databaseApi.createUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
+      console.log("User created successfully, invalidating users query");
+    },
+    onError: (error) => {
+      console.error("Error creating user:", error);
     },
   });
 };
