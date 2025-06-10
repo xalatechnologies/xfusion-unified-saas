@@ -55,5 +55,27 @@ export const userRolesApi = {
     }
     
     return data as boolean;
+  },
+
+  async getCurrentUserTenantId(): Promise<string | null> {
+    const { data, error } = await supabase.rpc('get_current_user_tenant_id');
+    
+    if (error) {
+      console.error('Error getting current user tenant ID:', error);
+      return null;
+    }
+    
+    return data;
+  },
+
+  async currentUserIsSuperAdmin(): Promise<boolean> {
+    const { data, error } = await supabase.rpc('current_user_is_super_admin');
+    
+    if (error) {
+      console.error('Error checking if current user is super admin:', error);
+      return false;
+    }
+    
+    return data as boolean;
   }
 };

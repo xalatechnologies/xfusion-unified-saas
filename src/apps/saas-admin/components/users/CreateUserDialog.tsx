@@ -71,13 +71,17 @@ export function CreateUserDialog({ open, onOpenChange }: CreateUserDialogProps) 
     try {
       console.log("Creating user with data:", data);
       
-      // Get the current user's tenant ID
-      const currentUser = await databaseApi.getCurrentUser();
+      // Get the current user's tenant ID using the new function
+      const tenantId = await databaseApi.getCurrentUserTenantId();
+      
+      if (!tenantId) {
+        throw new Error("Could not determine tenant ID");
+      }
       
       // Create the user record in the database
       await createUserMutation.mutateAsync({
         email: data.email,
-        tenant_id: currentUser.tenant_id
+        tenant_id: tenantId
       });
       
       toast({

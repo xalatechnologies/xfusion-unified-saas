@@ -1286,6 +1286,10 @@ export type Database = {
         Args: { asset_id_param: string; work_order_id_param: string }
         Returns: undefined
       }
+      current_user_is_super_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       decrement_inventory_and_log: {
         Args: {
           inv_item_id: string
@@ -1294,6 +1298,10 @@ export type Database = {
           usage_notes?: string
         }
         Returns: undefined
+      }
+      get_current_user_tenant_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
       }
       get_invitation_by_token: {
         Args: { token_param: string }
