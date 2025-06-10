@@ -35,15 +35,15 @@ export default function SaasSettings() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="platform-name" className="text-left block">Platform Name</Label>
-                <Input id="platform-name" defaultValue="SupplyMantix" />
+                <Input id="platform-name" defaultValue="XFusion" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="support-email" className="text-left block">Support Email</Label>
-                <Input id="support-email" defaultValue="support@supplymantix.com" />
+                <Input id="support-email" defaultValue="support@xfusion.com" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="company-url" className="text-left block">Company Website</Label>
-                <Input id="company-url" defaultValue="https://supplymantix.com" />
+                <Input id="company-url" defaultValue="https://xfusion.com" />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
@@ -114,7 +114,7 @@ export default function SaasSettings() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="from-email" className="text-left block">From Email</Label>
-                <Input id="from-email" defaultValue="noreply@supplymantix.com" />
+                <Input id="from-email" defaultValue="noreply@xfusion.com" />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">

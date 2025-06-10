@@ -28,9 +28,9 @@ const Footer = () => {
               animate={{ rotate: [0, 360] }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             >
-              <span className="text-white font-bold text-lg">S</span>
+              <span className="text-white font-bold text-lg">X</span>
             </motion.div>
-            <span className="text-2xl font-bold">SupplyMantix</span>
+            <span className="text-2xl font-bold">XFusion</span>
           </motion.div>
           <motion.p 
             className="text-slate-400"
@@ -39,7 +39,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            © 2024 SupplyMantix. All rights reserved.
+            © 2024 XFusion. All rights reserved.
           </motion.p>
         </motion.div>
       </div>

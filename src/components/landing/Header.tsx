@@ -28,7 +28,7 @@ const Header = () => {
                 animate={{ rotate: [0, 360] }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               >
-                <span className="text-white font-bold text-lg">S</span>
+                <span className="text-white font-bold text-lg">X</span>
               </motion.div>
               <motion.div 
                 className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-orange-400 to-red-500 rounded-full"
@@ -37,7 +37,7 @@ const Header = () => {
               />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-              SupplyMantix
+              XFusion
             </span>
           </motion.div>
           <motion.div 

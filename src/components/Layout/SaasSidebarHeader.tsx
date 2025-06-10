@@ -18,7 +18,7 @@ export function SaasSidebarHeader() {
             </div>
             <div className="flex flex-col gap-0.5 leading-none text-left">
               <span className="font-bold text-lg bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                SupplyMantix
+                XFusion
               </span>
               <span className="text-xs text-muted-foreground font-medium">
                 SAAS Admin
