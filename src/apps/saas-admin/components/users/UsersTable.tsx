@@ -18,8 +18,8 @@ interface UsersTableProps {
   onChangePassword: (user: any) => void;
   onChangeAvatar: (user: any) => void;
   loading?: boolean;
-  filters?: { status: string; role: string };
-  onFilterChange?: (filters: { status: string; role: string }) => void;
+  filters?: { status: string; role: string; organization: string; dateRange: string };
+  onFilterChange?: (filters: { status: string; role: string; organization: string; dateRange: string }) => void;
 }
 
 const statusIcons = {
@@ -58,7 +58,7 @@ export function UsersTable({
   onChangePassword,
   onChangeAvatar,
   loading = false,
-  filters = { status: "all", role: "all" },
+  filters = { status: "all", role: "all", organization: "all", dateRange: "all" },
   onFilterChange,
 }: UsersTableProps) {
   const allSelected = users.length > 0 && selectedUsers.length === users.length;

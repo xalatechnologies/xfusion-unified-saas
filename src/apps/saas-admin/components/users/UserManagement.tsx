@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import { useUsers } from "@/hooks/useUsers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { UserPlus, Search } from "lucide-react";
+import { UserPlus, Search, X } from "lucide-react";
 import { UserStatsCards } from "./UserStatsCards";
 import { UserFilters } from "./UserFilters";
 import { UsersTable } from "./UsersTable";
@@ -30,11 +29,18 @@ export function UserManagement() {
     dateRange: "all"
   });
 
-  const filteredUsers = users?.filter(user => {
-    const matchesSearch = user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    // Add more filter logic here based on filters state
-    return matchesSearch;
-  }) || [];
+  const filteredUsers = Array.isArray(users)
+    ? users.filter((user: any) => {
+        if (!user || typeof user !== 'object' || !('email' in user)) return false;
+        const matchesSearch = (user.email as string).toLowerCase().includes(searchTerm.toLowerCase());
+        // Add more filter logic here based on filters state
+        return matchesSearch;
+      })
+    : [];
+
+  const safeFilteredUsers = Array.isArray(filteredUsers)
+    ? filteredUsers.filter((user: any) => user && typeof user === 'object' && 'id' in user)
+    : [];
 
   const handleUserSelect = (userId: string, selected: boolean) => {
     if (selected) {
@@ -46,7 +52,7 @@ export function UserManagement() {
 
   const handleSelectAll = (selected: boolean) => {
     if (selected) {
-      setSelectedUsers(filteredUsers.map(user => user.id));
+      setSelectedUsers(safeFilteredUsers.map((user: any) => user.id));
     } else {
       setSelectedUsers([]);
     }
@@ -78,7 +84,7 @@ export function UserManagement() {
           <p className="text-gray-600 mt-1">Manage all users across your platform</p>
         </div>
         <div className="flex items-center gap-3">
-          <UserExport users={filteredUsers} selectedUsers={selectedUsers} />
+          <UserExport users={safeFilteredUsers} selectedUsers={selectedUsers} />
           <Button onClick={() => setShowCreateDialog(true)}>
             <UserPlus className="w-4 h-4 mr-2" />
             Create User
@@ -90,46 +96,69 @@ export function UserManagement() {
       <UserStatsCards users={users || []} />
 
       {/* Filters and Search */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>All Users</CardTitle>
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <Input
-                  placeholder="Search users..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-80"
-                />
-              </div>
+      <Card className="shadow-md border-0 bg-white/90 mb-2">
+        <CardContent className="py-6 px-4 md:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex flex-1 items-center gap-3 w-full md:w-auto">
+            <form
+              onSubmit={e => e.preventDefault()}
+              className="relative w-full md:w-96"
+              role="search"
+              aria-label="Search users"
+            >
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search users by name or email..."
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                className="pl-12 pr-12 py-3 rounded-full border border-gray-200 bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full text-base transition placeholder-gray-400 outline-none"
+                style={{ minWidth: 0 }}
+                aria-label="Search users"
+              />
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full p-1"
+                  aria-label="Clear search"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </form>
+            <div className="flex-shrink-0">
               <UserFilters filters={filters} onFiltersChange={setFilters} />
             </div>
           </div>
-        </CardHeader>
-        <CardContent>
-          {/* Bulk Actions */}
-          {selectedUsers.length > 0 && (
-            <UserBulkActions 
-              selectedCount={selectedUsers.length}
-              selectedUsers={selectedUsers}
-              onClearSelection={() => setSelectedUsers([])}
-            />
-          )}
-
-          {/* Users Table */}
-          <UsersTable
-            users={filteredUsers}
-            selectedUsers={selectedUsers}
-            onUserSelect={handleUserSelect}
-            onSelectAll={handleSelectAll}
-            onEditUser={setEditingUser}
-            onChangePassword={setPasswordUser}
-            onChangeAvatar={setAvatarUser}
-          />
+          <div className="flex items-center gap-2 mt-2 md:mt-0">
+            <UserExport users={safeFilteredUsers} selectedUsers={selectedUsers} />
+            <Button onClick={() => setShowCreateDialog(true)} className="rounded-full px-5 py-2 text-base font-semibold shadow-sm">
+              <UserPlus className="w-5 h-5 mr-2" />
+              Create User
+            </Button>
+          </div>
         </CardContent>
       </Card>
+      {/* Bulk Actions */}
+      {selectedUsers.length > 0 && (
+        <UserBulkActions 
+          selectedCount={selectedUsers.length}
+          selectedUsers={selectedUsers}
+          onClearSelection={() => setSelectedUsers([])}
+        />
+      )}
+      {/* Users Table */}
+      <UsersTable
+        users={safeFilteredUsers}
+        selectedUsers={selectedUsers}
+        onUserSelect={handleUserSelect}
+        onSelectAll={handleSelectAll}
+        onEditUser={setEditingUser}
+        onChangePassword={setPasswordUser}
+        onChangeAvatar={setAvatarUser}
+        filters={filters}
+        onFilterChange={setFilters}
+      />
 
       {/* Dialogs */}
       <CreateUserDialog

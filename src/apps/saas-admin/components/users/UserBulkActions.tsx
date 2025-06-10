@@ -91,10 +91,14 @@ export function UserBulkActions({ selectedCount, selectedUsers, onClearSelection
       setShowRoleDialog(false);
       onClearSelection();
       queryClient.invalidateQueries({ queryKey: ["users"] });
-    } catch (error) {
+    } catch (error: any) {
+      let message = "Failed to assign role to selected users.";
+      if (error?.message?.toLowerCase().includes("user") && error?.message?.toLowerCase().includes("does not exist")) {
+        message = "One or more users do not exist or were deleted. Please refresh the user list.";
+      }
       toast({
         title: "Error",
-        description: "Failed to assign role to selected users.",
+        description: message,
         variant: "destructive"
       });
     } finally {
@@ -209,7 +213,7 @@ export function UserBulkActions({ selectedCount, selectedUsers, onClearSelection
           <AlertDialogHeader>
             <AlertDialogTitle>Assign Role to Users</AlertDialogTitle>
             <AlertDialogDescription>
-              Select a role to assign to <span className="font-semibold">{selectedCount} user{selectedCount !== 1 ? 's' : ''}</span>.
+              Select a role to assign to <span className="font-semibold">{selectedCount} user{selectedCount !== 1 ? 's' : ''}</span>. If a user does not exist, you will see an error.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="py-2">

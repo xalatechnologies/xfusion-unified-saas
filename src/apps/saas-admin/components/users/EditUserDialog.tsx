@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -85,11 +86,15 @@ export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps
         description: "The user information has been updated."
       });
       onOpenChange(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error updating user:", error);
+      let message = "There was an error updating the user. Please try again.";
+      if (error?.message?.toLowerCase().includes("user") && error?.message?.toLowerCase().includes("does not exist")) {
+        message = "The user does not exist or was deleted. Please refresh the user list.";
+      }
       toast({
         title: "Error updating user",
-        description: "There was an error updating the user. Please try again.",
+        description: message,
         variant: "destructive"
       });
     } finally {
@@ -104,6 +109,9 @@ export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit User: {user.first_name && user.last_name ? `${user.first_name} ${user.last_name}` : user.email}</DialogTitle>
+          <DialogDescription>
+            Update the user's profile information, status, and system role. All changes are saved immediately.
+          </DialogDescription>
         </DialogHeader>
 
         <Tabs defaultValue="general" className="w-full">

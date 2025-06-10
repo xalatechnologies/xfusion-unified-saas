@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   Dialog,
@@ -6,6 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -77,6 +77,9 @@ export function ChangeAvatarDialog({ user, open, onOpenChange }: ChangeAvatarDia
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Change Avatar for {getUserDisplayName(user)}</DialogTitle>
+          <DialogDescription>
+            Upload a new avatar image or provide an image URL. If the image fails to load, your initials will be shown instead.
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
