@@ -9,18 +9,43 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator 
 } from "@/components/ui/dropdown-menu";
-import { Crown, Wrench, ChevronDown } from "lucide-react";
+import { Crown, Wrench, Building2, ChevronDown } from "lucide-react";
 import { applications } from "../config/applications";
 import { useCurrentApplication } from "../hooks/useCurrentApplication";
+import { useAuth } from "@/contexts/AuthContext";
 
 const iconMap = {
   Crown,
-  Wrench
+  Wrench,
+  Building2
+};
+
+// Helper function to determine user role
+const getUserRole = (user: any): string => {
+  // This is a simplified role detection - in a real app, this would come from user metadata or a separate roles table
+  // For now, we'll use user metadata or default logic
+  const userRole = user?.user_metadata?.role;
+  
+  if (userRole === 'super_admin') return 'super_admin';
+  if (userRole === 'organization_admin' || userRole === 'admin') return 'organization_admin';
+  return 'user';
+};
+
+// Helper function to check if user can access an application
+const canAccessApplication = (userRole: string, appRequiredRole: string): boolean => {
+  const roleHierarchy = {
+    'super_admin': ['super_admin', 'organization_admin', 'user'],
+    'organization_admin': ['organization_admin', 'user'],
+    'user': ['user']
+  };
+  
+  return roleHierarchy[userRole]?.includes(appRequiredRole) || false;
 };
 
 export const ApplicationSwitcher = () => {
   const navigate = useNavigate();
   const { currentApp } = useCurrentApplication();
+  const { user } = useAuth();
   
   const handleApplicationSwitch = (appId: string) => {
     const app = applications.find(a => a.id === appId);
@@ -29,7 +54,15 @@ export const ApplicationSwitcher = () => {
     }
   };
 
-  if (!currentApp) return null;
+  if (!currentApp || !user) return null;
+
+  const userRole = getUserRole(user);
+  const accessibleApps = applications.filter(app => 
+    app.enabled && canAccessApplication(userRole, app.requiredRole || 'user')
+  );
+
+  // If user only has access to one app, don't show the switcher
+  if (accessibleApps.length <= 1) return null;
 
   const CurrentIcon = iconMap[currentApp.icon as keyof typeof iconMap] || Crown;
 
@@ -54,7 +87,7 @@ export const ApplicationSwitcher = () => {
           <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Applications</p>
         </div>
         <DropdownMenuSeparator />
-        {applications.filter(app => app.enabled).map((app) => {
+        {accessibleApps.map((app) => {
           const Icon = iconMap[app.icon as keyof typeof iconMap] || Crown;
           const isActive = currentApp.id === app.id;
           

@@ -13,6 +13,7 @@ export const useCurrentApplication = () => {
   return {
     currentApp,
     isInSaasAdmin: currentApp?.id === 'saas-admin',
+    isInOrganizationAdmin: currentApp?.id === 'organization-admin',
     isInSupplyMantix: currentApp?.id === 'supplymantix'
   };
 };

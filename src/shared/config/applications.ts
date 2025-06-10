@@ -22,6 +22,16 @@ export const applications: Application[] = [
     requiredRole: 'super_admin'
   },
   {
+    id: 'organization-admin',
+    name: 'organization-admin',
+    displayName: 'Organization Admin',
+    description: 'Manage your organization settings, members, and billing',
+    icon: 'Building2',
+    baseRoute: '/org-admin',
+    enabled: true,
+    requiredRole: 'organization_admin'
+  },
+  {
     id: 'supplymantix',
     name: 'supplymantix',
     displayName: 'SupplyMantix',

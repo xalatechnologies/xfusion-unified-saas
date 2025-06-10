@@ -12,7 +12,9 @@ export type Database = {
       assets: {
         Row: {
           asset_tag: string | null
+          category: string | null
           created_at: string | null
+          criticality: string | null
           description: string | null
           id: string
           location: string | null
@@ -23,7 +25,9 @@ export type Database = {
         }
         Insert: {
           asset_tag?: string | null
+          category?: string | null
           created_at?: string | null
+          criticality?: string | null
           description?: string | null
           id?: string
           location?: string | null
@@ -34,7 +38,9 @@ export type Database = {
         }
         Update: {
           asset_tag?: string | null
+          category?: string | null
           created_at?: string | null
+          criticality?: string | null
           description?: string | null
           id?: string
           location?: string | null
@@ -255,6 +261,41 @@ export type Database = {
             columns: ["subscription_id"]
             isOneToOne: false
             referencedRelation: "subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      locations: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "locations_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
             referencedColumns: ["id"]
           },
         ]
@@ -508,12 +549,56 @@ export type Database = {
           },
         ]
       }
+      purchase_order_line_items: {
+        Row: {
+          created_at: string | null
+          id: string
+          inventory_item_id: string
+          purchase_order_id: string
+          quantity: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          inventory_item_id: string
+          purchase_order_id: string
+          quantity: number
+          unit_price: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          inventory_item_id?: string
+          purchase_order_id?: string
+          quantity?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchase_order_line_items_inventory_item_id_fkey"
+            columns: ["inventory_item_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_order_line_items_purchase_order_id_fkey"
+            columns: ["purchase_order_id"]
+            isOneToOne: false
+            referencedRelation: "purchase_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       purchase_orders: {
         Row: {
           approved_by: string | null
           created_at: string | null
           due_date: string | null
           id: string
+          line_items: Json | null
+          notes: string | null
           po_number: string
           requested_by: string | null
           status: Database["public"]["Enums"]["purchase_order_status"]
@@ -527,6 +612,8 @@ export type Database = {
           created_at?: string | null
           due_date?: string | null
           id?: string
+          line_items?: Json | null
+          notes?: string | null
           po_number: string
           requested_by?: string | null
           status?: Database["public"]["Enums"]["purchase_order_status"]
@@ -540,6 +627,8 @@ export type Database = {
           created_at?: string | null
           due_date?: string | null
           id?: string
+          line_items?: Json | null
+          notes?: string | null
           po_number?: string
           requested_by?: string | null
           status?: Database["public"]["Enums"]["purchase_order_status"]
@@ -571,6 +660,101 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      request_comments: {
+        Row: {
+          comment: string
+          created_at: string | null
+          id: string
+          request_id: string
+          user_id: string | null
+        }
+        Insert: {
+          comment: string
+          created_at?: string | null
+          id?: string
+          request_id: string
+          user_id?: string | null
+        }
+        Update: {
+          comment?: string
+          created_at?: string | null
+          id?: string
+          request_id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "request_comments_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      requests: {
+        Row: {
+          actual_cost: number | null
+          asset_id: string | null
+          assigned_to: string | null
+          attachments: Json | null
+          category: string | null
+          created_at: string | null
+          description: string | null
+          due_date: string | null
+          estimated_cost: number | null
+          id: string
+          location: string | null
+          notes: string | null
+          priority: Database["public"]["Enums"]["request_priority"]
+          requested_by: string | null
+          status: Database["public"]["Enums"]["request_status"]
+          tenant_id: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          actual_cost?: number | null
+          asset_id?: string | null
+          assigned_to?: string | null
+          attachments?: Json | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          due_date?: string | null
+          estimated_cost?: number | null
+          id?: string
+          location?: string | null
+          notes?: string | null
+          priority?: Database["public"]["Enums"]["request_priority"]
+          requested_by?: string | null
+          status?: Database["public"]["Enums"]["request_status"]
+          tenant_id: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          actual_cost?: number | null
+          asset_id?: string | null
+          assigned_to?: string | null
+          attachments?: Json | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          due_date?: string | null
+          estimated_cost?: number | null
+          id?: string
+          location?: string | null
+          notes?: string | null
+          priority?: Database["public"]["Enums"]["request_priority"]
+          requested_by?: string | null
+          status?: Database["public"]["Enums"]["request_status"]
+          tenant_id?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       subscriptions: {
         Row: {
@@ -679,41 +863,163 @@ export type Database = {
           },
         ]
       }
+      work_order_parts_used: {
+        Row: {
+          created_at: string | null
+          id: string
+          inventory_item_id: string | null
+          notes: string | null
+          quantity: number
+          tenant_id: string | null
+          work_order_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          inventory_item_id?: string | null
+          notes?: string | null
+          quantity: number
+          tenant_id?: string | null
+          work_order_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          inventory_item_id?: string | null
+          notes?: string | null
+          quantity?: number
+          tenant_id?: string | null
+          work_order_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "work_order_parts_used_inventory_item_id_fkey"
+            columns: ["inventory_item_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "work_order_parts_used_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "work_order_parts_used_work_order_id_fkey"
+            columns: ["work_order_id"]
+            isOneToOne: false
+            referencedRelation: "work_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      work_order_procedures: {
+        Row: {
+          created_at: string | null
+          id: string
+          procedure_id: string | null
+          status: string | null
+          tenant_id: string | null
+          updated_at: string | null
+          work_order_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          procedure_id?: string | null
+          status?: string | null
+          tenant_id?: string | null
+          updated_at?: string | null
+          work_order_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          procedure_id?: string | null
+          status?: string | null
+          tenant_id?: string | null
+          updated_at?: string | null
+          work_order_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "work_order_procedures_procedure_id_fkey"
+            columns: ["procedure_id"]
+            isOneToOne: false
+            referencedRelation: "procedures"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "work_order_procedures_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "work_order_procedures_work_order_id_fkey"
+            columns: ["work_order_id"]
+            isOneToOne: false
+            referencedRelation: "work_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       work_orders: {
         Row: {
           asset_id: string | null
           assigned_to: string | null
+          category: string | null
           created_at: string | null
           description: string | null
           due_date: string | null
           id: string
+          location_id: string | null
+          parts_used: Json | null
+          priority: string | null
           status: Database["public"]["Enums"]["work_order_status"]
           tenant_id: string
+          time_spent: number | null
           title: string
+          total_cost: number | null
           updated_at: string | null
         }
         Insert: {
           asset_id?: string | null
           assigned_to?: string | null
+          category?: string | null
           created_at?: string | null
           description?: string | null
           due_date?: string | null
           id?: string
+          location_id?: string | null
+          parts_used?: Json | null
+          priority?: string | null
           status?: Database["public"]["Enums"]["work_order_status"]
           tenant_id: string
+          time_spent?: number | null
           title: string
+          total_cost?: number | null
           updated_at?: string | null
         }
         Update: {
           asset_id?: string | null
           assigned_to?: string | null
+          category?: string | null
           created_at?: string | null
           description?: string | null
           due_date?: string | null
           id?: string
+          location_id?: string | null
+          parts_used?: Json | null
+          priority?: string | null
           status?: Database["public"]["Enums"]["work_order_status"]
           tenant_id?: string
+          time_spent?: number | null
           title?: string
+          total_cost?: number | null
           updated_at?: string | null
         }
         Relationships: [
@@ -729,6 +1035,13 @@ export type Database = {
             columns: ["assigned_to"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "work_orders_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "locations"
             referencedColumns: ["id"]
           },
           {
@@ -749,6 +1062,19 @@ export type Database = {
         Args: { token_param: string; user_id_param: string }
         Returns: boolean
       }
+      copy_asset_procedures_to_work_order: {
+        Args: { asset_id_param: string; work_order_id_param: string }
+        Returns: undefined
+      }
+      decrement_inventory_and_log: {
+        Args: {
+          inv_item_id: string
+          qty_used: number
+          wo_id: string
+          usage_notes?: string
+        }
+        Returns: undefined
+      }
       get_invitation_by_token: {
         Args: { token_param: string }
         Returns: {
@@ -763,6 +1089,19 @@ export type Database = {
       get_user_tenant_id: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      increment_inventory_from_po: {
+        Args: { po_id: string }
+        Returns: undefined
+      }
+      record_parts_usage: {
+        Args: {
+          wo_id: string
+          item_id: string
+          qty: number
+          usage_notes?: string
+        }
+        Returns: undefined
       }
       user_can_manage_organization_members: {
         Args: { org_id: string; user_id: string }
@@ -803,6 +1142,14 @@ export type Database = {
         | "approved"
         | "ordered"
         | "received"
+        | "cancelled"
+      request_priority: "low" | "medium" | "high" | "urgent"
+      request_status:
+        | "pending"
+        | "approved"
+        | "rejected"
+        | "in_progress"
+        | "completed"
         | "cancelled"
       work_order_status:
         | "open"
@@ -943,6 +1290,15 @@ export const Constants = {
         "approved",
         "ordered",
         "received",
+        "cancelled",
+      ],
+      request_priority: ["low", "medium", "high", "urgent"],
+      request_status: [
+        "pending",
+        "approved",
+        "rejected",
+        "in_progress",
+        "completed",
         "cancelled",
       ],
       work_order_status: [
