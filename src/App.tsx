@@ -32,7 +32,7 @@ import SaasDocumentation from "./pages/SaasDocumentation";
 import TranslationManagement from "./pages/TranslationManagement";
 import InviteAccept from "./pages/InviteAccept";
 import NotFound from "./pages/NotFound";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
