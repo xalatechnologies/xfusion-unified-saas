@@ -97,40 +97,40 @@ export const TopBar = () => {
   return (
     <TooltipProvider>
       <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 px-6 py-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-6">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4 flex-shrink-0">
             <ApplicationSwitcher />
-            
-            <div ref={searchRef} className="relative">
-              <form onSubmit={handleSearchSubmit} className="relative">
-                <div className="relative flex items-center">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Search organizations, users, subscriptions..."
-                    value={query}
-                    onChange={(e) => handleQueryChange(e.target.value)}
-                    className="pl-10 pr-16 w-80 focus-visible:ring-2 focus-visible:ring-primary/20 border-muted-foreground/20"
-                  />
-                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-                    <Badge variant="secondary" className="text-xs font-normal px-1.5 py-0.5">
-                      <Command className="h-3 w-3 mr-1" />
-                      K
-                    </Badge>
-                  </div>
+          </div>
+          
+          <div ref={searchRef} className="relative flex-1 max-w-2xl">
+            <form onSubmit={handleSearchSubmit} className="relative">
+              <div className="relative flex items-center">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search organizations, users, subscriptions..."
+                  value={query}
+                  onChange={(e) => handleQueryChange(e.target.value)}
+                  className="pl-10 pr-16 w-full focus-visible:ring-2 focus-visible:ring-primary/20 border-muted-foreground/20"
+                />
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                  <Badge variant="secondary" className="text-xs font-normal px-1.5 py-0.5">
+                    <Command className="h-3 w-3 mr-1" />
+                    K
+                  </Badge>
                 </div>
-              </form>
-              
-              <SearchResults
-                results={results}
-                isLoading={isLoading}
-                query={query}
-                onResultClick={handleResultClick}
-                selectedIndex={selectedIndex}
-              />
-            </div>
+              </div>
+            </form>
+            
+            <SearchResults
+              results={results}
+              isLoading={isLoading}
+              query={query}
+              onResultClick={handleResultClick}
+              selectedIndex={selectedIndex}
+            />
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-shrink-0">
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button variant="ghost" size="icon" className="h-9 w-9 hover:bg-muted/50 transition-colors">
