@@ -902,6 +902,42 @@ export type Database = {
         }
         Relationships: []
       }
+      search_analytics: {
+        Row: {
+          clicked_result_id: string | null
+          clicked_result_type: string | null
+          created_at: string
+          entity_types: string[] | null
+          id: string
+          results_count: number | null
+          search_duration_ms: number | null
+          search_query: string
+          user_id: string | null
+        }
+        Insert: {
+          clicked_result_id?: string | null
+          clicked_result_type?: string | null
+          created_at?: string
+          entity_types?: string[] | null
+          id?: string
+          results_count?: number | null
+          search_duration_ms?: number | null
+          search_query: string
+          user_id?: string | null
+        }
+        Update: {
+          clicked_result_id?: string | null
+          clicked_result_type?: string | null
+          created_at?: string
+          entity_types?: string[] | null
+          id?: string
+          results_count?: number | null
+          search_duration_ms?: number | null
+          search_query?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       subscriptions: {
         Row: {
           billing_cycle: string | null
@@ -1278,8 +1314,37 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string
       }
+      global_search: {
+        Args: { search_query: string; entity_types?: string[] }
+        Returns: {
+          entity_type: string
+          entity_id: string
+          title: string
+          subtitle: string
+          url: string
+          relevance: number
+          created_at: string
+        }[]
+      }
       increment_inventory_from_po: {
         Args: { po_id: string }
+        Returns: undefined
+      }
+      log_search_analytics: {
+        Args: {
+          search_query_param: string
+          entity_types_param?: string[]
+          results_count_param?: number
+          search_duration_ms_param?: number
+        }
+        Returns: string
+      }
+      log_search_click: {
+        Args: {
+          analytics_id_param: string
+          clicked_result_id_param: string
+          clicked_result_type_param: string
+        }
         Returns: undefined
       }
       record_parts_usage: {
@@ -1290,6 +1355,52 @@ export type Database = {
           usage_notes?: string
         }
         Returns: undefined
+      }
+      search_documentation: {
+        Args: { search_query: string }
+        Returns: {
+          id: string
+          title: string
+          category: string
+          slug: string
+          access_level: string
+          created_at: string
+          relevance: number
+        }[]
+      }
+      search_organizations: {
+        Args: { search_query: string }
+        Returns: {
+          id: string
+          name: string
+          contact_email: string
+          created_at: string
+          member_count: number
+          relevance: number
+        }[]
+      }
+      search_subscriptions: {
+        Args: { search_query: string }
+        Returns: {
+          id: string
+          plan_name: string
+          status: string
+          billing_cycle: string
+          created_at: string
+          price_monthly: number
+          relevance: number
+        }[]
+      }
+      search_users: {
+        Args: { search_query: string }
+        Returns: {
+          id: string
+          email: string
+          tenant_id: string
+          created_at: string
+          organization_count: number
+          relevance: number
+        }[]
       }
       user_can_manage_organization_members: {
         Args: { org_id: string; user_id: string }

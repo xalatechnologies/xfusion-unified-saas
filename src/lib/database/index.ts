@@ -12,6 +12,7 @@ import { globalThemeApi } from "./global-theme";
 import { globalTranslationsApi } from "./global-translations";
 import { documentationApi } from "./documentation";
 import { organizationThemesApi } from "./organization-themes";
+import { searchApi } from "./search";
 
 export const databaseApi = {
   // Organizations
@@ -52,4 +53,7 @@ export const databaseApi = {
   
   // Organization Themes
   ...organizationThemesApi,
+  
+  // Search
+  ...searchApi,
 };
