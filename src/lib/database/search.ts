@@ -1,5 +1,5 @@
-
 import { supabase } from "@/integrations/supabase/client";
+import { transformSearchResults } from "./searchResultTransformer";
 
 export interface SearchResult {
   entity_type: string;
@@ -45,7 +45,8 @@ export const searchApi = {
     // Log search analytics
     await this.logSearchAnalytics(query, entityTypes, data?.length || 0, searchDuration);
 
-    return data || [];
+    // Transform, deduplicate, and highlight results
+    return transformSearchResults(data || []);
   },
 
   async logSearchAnalytics(

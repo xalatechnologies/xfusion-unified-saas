@@ -1,10 +1,11 @@
-
 import React from "react";
 import { SearchResult } from "@/lib/database/search";
 import { SearchResultItem } from "./SearchResultItem";
 import { RecentSearches } from "./RecentSearches";
 import { SearchShortcuts } from "./SearchShortcuts";
 import { Loader2 } from "lucide-react";
+import { SearchEmpty } from "./SearchEmpty";
+import { SearchLoading } from "./SearchLoading";
 
 interface RecentSearch {
   query: string;
@@ -56,10 +57,7 @@ export const SearchResults = ({
   if (isLoading) {
     return (
       <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50">
-        <div className="p-4 flex items-center justify-center">
-          <Loader2 className="h-4 w-4 animate-spin mr-2" />
-          <span className="text-sm text-gray-600">Searching...</span>
-        </div>
+        <SearchLoading />
       </div>
     );
   }
@@ -68,9 +66,7 @@ export const SearchResults = ({
     if (query.trim() && results.length === 0) {
       return (
         <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50">
-          <div className="p-4 text-center">
-            <span className="text-sm text-gray-500">No results found for "{query}"</span>
-          </div>
+          <SearchEmpty query={query} />
         </div>
       );
     }
