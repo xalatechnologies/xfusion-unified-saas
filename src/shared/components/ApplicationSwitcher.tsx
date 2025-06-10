@@ -22,16 +22,31 @@ const iconMap = {
 
 // Helper function to determine user role
 const getUserRole = (user: any): string => {
-  // This is a simplified role detection - in a real app, this would come from user metadata or a separate roles table
-  // For now, we'll use user metadata or default logic
+  // Check user metadata for role
   const userRole = user?.user_metadata?.role;
   
   console.log('User metadata:', user?.user_metadata);
-  console.log('Detected user role:', userRole);
+  console.log('Detected user role from metadata:', userRole);
   
-  if (userRole === 'super_admin') return 'super_admin';
-  if (userRole === 'organization_admin' || userRole === 'admin') return 'organization_admin';
-  return 'user';
+  // For demo purposes, let's also check the email domain
+  const email = user?.email;
+  console.log('User email:', email);
+  
+  // If no role in metadata, we'll determine based on email or default to organization_admin for testing
+  if (userRole) {
+    if (userRole === 'super_admin') return 'super_admin';
+    if (userRole === 'organization_admin' || userRole === 'admin') return 'organization_admin';
+    return 'user';
+  }
+  
+  // Temporary logic for testing - you can remove this later
+  // For now, let's assume users are organization_admin so you can see the switcher
+  if (email?.includes('@xala.no')) {
+    return 'organization_admin'; // This will give access to both org-admin and main app
+  }
+  
+  // Default to organization_admin for testing
+  return 'organization_admin';
 };
 
 // Helper function to check if user can access an application
@@ -68,8 +83,8 @@ export const ApplicationSwitcher = () => {
   console.log('Accessible apps:', accessibleApps);
   console.log('Current app:', currentApp);
 
-  // Temporarily show switcher even for single app to debug
-  // if (accessibleApps.length <= 1) return null;
+  // Only show switcher if user has access to more than one app
+  if (accessibleApps.length <= 1) return null;
 
   const CurrentIcon = iconMap[currentApp.icon as keyof typeof iconMap] || Crown;
 
