@@ -7,6 +7,11 @@ import { inventoryApi } from "./inventory";
 import { procurementApi } from "./procurement";
 import { proceduresApi } from "./procedures";
 import { usersApi } from "./users";
+import { userRolesApi } from "./user-roles";
+import { globalThemeApi } from "./global-theme";
+import { globalTranslationsApi } from "./global-translations";
+import { documentationApi } from "./documentation";
+import { organizationThemesApi } from "./organization-themes";
 
 export const databaseApi = {
   // Organizations
@@ -32,4 +37,19 @@ export const databaseApi = {
   
   // Users & Tenants
   ...usersApi,
+  
+  // User Roles
+  ...userRolesApi,
+  
+  // Global Theme Management
+  ...globalThemeApi,
+  
+  // Global Translations
+  ...globalTranslationsApi,
+  
+  // Documentation
+  ...documentationApi,
+  
+  // Organization Themes
+  ...organizationThemesApi,
 };

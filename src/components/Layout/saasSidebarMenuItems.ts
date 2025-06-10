@@ -1,71 +1,59 @@
 
-import { 
-  Building2, 
-  Users, 
-  CreditCard, 
-  BarChart3, 
-  Settings, 
-  Crown,
-  Languages,
-  LayoutDashboard,
-  Package
-} from "lucide-react";
-
-export const saasMenuItems = [
+export const saasSidebarMenuItems = [
   {
     title: "Dashboard",
-    url: "/saas",
-    icon: LayoutDashboard,
-    group: "Overview"
-  },
-  {
-    title: "Organizations",
-    url: "/saas/organizations",
-    icon: Building2,
-    group: "Management"
+    url: "/saas-admin",
+    icon: "LayoutDashboard",
   },
   {
     title: "Users",
-    url: "/saas/users",
-    icon: Users,
-    group: "Management"
+    url: "/saas-admin/users",
+    icon: "Users",
+  },
+  {
+    title: "Organizations",
+    url: "/saas-admin/organizations",
+    icon: "Building",
   },
   {
     title: "Subscriptions",
-    url: "/saas/subscriptions",
-    icon: Package,
-    group: "Billing"
+    url: "/saas-admin/subscriptions",
+    icon: "CreditCard",
   },
   {
     title: "Billing",
-    url: "/saas/billing",
-    icon: CreditCard,
-    group: "Billing"
+    url: "/saas-admin/billing",
+    icon: "Receipt",
   },
   {
     title: "Analytics",
-    url: "/saas/analytics",
-    icon: BarChart3,
-    group: "Insights"
+    url: "/saas-admin/analytics",
+    icon: "BarChart3",
   },
   {
-    title: "Translations",
-    url: "/saas/translations",
-    icon: Languages,
-    group: "System"
+    title: "Global Design",
+    icon: "Palette",
+    items: [
+      {
+        title: "Theme Management",
+        url: "/saas-admin/themes",
+        icon: "Palette",
+      },
+      {
+        title: "Global Translations",
+        url: "/saas-admin/translations",
+        icon: "Languages",
+      },
+    ],
+  },
+  {
+    title: "Documentation",
+    url: "/saas-admin/documentation",
+    icon: "FileText",
   },
   {
     title: "Settings",
-    url: "/saas/settings",
-    icon: Settings,
-    group: "System"
-  }
+    url: "/saas-admin/settings",
+    icon: "Settings",
+  },
 ];
-
-export const saasgroupedItems = saasMenuItems.reduce((acc, item) => {
-  if (!acc[item.group]) {
-    acc[item.group] = [];
-  }
-  acc[item.group].push(item);
-  return acc;
-}, {} as Record<string, typeof saasMenuItems>);

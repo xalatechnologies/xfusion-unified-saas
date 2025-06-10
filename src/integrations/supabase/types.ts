@@ -158,6 +158,117 @@ export type Database = {
           },
         ]
       }
+      documentation: {
+        Row: {
+          access_level: string | null
+          category: string
+          content: string
+          created_at: string | null
+          created_by: string | null
+          id: string
+          is_published: boolean | null
+          slug: string
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+          version: string | null
+        }
+        Insert: {
+          access_level?: string | null
+          category: string
+          content: string
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          is_published?: boolean | null
+          slug: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+          version?: string | null
+        }
+        Update: {
+          access_level?: string | null
+          category?: string
+          content?: string
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          is_published?: boolean | null
+          slug?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+          version?: string | null
+        }
+        Relationships: []
+      }
+      global_theme_settings: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          id: string
+          is_active: boolean
+          name: string
+          theme_config: Json
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          theme_config?: Json
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          theme_config?: Json
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      global_translations: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          created_by: string | null
+          id: string
+          is_custom: boolean | null
+          language: string
+          translation_key: string
+          updated_at: string | null
+          value: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          is_custom?: boolean | null
+          language: string
+          translation_key: string
+          updated_at?: string | null
+          value: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          is_custom?: boolean | null
+          language?: string
+          translation_key?: string
+          updated_at?: string | null
+          value?: string
+        }
+        Relationships: []
+      }
       inventory_items: {
         Row: {
           created_at: string | null
@@ -429,6 +540,41 @@ export type Database = {
             columns: ["subscription_id"]
             isOneToOne: false
             referencedRelation: "subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organization_themes: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          organization_id: string
+          theme_overrides: Json
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          organization_id: string
+          theme_overrides?: Json
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          organization_id?: string
+          theme_overrides?: Json
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organization_themes_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]

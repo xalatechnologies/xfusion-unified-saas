@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { databaseApi } from '@/lib/database';
 
 export type SystemRole = 'super_admin' | 'organization_admin' | 'user';
 
@@ -19,14 +19,8 @@ export const useUserRole = () => {
       }
 
       try {
-        const { data, error } = await supabase.rpc('get_user_system_role');
-        
-        if (error) {
-          console.error('Error fetching user role:', error);
-          setSystemRole('user'); // Default to user role
-        } else {
-          setSystemRole(data as SystemRole || 'user');
-        }
+        const role = await databaseApi.getUserSystemRole();
+        setSystemRole(role as SystemRole || 'user');
       } catch (error) {
         console.error('Error fetching user role:', error);
         setSystemRole('user');

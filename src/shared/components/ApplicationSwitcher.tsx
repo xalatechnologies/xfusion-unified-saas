@@ -29,7 +29,7 @@ const canAccessApplication = (userRole: string, appRequiredRole: string): boolea
     'user': ['user']
   };
   
-  return roleHierarchy[userRole]?.includes(appRequiredRole) || false;
+  return roleHierarchy[userRole as keyof typeof roleHierarchy]?.includes(appRequiredRole) || false;
 };
 
 export const ApplicationSwitcher = () => {
