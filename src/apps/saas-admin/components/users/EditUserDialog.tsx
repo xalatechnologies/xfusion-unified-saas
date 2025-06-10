@@ -1,0 +1,217 @@
+
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+
+const editUserSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  status: z.enum(["active", "inactive", "pending", "suspended"]),
+  systemRole: z.enum(["super_admin", "organization_admin", "user"]),
+  notes: z.string().optional()
+});
+
+type EditUserForm = z.infer<typeof editUserSchema>;
+
+interface EditUserDialogProps {
+  user: any;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const form = useForm<EditUserForm>({
+    resolver: zodResolver(editUserSchema),
+    defaultValues: {
+      email: user?.email || "",
+      status: "active",
+      systemRole: "user",
+      notes: ""
+    }
+  });
+
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        email: user.email,
+        status: "active", // Mock data
+        systemRole: "user", // Mock data
+        notes: ""
+      });
+    }
+  }, [user, form]);
+
+  const onSubmit = async (data: EditUserForm) => {
+    setIsSubmitting(true);
+    try {
+      console.log("Updating user:", data);
+      
+      // Mock API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast({
+        title: "User updated successfully",
+        description: "The user information has been updated."
+      });
+      
+      onOpenChange(false);
+    } catch (error) {
+      toast({
+        title: "Error updating user",
+        description: "There was an error updating the user. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (!user) return null;
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Edit User: {user.email}</DialogTitle>
+        </DialogHeader>
+
+        <Tabs defaultValue="general" className="w-full">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="general">General</TabsTrigger>
+            <TabsTrigger value="roles">Roles & Permissions</TabsTrigger>
+            <TabsTrigger value="organizations">Organizations</TabsTrigger>
+            <TabsTrigger value="activity">Activity Log</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="general" className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    {...form.register("email")}
+                    placeholder="Enter email address"
+                  />
+                  {form.formState.errors.email && (
+                    <p className="text-sm text-red-600">{form.formState.errors.email.message}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Status</Label>
+                  <Select value={form.watch("status")} onValueChange={(value: any) => form.setValue("status", value)}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="active">Active</SelectItem>
+                      <SelectItem value="inactive">Inactive</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="suspended">Suspended</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>System Role</Label>
+                <Select value={form.watch("systemRole")} onValueChange={(value: any) => form.setValue("systemRole", value)}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="user">User</SelectItem>
+                    <SelectItem value="organization_admin">Organization Admin</SelectItem>
+                    <SelectItem value="super_admin">Super Admin</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="notes">Notes</Label>
+                <Textarea
+                  id="notes"
+                  {...form.register("notes")}
+                  placeholder="Add notes about this user..."
+                  rows={3}
+                />
+              </div>
+
+              <DialogFooter>
+                <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Updating..." : "Update User"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </TabsContent>
+
+          <TabsContent value="roles" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>System Roles</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 border rounded-lg">
+                    <div>
+                      <h4 className="font-medium">User</h4>
+                      <p className="text-sm text-gray-600">Basic user access</p>
+                    </div>
+                    <Badge variant="secondary">Current</Badge>
+                  </div>
+                  {/* More role options would go here */}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="organizations" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Organization Memberships</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-600">No organizations found for this user.</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="activity" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Activity</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-600">No recent activity to display.</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </DialogContent>
+    </Dialog>
+  );
+}
