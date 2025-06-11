@@ -11,3 +11,4 @@
 - Expanded Label stories to cover association with input/textarea, focus/active state, required/disabled, and added accessibility documentation and notes. 
 - Expanded Input stories to cover label association, help/error text with aria-describedby, responsive and focus states, and added accessibility documentation and notes. 
 - Expanded Textarea stories to cover label association, help/error text with aria-describedby, responsive and focus states, and added accessibility documentation and notes. 
+- Expanded Switch stories to cover label association, focus state, large clickable area, and added accessibility documentation and notes. 
