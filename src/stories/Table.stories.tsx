@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption } from '@/components/shared/Table';
-import { Badge } from '@/components/shared/Badge';
+import { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption } from '../components/shared/Table';
+import { Badge } from '../components/shared/Badge';
 
 const meta: Meta<typeof Table> = {
   title: 'Shared/Table',
@@ -13,7 +13,7 @@ const meta: Meta<typeof Table> = {
 export default meta;
 type Story = StoryObj<typeof Table>;
 
-export const AllStates: Story = {
+export const Default: Story = {
   render: () => (
     <Table>
       <TableCaption>Example table using design tokens</TableCaption>

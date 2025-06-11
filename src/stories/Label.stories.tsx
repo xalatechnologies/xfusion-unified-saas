@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Label } from '@/components/shared/Label';
+import { Label } from '../components/shared/Label';
 
 const meta: Meta<typeof Label> = {
   title: 'Shared/Label',
@@ -12,12 +12,12 @@ const meta: Meta<typeof Label> = {
 export default meta;
 type Story = StoryObj<typeof Label>;
 
-export const AllStates: Story = {
+export const Default: Story = { args: { children: 'Default Label' } };
+export const WithAsterisk: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <Label>Default Label</Label>
-      <Label>Label <span style={{ color: 'var(--color-error)' }}>*</span></Label>
-      <Label aria-disabled>Disabled Label</Label>
-    </div>
+    <Label>
+      Label <span style={{ color: 'var(--color-error)' }}>*</span>
+    </Label>
   ),
-}; 
+};
+export const Disabled: Story = { args: { children: 'Disabled Label', 'aria-disabled': true } }; 

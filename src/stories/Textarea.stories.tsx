@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Textarea } from '@/components/shared/Textarea';
+import { Textarea } from '../components/shared/Textarea';
 
 const meta: Meta<typeof Textarea> = {
   title: 'Shared/Textarea',
@@ -19,12 +19,6 @@ const meta: Meta<typeof Textarea> = {
 export default meta;
 type Story = StoryObj<typeof Textarea>;
 
-export const AllStates: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: 350 }}>
-      <Textarea placeholder="Default" />
-      <Textarea placeholder="With placeholder" />
-      <Textarea disabled placeholder="Disabled textarea" />
-    </div>
-  ),
-}; 
+export const Default: Story = {};
+export const WithPlaceholder: Story = { args: { placeholder: 'With placeholder' } };
+export const Disabled: Story = { args: { disabled: true, placeholder: 'Disabled textarea' } }; 

@@ -16,12 +16,10 @@ const meta: Meta<typeof Switch> = {
 export default meta;
 type Story = StoryObj<typeof Switch>;
 
-export const AllStates: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <Switch />
-      <Switch checked />
-      <Switch disabled />
-    </div>
-  ),
+export const Default: Story = {};
+export const Checked: Story = {
+  args: { checked: true },
+};
+export const Disabled: Story = {
+  args: { disabled: true },
 }; 
