@@ -8,17 +8,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-
-export interface User {
-  id: string;
-  email: string;
-  first_name?: string | null;
-  last_name?: string | null;
-  avatar_url?: string | null;
-  created_at?: string | null;
-  status?: string;
-  system_role?: string;
-}
+import type { User } from "@/types/User";
 
 interface UserExportProps {
   users: User[];

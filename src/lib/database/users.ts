@@ -1,7 +1,19 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import type { User } from "@/types/User";
 
 type Tables = Database["public"]["Tables"];
+
+type UsersWithRoleRow = {
+  id: string;
+  email: string;
+  first_name?: string | null;
+  last_name?: string | null;
+  avatar_url?: string | null;
+  created_at?: string | null;
+  status?: string;
+  system_role?: string;
+};
 
 export const usersApi = {
   async getTenants() {
@@ -25,14 +37,19 @@ export const usersApi = {
     return data;
   },
 
-  async getUsers() {
-    // Using <any, any> because users_with_role is a custom view not present in generated types
-    const { data, error } = await supabase
-      .from<any, any>("users_with_role")
+  async getUsers(): Promise<User[]> {
+    // 'users_with_role' is a custom view not present in generated types, so we use 'as unknown' to suppress the type error
+    const { data, error } = await (supabase as unknown as {
+      from: (table: string) => {
+        select: (columns: string) => {
+          order: (column: string, options: { ascending: boolean }) => Promise<{ data: UsersWithRoleRow[]; error: unknown }>;
+        };
+      };
+    }).from("users_with_role")
       .select("id, email, first_name, last_name, avatar_url, created_at, status, system_role")
       .order("created_at", { ascending: false });
     if (error) throw error;
-    return data;
+    return Array.isArray(data) ? data.filter(isUser) : [];
   },
 
   async createUser(user: Tables["users"]["Insert"]) {
@@ -98,3 +115,7 @@ export const usersApi = {
     return true;
   },
 };
+
+function isUser(obj: unknown): obj is User {
+  return obj && typeof obj === 'object' && typeof (obj as User).id === 'string' && typeof (obj as User).email === 'string';
+}

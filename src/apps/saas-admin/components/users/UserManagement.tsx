@@ -13,34 +13,31 @@ import { ChangePasswordDialog } from "./ChangePasswordDialog";
 import { ChangeAvatarDialog } from "./ChangeAvatarDialog";
 import { UserBulkActions } from "./UserBulkActions";
 import { UserExport } from "./UserExport";
+import type { User } from "@/types/User";
+import type { UserFilters as UserFiltersType } from "./UserFilters";
 
 export function UserManagement() {
-  const { data: users, isLoading } = useUsers();
+  const { data: users = [], isLoading } = useUsers();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
-  const [editingUser, setEditingUser] = useState<any>(null);
-  const [passwordUser, setPasswordUser] = useState<any>(null);
-  const [avatarUser, setAvatarUser] = useState<any>(null);
-  const [filters, setFilters] = useState({
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [passwordUser, setPasswordUser] = useState<User | null>(null);
+  const [avatarUser, setAvatarUser] = useState<User | null>(null);
+  const [filters, setFilters] = useState<UserFiltersType>({
     status: "all",
     role: "all",
     organization: "all",
     dateRange: "all"
   });
 
-  const filteredUsers = Array.isArray(users)
-    ? users.filter((user: any) => {
-        if (!user || typeof user !== 'object' || !('email' in user)) return false;
-        const matchesSearch = (user.email as string).toLowerCase().includes(searchTerm.toLowerCase());
-        // Add more filter logic here based on filters state
-        return matchesSearch;
-      })
-    : [];
+  const filteredUsers: User[] = users.filter((user) => {
+    const matchesSearch = user.email.toLowerCase().includes(searchTerm.toLowerCase());
+    // Add more filter logic here based on filters state
+    return matchesSearch;
+  });
 
-  const safeFilteredUsers = Array.isArray(filteredUsers)
-    ? filteredUsers.filter((user: any) => user && typeof user === 'object' && 'id' in user)
-    : [];
+  const safeFilteredUsers: User[] = filteredUsers;
 
   const handleUserSelect = (userId: string, selected: boolean) => {
     if (selected) {
@@ -52,7 +49,7 @@ export function UserManagement() {
 
   const handleSelectAll = (selected: boolean) => {
     if (selected) {
-      setSelectedUsers(safeFilteredUsers.map((user: any) => user.id));
+      setSelectedUsers(safeFilteredUsers.map((user) => user.id));
     } else {
       setSelectedUsers([]);
     }

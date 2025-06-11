@@ -1,6 +1,6 @@
-
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { databaseApi } from "@/lib/database";
+import type { User } from "@/types/User";
 
 // Tenants
 export const useTenants = () => {
@@ -22,12 +22,12 @@ export const useCreateTenant = () => {
 };
 
 // Users
-export const useUsers = () => {
-  return useQuery({
+export function useUsers() {
+  return useQuery<User[]>({
     queryKey: ["users"],
     queryFn: databaseApi.getUsers,
   });
-};
+}
 
 export const useCreateUser = () => {
   const queryClient = useQueryClient();

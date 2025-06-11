@@ -20,3 +20,4 @@
 - Removed 'any' from the catch block in handleBulkRole in UserBulkActions.tsx, using 'unknown' and a type guard for error.message. 
 - Replaced all 'any' usages for users in UserExport.tsx with the User interface, updating props and function signatures accordingly. 
 - Replaced 'any' in UserFilters.tsx with a UserFilters type for the filters prop and onFiltersChange argument. 
+- Unified all user-related types to use a shared User interface, updated Supabase query typing, and removed all 'any' usages from user management files. Fixed linter errors in users.ts and related files. 
