@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
@@ -10,8 +9,19 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 
+export interface User {
+  id: string;
+  email: string;
+  first_name?: string | null;
+  last_name?: string | null;
+  avatar_url?: string | null;
+  created_at?: string | null;
+  status?: string;
+  system_role?: string;
+}
+
 interface UserExportProps {
-  users: any[];
+  users: User[];
   selectedUsers?: string[];
 }
 
@@ -19,14 +29,14 @@ export function UserExport({ users, selectedUsers }: UserExportProps) {
   const [isExporting, setIsExporting] = useState(false);
   const { toast } = useToast();
 
-  const getUserDisplayName = (user: any) => {
+  const getUserDisplayName = (user: User) => {
     if (user?.first_name || user?.last_name) {
       return `${user.first_name || ''} ${user.last_name || ''}`.trim();
     }
     return user?.email || "User";
   };
 
-  const exportToCSV = async (data: any[], filename: string) => {
+  const exportToCSV = async (data: User[], filename: string) => {
     setIsExporting(true);
     try {
       const headers = ['Name', 'Email', 'First Name', 'Last Name', 'Created At', 'Status', 'System Role'];
