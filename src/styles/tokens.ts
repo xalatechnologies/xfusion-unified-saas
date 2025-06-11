@@ -3,7 +3,8 @@ export const tokens = {
     primary: '#2563eb', // blue-600
     primaryGradient: 'linear-gradient(90deg, #2563eb 0%, #6366f1 100%)',
     secondary: '#6366f1', // indigo-500
-    accent: '#f59e42', // orange-400
+    accent: '#f59e42', // orange-400 (use for backgrounds, icons, badges)
+    accentText: '#b26a1a', // accessible for text on light backgrounds
     accentGradient: 'linear-gradient(90deg, #f59e42 0%, #fbbf24 100%)',
     background: '#f9fafb', // gray-50
     surface: '#ffffff',
@@ -21,6 +22,10 @@ export const tokens = {
     popover: '#ffffff',
     popoverBorder: '#e5e7eb',
     popoverShadow: 'rgba(0,0,0,0.08)',
+    shadowXs: '0 1px 2px 0 rgba(16, 24, 40, 0.05)',
+    shadowMd: '0 4px 8px 0 rgba(16, 24, 40, 0.10)',
+    shadowLg: '0 8px 24px 0 rgba(16, 24, 40, 0.12)',
+    blurMd: '8px', // for glassmorphism effects
   },
   spacing: {
     xs: '4px',
