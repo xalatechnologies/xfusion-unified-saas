@@ -27,9 +27,10 @@ export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof badgeVariants> {}
 
-function Badge({ className, variant, ...props }: BadgeProps) {
+function Badge({ className, variant, role = 'status', ...props }: BadgeProps) {
+  // ARIA: role='status' by default for status badges. Override if needed.
   return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
+    <div className={cn(badgeVariants({ variant }), className)} role={role} {...props} />
   )
 }
 

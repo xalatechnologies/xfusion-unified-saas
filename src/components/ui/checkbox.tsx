@@ -7,13 +7,15 @@ import { cn } from "@/lib/utils"
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
->(({ className, ...props }, ref) => (
+>(({ className, checked, ...props }, ref) => (
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn(
       "peer h-4 w-4 shrink-0 rounded-[var(--radius-sm)] border border-[var(--color-primary)] bg-[var(--color-surface)] ring-offset-[var(--color-background)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-[var(--color-primary)] data-[state=checked]:text-[var(--color-surface)] font-family-[var(--font-family)]",
       className
     )}
+    role="checkbox"
+    aria-checked={checked === 'indeterminate' ? 'mixed' : !!checked}
     {...props}
   >
     <CheckboxPrimitive.Indicator

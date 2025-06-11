@@ -2,3 +2,4 @@
 - Documented all design tokens in dev-plan/design-tokens.md and completed the project setup & design tokens story. 
 - Verified base font size is set to 18px for body and 16px for form/table elements, meeting accessibility standards. 
 - Added universal high-contrast focus style for all interactive elements using :focus-visible, 2px outline in primary/accent. 
+- Added ARIA roles, labels, and descriptions to Button, Avatar, Badge, Switch, and Checkbox for accessibility compliance. 

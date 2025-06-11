@@ -24,6 +24,16 @@ const AvatarImage = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
 >(({ className, ...props }, ref) => {
   const [hasError, setHasError] = React.useState(false);
+  // Accessibility: Warn if AvatarImage is missing alt
+  if (
+    process.env.NODE_ENV === "development" &&
+    (!('alt' in props) || !props.alt)
+  ) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      "[AvatarImage] AvatarImage should have an alt attribute for accessibility."
+    );
+  }
   if (!props.src || hasError) return null;
   return (
     <AvatarPrimitive.Image

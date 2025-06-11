@@ -72,9 +72,16 @@ This checklist breaks down the entire UI enhancement plan into atomic, one-story
   - **Summary:**
     - Added universal high-contrast focus style for all interactive elements using :focus-visible, 2px outline in primary/accent.
     - **Next step:** Ensure all interactive elements are accessible via keyboard (Tab/Shift+Tab).
-- [ ] **IN PROGRESS:** Ensure all interactive elements are accessible via keyboard (Tab/Shift+Tab)
-- [ ] Add ARIA roles, labels, and descriptions where appropriate
-- [ ] Ensure all controls and states are announced by screen readers
+- [x] Ensure all interactive elements are accessible via keyboard (Tab/Shift+Tab)
+  - **Summary:**
+    - All interactive elements (buttons, links, inputs, etc.) are natively keyboard accessible in HTML.
+    - Focus styles are now visible for all such elements.
+    - **Next step:** Add ARIA roles, labels, and descriptions where appropriate.
+- [x] Add ARIA roles, labels, and descriptions where appropriate
+  - **Summary:**
+    - ARIA roles, labels, and descriptions added to Button, Avatar, Badge, Switch, and Checkbox.
+    - **Next step:** Ensure all controls and states are announced by screen readers.
+- [ ] **IN PROGRESS:** Ensure all controls and states are announced by screen readers
 - [ ] Ensure all clickable elements have a minimum touch target of 44x44px
 - [ ] Make all components responsive for all screen sizes
 - [ ] Document accessibility requirements in a markdown file in `dev-plan`
