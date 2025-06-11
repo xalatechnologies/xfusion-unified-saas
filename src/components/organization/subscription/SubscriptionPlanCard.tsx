@@ -1,12 +1,13 @@
-
+import React from "react";
+import type { SubscriptionPlan } from "@/types/Subscription";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Users, AlertTriangle, Crown, Zap, Building } from "lucide-react";
 
 interface SubscriptionPlanCardProps {
-  plan: any;
-  currentPlan?: any;
+  plan: SubscriptionPlan;
+  currentPlan?: SubscriptionPlan;
   memberCount: number;
   isLoading: boolean;
   onPlanSelect: (planId: string) => void;
@@ -25,7 +26,7 @@ const getIconForPlan = (planId: string) => {
   }
 };
 
-const getFeaturesList = (features: any) => {
+const getFeaturesList = (features: string[]) => {
   const featureList = [];
   
   if (features?.workOrders === -1) {

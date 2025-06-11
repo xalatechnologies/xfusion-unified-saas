@@ -1,9 +1,10 @@
-
+import React from "react";
+import type { Subscription } from "@/types/Subscription";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertTriangle } from "lucide-react";
 
 interface UserLimitWarningProps {
-  subscription: any;
+  subscription: Subscription;
   memberCount: number;
 }
 

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useOrganizations, useUpdateOrganization } from "@/hooks/useOrganizations";

@@ -1,9 +1,10 @@
-
+import React from "react";
+import type { Subscription } from "@/types/Subscription";
 import { SubscriptionPlanCard } from "./SubscriptionPlanCard";
 import { useSubscriptionTemplates } from "@/hooks/useBilling";
 
 interface SubscriptionPlansGridProps {
-  currentSubscription?: any;
+  currentSubscription?: Subscription;
   memberCount: number;
   isLoading: boolean;
   onPlanSelect: (planId: string) => void;

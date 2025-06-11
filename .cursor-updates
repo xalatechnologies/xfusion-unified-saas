@@ -25,3 +25,4 @@
 - Reviewed and confirmed all user-related files in the lint-fix checklist for 'any' type usage; all are type-safe and require no changes. Continuing with the next files in the checklist as part of the ongoing lint and type safety improvements. 
 - Replaced 'any' usage in SaasTranslations.tsx with the correct Translation type, and exported the Translation type from useGlobalTranslations for type safety. 
 - Replaced 'any' with React.ElementType for the icon property in AppMenuItem in AppSidebarMenuItems.ts for type safety and consistency. 
+- Created shared Subscription and SubscriptionPlan types in src/types/Subscription.ts, updated all relevant components to use these types, and verified a successful build. 

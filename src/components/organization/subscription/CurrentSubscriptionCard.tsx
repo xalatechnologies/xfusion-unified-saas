@@ -1,11 +1,12 @@
-
+import React from "react";
+import type { Subscription } from "@/types/Subscription";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Users, Crown, Zap, Building } from "lucide-react";
 
 interface CurrentSubscriptionCardProps {
-  orgSubscription: any;
+  orgSubscription: Subscription;
   memberCount: number;
 }
 
