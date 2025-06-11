@@ -46,7 +46,7 @@ export default function SaasOrganizations() {
 
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="border-l-4 border-l-blue-500">
+          <Card variant="blue">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="text-left">
@@ -58,7 +58,7 @@ export default function SaasOrganizations() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-green-500">
+          <Card variant="green">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="text-left">
@@ -70,7 +70,7 @@ export default function SaasOrganizations() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-orange-500">
+          <Card variant="orange">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="text-left">
@@ -82,7 +82,7 @@ export default function SaasOrganizations() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-purple-500">
+          <Card variant="purple">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="text-left">
@@ -180,7 +180,7 @@ export default function SaasOrganizations() {
                   Manage organizations, their subscriptions, and member access
                 </CardDescription>
               </div>
-              <Button className="bg-blue-600 hover:bg-blue-700">
+              <Button variant="primary">
                 <Plus className="w-4 h-4 mr-2" />
                 Add Organization
               </Button>

@@ -46,7 +46,7 @@ export default function SaasSettings() {
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label className="text-left block">Maintenance Mode</Label>
+                  <Label>Maintenance Mode</Label>
                   <p className="text-sm text-gray-500 text-left">Temporarily disable platform access</p>
                 </div>
                 <Switch />
@@ -65,14 +65,14 @@ export default function SaasSettings() {
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label className="text-left block">Two-Factor Authentication</Label>
+                  <Label>Two-Factor Authentication</Label>
                   <p className="text-sm text-gray-500 text-left">Require 2FA for all admin accounts</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label className="text-left block">Session Timeout</Label>
+                  <Label>Session Timeout</Label>
                   <p className="text-sm text-gray-500 text-left">Auto-logout after inactivity</p>
                 </div>
                 <Switch defaultChecked />
@@ -83,7 +83,7 @@ export default function SaasSettings() {
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label className="text-left block">Password Complexity</Label>
+                  <Label>Password Complexity</Label>
                   <p className="text-sm text-gray-500 text-left">Enforce strong password requirements</p>
                 </div>
                 <Switch defaultChecked />
@@ -117,7 +117,7 @@ export default function SaasSettings() {
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label className="text-left block">Email Verification Required</Label>
+                  <Label>Email Verification Required</Label>
                   <p className="text-sm text-gray-500 text-left">Require email verification for new users</p>
                 </div>
                 <Switch defaultChecked />
@@ -139,28 +139,28 @@ export default function SaasSettings() {
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label className="text-left block">New User Registration</Label>
+                  <Label>New User Registration</Label>
                   <p className="text-sm text-gray-500 text-left">Notify admins of new sign-ups</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label className="text-left block">Failed Payment Alerts</Label>
+                  <Label>Failed Payment Alerts</Label>
                   <p className="text-sm text-gray-500 text-left">Alert when payments fail</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label className="text-left block">System Health Monitoring</Label>
+                  <Label>System Health Monitoring</Label>
                   <p className="text-sm text-gray-500 text-left">Alerts for system issues</p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 text-left">
-                  <Label className="text-left block">Weekly Usage Reports</Label>
+                  <Label>Weekly Usage Reports</Label>
                   <p className="text-sm text-gray-500 text-left">Send usage summaries to admins</p>
                 </div>
                 <Switch />
@@ -222,7 +222,7 @@ export default function SaasSettings() {
         {/* Save Settings */}
         <div className="flex justify-end space-x-4">
           <Button variant="outline">Reset to Defaults</Button>
-          <Button className="bg-blue-600 hover:bg-blue-700">Save Changes</Button>
+          <Button variant="primary">Save Changes</Button>
         </div>
       </div>
     </SaasAdminLayout>

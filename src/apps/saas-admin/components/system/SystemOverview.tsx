@@ -12,7 +12,7 @@ export function SystemOverview() {
           <h3 className="text-lg font-medium text-gray-900">System Settings</h3>
           <p className="text-sm text-gray-600">Manage translations, system configuration and settings</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button variant="primary">
           <Plus className="w-4 h-4 mr-2" />
           Add Configuration
         </Button>

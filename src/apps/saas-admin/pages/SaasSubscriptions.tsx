@@ -36,7 +36,7 @@ export default function SaasSubscriptions() {
 
         {/* Revenue Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="border-l-4 border-l-green-500">
+          <Card variant="green">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="text-left">
@@ -49,7 +49,7 @@ export default function SaasSubscriptions() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-blue-500">
+          <Card variant="blue">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="text-left">
@@ -62,7 +62,7 @@ export default function SaasSubscriptions() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-purple-500">
+          <Card variant="purple">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="text-left">
@@ -75,7 +75,7 @@ export default function SaasSubscriptions() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-orange-500">
+          <Card variant="orange">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="text-left">
@@ -162,7 +162,7 @@ export default function SaasSubscriptions() {
                   Monitor all subscription details, billing cycles, and customer information
                 </CardDescription>
               </div>
-              <Button className="bg-blue-600 hover:bg-blue-700">
+              <Button variant="primary">
                 <Plus className="w-4 h-4 mr-2" />
                 Create Subscription
               </Button>

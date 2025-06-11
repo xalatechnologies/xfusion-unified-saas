@@ -30,7 +30,7 @@ export default function SaasAnalytics() {
 
         {/* Key Performance Indicators */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="border-l-4 border-l-blue-500">
+          <Card variant="blue">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="text-left">
@@ -46,7 +46,7 @@ export default function SaasAnalytics() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-green-500">
+          <Card variant="green">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="text-left">
@@ -62,7 +62,7 @@ export default function SaasAnalytics() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-purple-500">
+          <Card variant="purple">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="text-left">
@@ -78,7 +78,7 @@ export default function SaasAnalytics() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-orange-500">
+          <Card variant="orange">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="text-left">
@@ -248,7 +248,7 @@ export default function SaasAnalytics() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Card className="border-dashed">
+              <Card variant="dashed">
                 <CardContent className="p-4 text-center">
                   <BarChart3 className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                   <p className="font-medium">Usage Report</p>
@@ -256,7 +256,7 @@ export default function SaasAnalytics() {
                 </CardContent>
               </Card>
               
-              <Card className="border-dashed">
+              <Card variant="dashed">
                 <CardContent className="p-4 text-center">
                   <DollarSign className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                   <p className="font-medium">Revenue Report</p>
@@ -264,7 +264,7 @@ export default function SaasAnalytics() {
                 </CardContent>
               </Card>
               
-              <Card className="border-dashed">
+              <Card variant="dashed">
                 <CardContent className="p-4 text-center">
                   <Users className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                   <p className="font-medium">User Report</p>

@@ -11,7 +11,7 @@ export function BillingOverview() {
           <h3 className="text-lg font-medium text-gray-900">Global Billing</h3>
           <p className="text-sm text-gray-600">Overview of all billing activities and revenue</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button variant="primary">
           <Plus className="w-4 h-4 mr-2" />
           Generate Report
         </Button>

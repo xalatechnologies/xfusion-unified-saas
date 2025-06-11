@@ -18,6 +18,7 @@ const cardVariants = cva(
         green: "border-l-4 border-l-green-500",
         purple: "border-l-4 border-l-purple-500",
         orange: "border-l-4 border-l-orange-500",
+        red: "border-l-4 border-l-red-500",
         dashed: "border-dashed",
         shadow: "shadow-lg",
         gradient: "bg-gradient-to-br from-blue-50 to-indigo-50",

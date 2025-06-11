@@ -104,6 +104,16 @@ const Dashboard = () => {
     }
   };
 
+  const statusToVariant = (status: string) => {
+    switch (status) {
+      case 'Open': return 'default';
+      case 'On Hold': return 'secondary';
+      case 'In Progress': return 'outline';
+      case 'Closed': return 'destructive';
+      default: return 'secondary';
+    }
+  };
+
   return (
     <AppDashboardLayout>
       <div className="space-y-8">
@@ -168,9 +178,7 @@ const Dashboard = () => {
                       <div className="flex items-center space-x-3 mb-2">
                         <span className="text-sm font-bold text-blue-700">{wo.id}</span>
                         <div className={`w-2 h-2 rounded-full ${getPriorityColor(wo.priority)}`}></div>
-                        <Badge className={`text-xs ${getStatusColor(wo.status)} border`}>
-                          {wo.status}
-                        </Badge>
+                        <Badge variant={statusToVariant(wo.status)}>{wo.status}</Badge>
                       </div>
                       <h4 className="font-semibold text-slate-900 mb-1 group-hover:text-blue-700 transition-colors">
                         {wo.title}

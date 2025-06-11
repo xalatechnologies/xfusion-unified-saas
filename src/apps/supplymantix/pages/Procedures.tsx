@@ -97,6 +97,16 @@ const Procedures = () => {
     }
   };
 
+  const categoryToVariant = (category: string) => {
+    switch (category) {
+      case 'maintenance': return 'default';
+      case 'critical': return 'destructive';
+      case 'info': return 'secondary';
+      case 'outline': return 'outline';
+      default: return 'secondary';
+    }
+  };
+
   return (
     <AppDashboardLayout>
       <div className="space-y-6">
@@ -176,7 +186,7 @@ const Procedures = () => {
                         {procedure.title}
                       </h3>
                       <div className="flex items-center space-x-2 mb-2">
-                        <Badge className={getCategoryColor(procedure.category)}>
+                        <Badge variant={categoryToVariant(procedure.category)}>
                           {procedure.category}
                         </Badge>
                       </div>
