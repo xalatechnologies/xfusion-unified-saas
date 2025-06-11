@@ -1,4 +1,3 @@
-
 "use client";
 
 import { motion } from "framer-motion";
@@ -79,11 +78,7 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
         >
           <div className="w-full flex h-32 md:h-48 relative overflow-hidden mb-4">
-            <img
-              src="https://blocks.mvp-subha.me/assets/earth.png"
-              alt="Global Operations"
-              className="absolute px-4 top-0 left-1/2 -translate-x-1/2 mx-auto -z-10 opacity-60"
-            />
+            <div className="absolute px-4 top-0 left-1/2 -translate-x-1/2 mx-auto -z-10 opacity-60 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/20 via-blue-800/10 to-transparent" />
           </div>
           <div className="relative z-10 mx-auto max-w-5xl overflow-hidden rounded-xl shadow-2xl shadow-blue-500/20 border border-blue-400/20">
             <img

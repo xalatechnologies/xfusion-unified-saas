@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -31,21 +30,24 @@ const Login = () => {
     setLoading(true);
 
     try {
+      console.log('Attempting to sign in with:', formData.email);
       const { error } = await signIn(formData.email, formData.password);
       
       if (error) {
+        console.error('Sign-in error:', error);
         if (error.message.includes("Invalid login credentials")) {
           setError("Invalid email or password. Please try again.");
         } else if (error.message.includes("Email not confirmed")) {
           setError("Please check your email and click the confirmation link before signing in.");
         } else {
-          setError(error.message);
+          setError(`Error: ${error.message}`);
         }
       } else {
         navigate("/dashboard");
       }
     } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
+      console.error('Unexpected error during sign-in:', err);
+      setError(`An unexpected error occurred: ${err instanceof Error ? err.message : 'Unknown error'}`);
     } finally {
       setLoading(false);
     }
