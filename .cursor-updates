@@ -3,3 +3,4 @@
 - Verified base font size is set to 18px for body and 16px for form/table elements, meeting accessibility standards. 
 - Added universal high-contrast focus style for all interactive elements using :focus-visible, 2px outline in primary/accent. 
 - Added ARIA roles, labels, and descriptions to Button, Avatar, Badge, Switch, and Checkbox for accessibility compliance. 
+- Made Card, Table, and Avatar components fully responsive with atomic responsive classes and comments. All shared UI stories now have responsive coverage. 

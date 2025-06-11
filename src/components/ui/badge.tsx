@@ -23,12 +23,26 @@ const badgeVariants = cva(
   }
 )
 
+// Badge is not intended to be interactive/clickable by default. If used as a button or link, min-w-[44px] min-h-[44px] should be applied for accessibility.
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof badgeVariants> {}
 
 function Badge({ className, variant, role = 'status', ...props }: BadgeProps) {
   // ARIA: role='status' by default for status badges. Override if needed.
+  // Accessibility: Warn if Badge is used as a button or link without min-w-[44px] min-h-[44px]
+  if (
+    process.env.NODE_ENV === "development" &&
+    (props as any).as === 'button' || (props as any).as === 'a'
+  ) {
+    const classStr = className || '';
+    if (!classStr.includes('min-w-[44px]') || !classStr.includes('min-h-[44px]')) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        '[Badge] Interactive badges (button or link) must have min-w-[44px] min-h-[44px] for accessibility.'
+      );
+    }
+  }
   return (
     <div className={cn(badgeVariants({ variant }), className)} role={role} {...props} />
   )

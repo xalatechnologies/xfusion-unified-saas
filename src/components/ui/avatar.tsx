@@ -7,6 +7,7 @@ const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
 >(({ className, ...props }, ref) => (
+  // Responsive: Avatar uses h-10 w-10 by default, but can be resized with className (e.g., sm:h-8 w-8, md:h-12 w-12, lg:h-16 w-16)
   <AvatarPrimitive.Root
     ref={ref}
     className={cn(

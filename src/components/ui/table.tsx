@@ -6,10 +6,11 @@ const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
 >(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto">
+  // Responsive: Table is horizontally scrollable on small screens, with responsive text size
+  <div className="relative w-full overflow-x-auto">
     <table
       ref={ref}
-      className={cn("w-full caption-bottom text-sm text-[var(--color-text)] font-family-[var(--font-family)]", className)}
+      className={cn("w-full caption-bottom text-sm md:text-base text-[var(--color-text)] font-family-[var(--font-family)]", className)}
       {...props}
     />
   </div>

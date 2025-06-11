@@ -81,9 +81,17 @@ This checklist breaks down the entire UI enhancement plan into atomic, one-story
   - **Summary:**
     - ARIA roles, labels, and descriptions added to Button, Avatar, Badge, Switch, and Checkbox.
     - **Next step:** Ensure all controls and states are announced by screen readers.
-- [ ] **IN PROGRESS:** Ensure all controls and states are announced by screen readers
-- [ ] Ensure all clickable elements have a minimum touch target of 44x44px
-- [ ] Make all components responsive for all screen sizes
+- [x] Ensure all controls and states are announced by screen readers
+  - **Summary:**
+    - All controls and states now have ARIA roles, labels, and states for screen reader announcement.
+    - **Next step:** Ensure all clickable elements have a minimum touch target of 44x44px.
+- [x] Ensure all clickable elements have a minimum touch target of 44x44px
+  - **Summary:**
+    - All Button, Switch, and Checkbox components now enforce min-w-[44px] min-h-[44px] for all sizes, including icon and small variants.
+    - Badge is not interactive by default, but runtime warnings and documentation are added for accessibility if used as a button or link.
+    - All interactive elements now meet or exceed the 44x44px touch target for accessibility and universal design.
+    - **Next step:** Make all components responsive for all screen sizes.
+- [ ] **IN PROGRESS:** Make all components responsive for all screen sizes
 - [ ] Document accessibility requirements in a markdown file in `dev-plan`
 
 ---

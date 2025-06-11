@@ -29,10 +29,10 @@ const buttonVariants = cva(
         link: "bg-transparent text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-accent)] border-none",
       },
       size: {
-        default: "h-10 px-4 py-2 text-[var(--font-size-md)]",
-        sm: "h-9 rounded-[var(--radius-sm)] px-3 text-[var(--font-size-sm)]",
-        lg: "h-11 rounded-[var(--radius-lg)] px-8 text-[var(--font-size-lg)]",
-        icon: "h-10 w-10 p-0",
+        default: "h-10 px-4 py-2 text-[var(--font-size-md)] min-w-[44px] min-h-[44px]",
+        sm: "h-9 rounded-[var(--radius-sm)] px-3 text-[var(--font-size-sm)] min-w-[44px] min-h-[44px]",
+        lg: "h-11 rounded-[var(--radius-lg)] px-8 text-[var(--font-size-lg)] min-w-[44px] min-h-[44px]",
+        icon: "h-10 w-10 p-0 min-w-[44px] min-h-[44px]",
       },
     },
     defaultVariants: {
