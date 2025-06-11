@@ -1,20 +1,66 @@
 # User Management Finalization Checklist for `@/saas-admin`
 
-> This checklist covers every detail required to finalize user management in the saas-admin app. Each story is broken down into one-story-point tasks and subtasks. All tasks must be completed for a production-ready, accessible, and maintainable user management system. **Do not skip any item.**
+---
+
+## High-Level Overview
+
+The **User Management** feature in the `saas-admin` application provides administrators with a comprehensive interface to manage all users across the SaaS platform. This includes listing, searching, filtering, creating, editing, deleting, and exporting users, as well as managing user roles, statuses, passwords, and avatars. The feature is tightly integrated with the backend API for CRUD operations, leverages a shared UI component library for consistency and branding, and enforces strict access control and validation. All user management logic, UI, and dialogs are encapsulated within the `@/saas-admin` app, ensuring maintainability, scalability, and a seamless admin experience. Accessibility, responsiveness, and code quality are prioritized throughout.
+
+**Relationship to Application Logic:**
+- User management is central to the admin's ability to control access, onboard new users, and maintain security and compliance.
+- All user actions (create, edit, delete, role/status changes) are reflected in the backend and update the application state via API integration and state management (e.g., react-query).
+- The feature interacts with other admin modules (organizations, subscriptions, analytics) for cross-entity management and reporting.
+- All UI components must be derived from the shared UI library to ensure global styling and white-labeling support.
+
+---
+
+## Directory Structure (User Management)
+
+```
+src/
+  apps/
+    saas-admin/
+      pages/
+        SaasUsers.tsx                # Entry point for user management page
+      components/
+        users/
+          UserManagement.tsx         # Main user management container
+          UsersTable.tsx             # User list table
+          UserStatsCards.tsx         # User summary metrics
+          UserBulkActions.tsx        # Bulk actions for users
+          UserActions.tsx            # Row actions (edit, delete, etc.)
+          EditUserDialog.tsx         # Edit user modal
+          ChangePasswordDialog.tsx   # Change password modal
+          ChangeAvatarDialog.tsx     # Change avatar modal
+          UserFilters.tsx            # Filtering UI
+          UserExport.tsx             # Export users to CSV
+          UsersOverview.tsx          # User overview cards/metrics
+          CreateUserDialog.tsx       # Create user modal
+          create-user/
+            CreateUserForm.tsx       # User creation form
+            createUserSchema.ts      # Validation schema for user creation
+            useCreateUserLogic.ts    # Hook for user creation logic
+      layout/
+        SaasAdminLayout.tsx          # Shared admin layout
+  dev-plan/
+    user-management-finalization-checklist.md  # This checklist
+```
+
+> **Note:** All new or updated files for user management must be placed in the directories above. Do not add files outside these locations unless explicitly required by the checklist or application architecture.
 
 ---
 
 ## 1. User List & Overview
-- [ ] Implement user list page using shared `UsersTable` component
-  - [ ] Fetch users from backend API with pagination, sorting, and filtering
-  - [ ] Display user avatars, names, emails, roles, statuses, and creation dates
+- [x] Implement user list page using shared `UsersTable` component
+  - [x] Fetch users from backend API with pagination, sorting, and filtering
+  - [x] Display user avatars, names, emails, roles, statuses, and creation dates
   - [ ] Show loading, empty, and error states with clear messaging
   - [ ] Integrate `UserStatsCards` for summary metrics (active, pending, suspended, etc.)
-  - [ ] Ensure all table actions use shared UI components (buttons, badges, tooltips, etc.)
-  - [ ] Add quick filters for status, role, organization, and date range
+  - [x] Ensure all table actions use shared UI components (buttons, badges, tooltips, etc.)
+  - [x] Add quick filters for status, role, organization, and date range
   - [ ] Support keyboard navigation and screen reader accessibility
-  - [ ] Add bulk selection and bulk actions (activate, deactivate, delete, assign role)
-  - [ ] Ensure responsive design for all breakpoints
+  - [x] Add bulk selection and bulk actions (activate, deactivate, delete, assign role)
+  - [x] Ensure responsive design for all breakpoints
 
 ## 2. User Search & Filtering
 - [ ] Implement search bar for users (by name, email, ID)

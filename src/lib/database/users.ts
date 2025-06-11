@@ -37,19 +37,64 @@ export const usersApi = {
     return data;
   },
 
-  async getUsers(): Promise<User[]> {
-    // 'users_with_role' is a custom view not present in generated types, so we use 'as unknown' to suppress the type error
-    const { data, error } = await (supabase as unknown as {
+  async getUsers(options: {
+    page?: number;
+    pageSize?: number;
+    sortBy?: string;
+    sortOrder?: 'asc' | 'desc';
+    filters?: {
+      status?: string;
+      role?: string;
+      organization?: string;
+      dateRange?: string;
+      search?: string;
+    };
+  } = {}): Promise<{ users: User[]; total: number }> {
+    const {
+      page = 1,
+      pageSize = 20,
+      sortBy = 'created_at',
+      sortOrder = 'desc',
+      filters = {}
+    } = options;
+    let query = (supabase as unknown as {
       from: (table: string) => {
-        select: (columns: string) => {
-          order: (column: string, options: { ascending: boolean }) => Promise<{ data: UsersWithRoleRow[]; error: unknown }>;
-        };
+        select: (columns: string, options?: { count?: string }) => any;
+        order: (column: string, options: { ascending: boolean }) => any;
+        range: (from: number, to: number) => any;
+        eq: (column: string, value: any) => any;
+        ilike: (column: string, value: string) => any;
       };
     }).from("users_with_role")
-      .select("id, email, first_name, last_name, avatar_url, created_at, status, system_role")
-      .order("created_at", { ascending: false });
+      .select("id, email, first_name, last_name, avatar_url, created_at, status, system_role", { count: "exact" })
+      .order(sortBy, { ascending: sortOrder === 'asc' });
+
+    // Filtering
+    if (filters.status && filters.status !== 'all') {
+      query = query.eq('status', filters.status);
+    }
+    if (filters.role && filters.role !== 'all') {
+      query = query.eq('system_role', filters.role);
+    }
+    if (filters.organization && filters.organization !== 'all') {
+      query = query.eq('organization_id', filters.organization);
+    }
+    if (filters.search) {
+      query = query.ilike('email', `%${filters.search}%`);
+    }
+    // TODO: Add dateRange filtering if needed
+
+    // Pagination
+    const from = (page - 1) * pageSize;
+    const to = from + pageSize - 1;
+    query = query.range(from, to);
+
+    const { data, error, count } = await query;
     if (error) throw error;
-    return Array.isArray(data) ? data.filter(isUser) : [];
+    return {
+      users: Array.isArray(data) ? data.filter(isUser) : [],
+      total: count || 0
+    };
   },
 
   async createUser(user: Tables["users"]["Insert"]) {

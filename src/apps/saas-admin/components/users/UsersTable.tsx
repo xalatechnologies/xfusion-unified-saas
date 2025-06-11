@@ -9,6 +9,8 @@ import { format } from "date-fns";
 import { UserActions } from "./UserActions";
 import React from "react";
 import type { User } from "@/types/User";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface UsersTableProps {
   users: User[];
@@ -21,6 +23,14 @@ interface UsersTableProps {
   loading?: boolean;
   filters?: { status: string; role: string; organization: string; dateRange: string };
   onFilterChange?: (filters: { status: string; role: string; organization: string; dateRange: string }) => void;
+  total?: number;
+  page?: number;
+  pageSize?: number;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+  onPageChange?: (page: number) => void;
+  onPageSizeChange?: (size: number) => void;
+  onSortChange?: (column: string) => void;
 }
 
 const statusIcons = {
@@ -61,6 +71,14 @@ export function UsersTable({
   loading = false,
   filters = { status: "all", role: "all", organization: "all", dateRange: "all" },
   onFilterChange,
+  total = 0,
+  page = 1,
+  pageSize = 20,
+  sortBy = "created_at",
+  sortOrder = "desc",
+  onPageChange,
+  onPageSizeChange,
+  onSortChange,
 }: UsersTableProps) {
   const allSelected = users.length > 0 && selectedUsers.length === users.length;
   const someSelected = selectedUsers.length > 0 && selectedUsers.length < users.length;
@@ -119,6 +137,29 @@ export function UsersTable({
       </Badge>
     );
   };
+
+  // Helper for rendering sortable column headers
+  const renderSortableHeader = (label: string, column: string) => (
+    <th
+      className="text-base font-semibold text-gray-900 cursor-pointer select-none group"
+      aria-sort={sortBy === column ? (sortOrder === "asc" ? "ascending" : "descending") : "none"}
+      tabIndex={0}
+      onClick={() => onSortChange && onSortChange(column)}
+      onKeyDown={e => {
+        if (e.key === "Enter" || e.key === " ") onSortChange && onSortChange(column);
+      }}
+      scope="col"
+    >
+      <span className="inline-flex items-center">
+        {label}
+        {sortBy === column && (
+          <span className="ml-1 text-xs">
+            {sortOrder === "asc" ? "▲" : "▼"}
+          </span>
+        )}
+      </span>
+    </th>
+  );
 
   // Skeleton loader rows
   if (loading) {
@@ -281,12 +322,12 @@ export function UsersTable({
                 aria-label="Select all users"
               />
             </th>
-            <th className="text-base font-semibold text-gray-900">User</th>
-            <th className="text-base font-semibold text-gray-900">System Role</th>
-            <th className="text-base font-semibold text-gray-900">Status</th>
+            {renderSortableHeader("User", "email")}
+            {renderSortableHeader("System Role", "system_role")}
+            {renderSortableHeader("Status", "status")}
             <th className="text-base font-semibold text-gray-900">Organizations</th>
-            <th className="text-base font-semibold text-gray-900">Created</th>
-            <th className="text-base font-semibold text-gray-900">Last Login</th>
+            {renderSortableHeader("Created", "created_at")}
+            {renderSortableHeader("Last Login", "last_login")}
             <th className="w-14 text-base font-semibold text-gray-900">Actions</th>
           </tr>
         }
@@ -374,6 +415,47 @@ export function UsersTable({
           );
         })}
       </DataTable>
+      {/* Pagination Controls */}
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-4 border-t bg-gray-50">
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-700">Rows per page:</span>
+          <Input
+            type="number"
+            min={1}
+            max={100}
+            value={pageSize}
+            onChange={e => onPageSizeChange && onPageSizeChange(Number(e.target.value))}
+            className="w-16 text-center"
+            aria-label="Rows per page"
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => onPageChange && onPageChange(page - 1)}
+            disabled={page <= 1}
+            aria-label="Previous page"
+          >
+            Previous
+          </Button>
+          <span className="text-sm text-gray-700">
+            Page {page} of {Math.max(1, Math.ceil(total / pageSize))}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => onPageChange && onPageChange(page + 1)}
+            disabled={page >= Math.ceil(total / pageSize)}
+            aria-label="Next page"
+          >
+            Next
+          </Button>
+        </div>
+        <div className="text-sm text-gray-500">
+          {total} user{total === 1 ? "" : "s"} total
+        </div>
+      </div>
     </div>
   );
 }

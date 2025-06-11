@@ -17,7 +17,10 @@ import type { User } from "@/types/User";
 import type { UserFilters as UserFiltersType } from "./UserFilters";
 
 export function UserManagement() {
-  const { data: users = [], isLoading } = useUsers();
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
+  const [sortBy, setSortBy] = useState<string>("created_at");
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>("desc");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
@@ -31,13 +34,24 @@ export function UserManagement() {
     dateRange: "all"
   });
 
-  const filteredUsers: User[] = users.filter((user) => {
-    const matchesSearch = user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    // Add more filter logic here based on filters state
-    return matchesSearch;
+  const {
+    data: usersData,
+    isPending: isLoading,
+    isError,
+    error
+  } = useUsers({
+    page,
+    pageSize,
+    sortBy,
+    sortOrder,
+    filters: {
+      ...filters,
+      search: searchTerm
+    }
   });
 
-  const safeFilteredUsers: User[] = filteredUsers;
+  const users = usersData?.users || [];
+  const total = usersData?.total || 0;
 
   const handleUserSelect = (userId: string, selected: boolean) => {
     if (selected) {
@@ -49,7 +63,7 @@ export function UserManagement() {
 
   const handleSelectAll = (selected: boolean) => {
     if (selected) {
-      setSelectedUsers(safeFilteredUsers.map((user) => user.id));
+      setSelectedUsers(users.map((user) => user.id));
     } else {
       setSelectedUsers([]);
     }
@@ -81,7 +95,7 @@ export function UserManagement() {
           <p className="text-gray-600 mt-1">Manage all users across your platform</p>
         </div>
         <div className="flex items-center gap-3">
-          <UserExport users={safeFilteredUsers} selectedUsers={selectedUsers} />
+          <UserExport users={users} selectedUsers={selectedUsers} />
           <Button onClick={() => setShowCreateDialog(true)}>
             <UserPlus className="w-4 h-4 mr-2" />
             Create User
@@ -128,7 +142,7 @@ export function UserManagement() {
             </div>
           </div>
           <div className="flex items-center gap-2 mt-2 md:mt-0">
-            <UserExport users={safeFilteredUsers} selectedUsers={selectedUsers} />
+            <UserExport users={users} selectedUsers={selectedUsers} />
             <Button onClick={() => setShowCreateDialog(true)} className="rounded-full px-5 py-2 text-base font-semibold shadow-sm">
               <UserPlus className="w-5 h-5 mr-2" />
               Create User
@@ -146,7 +160,7 @@ export function UserManagement() {
       )}
       {/* Users Table */}
       <UsersTable
-        users={safeFilteredUsers}
+        users={users}
         selectedUsers={selectedUsers}
         onUserSelect={handleUserSelect}
         onSelectAll={handleSelectAll}
@@ -155,6 +169,22 @@ export function UserManagement() {
         onChangeAvatar={setAvatarUser}
         filters={filters}
         onFilterChange={setFilters}
+        loading={isLoading}
+        total={total}
+        page={page}
+        pageSize={pageSize}
+        sortBy={sortBy}
+        sortOrder={sortOrder}
+        onPageChange={setPage}
+        onPageSizeChange={setPageSize}
+        onSortChange={(column: string) => {
+          if (sortBy === column) {
+            setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+          } else {
+            setSortBy(column);
+            setSortOrder('asc');
+          }
+        }}
       />
 
       {/* Dialogs */}

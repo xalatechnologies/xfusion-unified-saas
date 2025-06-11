@@ -22,10 +22,23 @@ export const useCreateTenant = () => {
 };
 
 // Users
-export function useUsers() {
-  return useQuery<User[]>({
-    queryKey: ["users"],
-    queryFn: databaseApi.getUsers,
+export function useUsers(options: {
+  page?: number;
+  pageSize?: number;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+  filters?: {
+    status?: string;
+    role?: string;
+    organization?: string;
+    dateRange?: string;
+    search?: string;
+  };
+} = {}) {
+  return useQuery({
+    queryKey: ["users", options],
+    queryFn: () => databaseApi.getUsers(options),
+    placeholderData: (prev) => prev,
   });
 }
 
