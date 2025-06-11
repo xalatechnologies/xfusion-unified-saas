@@ -8,3 +8,4 @@
 - Refactored Button to use only tokens, added shadowed variant, updated all stories and accessibility notes, and marked all Button checklist items complete. 
 - Refactored Card to use only tokens, added soft, glass, and layered variants, updated all stories and accessibility notes, and marked all Card checklist items complete. 
 - Refactored Badge component to add shape (pill, rounded) and color-coded variants (success, warning, info, accent, muted, card), all using design tokens and accessible text colors. Updated runtime accessibility warnings. Expanded Badge stories to cover all variants, shapes, and accessibility scenarios. 
+- Expanded Label stories to cover association with input/textarea, focus/active state, required/disabled, and added accessibility documentation and notes. 
