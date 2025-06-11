@@ -10,3 +10,4 @@
 - Refactored Badge component to add shape (pill, rounded) and color-coded variants (success, warning, info, accent, muted, card), all using design tokens and accessible text colors. Updated runtime accessibility warnings. Expanded Badge stories to cover all variants, shapes, and accessibility scenarios. 
 - Expanded Label stories to cover association with input/textarea, focus/active state, required/disabled, and added accessibility documentation and notes. 
 - Expanded Input stories to cover label association, help/error text with aria-describedby, responsive and focus states, and added accessibility documentation and notes. 
+- Expanded Textarea stories to cover label association, help/error text with aria-describedby, responsive and focus states, and added accessibility documentation and notes. 
