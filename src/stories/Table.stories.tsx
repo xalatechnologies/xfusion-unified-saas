@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption } from '../components/shared/Table';
-import { Badge } from '../components/shared/Badge';
+import { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption } from '../components/ui/table';
+import { Badge } from '../components/ui/badge';
 
 const meta: Meta<typeof Table> = {
   title: 'Shared/Table',

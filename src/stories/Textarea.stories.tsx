@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Textarea } from '../components/shared/Textarea';
-import { Label } from '../components/shared/Label';
+import { Textarea } from '../components/ui/textarea';
+import { Label } from '../components/ui/label';
 
 const meta: Meta<typeof Textarea> = {
   title: 'Shared/Textarea',

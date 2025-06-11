@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Label } from '../components/shared/Label';
-import { Input } from '../components/shared/Input';
-import { Textarea } from '../components/shared/Textarea';
+import { Label } from '../components/ui/label';
+import { Input } from '../components/ui/input';
+import { Textarea } from '../components/ui/textarea';
 
 const meta: Meta<typeof Label> = {
   title: 'Shared/Label',
