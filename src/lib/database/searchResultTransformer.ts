@@ -1,6 +1,7 @@
 import type { SearchResult } from "./search";
+import type { SearchResultRaw } from "@/types/SearchResultRaw";
 
-export function transformSearchResults(rawResults: any[]): SearchResult[] {
+export function transformSearchResults(rawResults: SearchResultRaw[]): SearchResult[] {
   const seen = new Set<string>();
   return rawResults
     .filter((item) => {

@@ -1,9 +1,9 @@
 import React from "react";
-import type { SubscriptionPlan } from "@/types/Subscription";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Users, AlertTriangle, Crown, Zap, Building } from "lucide-react";
+import { SubscriptionPlan } from "@/types/Subscription";
 
 interface SubscriptionPlanCardProps {
   plan: SubscriptionPlan;
@@ -26,28 +26,7 @@ const getIconForPlan = (planId: string) => {
   }
 };
 
-const getFeaturesList = (features: string[]) => {
-  const featureList = [];
-  
-  if (features?.workOrders === -1) {
-    featureList.push("Unlimited work orders");
-  } else if (features?.workOrders > 0) {
-    featureList.push(`Up to ${features.workOrders} work orders per month`);
-  }
-  
-  if (features?.assetManagement) featureList.push("Advanced asset management");
-  if (features?.customProcedures) featureList.push("Custom procedures");
-  if (features?.apiAccess) featureList.push("API access");
-  if (features?.prioritySupport) featureList.push("Priority support");
-  if (features?.customBranding) featureList.push("Custom branding");
-  if (features?.ssoAuth) featureList.push("SSO authentication");
-  
-  // Always include basic features
-  featureList.push("Mobile app access");
-  featureList.push("Email support");
-  
-  return featureList;
-};
+const getFeaturesList = (features: string[]) => features;
 
 export const SubscriptionPlanCard = ({ 
   plan, 
@@ -56,18 +35,18 @@ export const SubscriptionPlanCard = ({
   isLoading, 
   onPlanSelect 
 }: SubscriptionPlanCardProps) => {
-  const Icon = getIconForPlan(plan.plan_id);
-  const isCurrentPlan = plan.plan_id === currentPlan?.plan_id;
-  const isOverLimit = plan.max_users !== -1 && memberCount > plan.max_users;
+  const Icon = getIconForPlan(plan.id);
+  const isCurrentPlan = plan.id === currentPlan?.id;
+  const isOverLimit = plan.maxUsers !== -1 && memberCount > plan.maxUsers;
   const canSelect = !isCurrentPlan && !isOverLimit;
-  const isPopular = plan.plan_id === 'professional';
+  const isPopular = plan.id === 'professional';
   
   const getButtonText = () => {
     if (isCurrentPlan) return "Current Plan";
     if (!currentPlan) return "Select Plan";
     
-    const currentPrice = currentPlan.price_monthly || 0;
-    const newPrice = plan.price_monthly || 0;
+    const currentPrice = Number(currentPlan.price) || 0;
+    const newPrice = Number(plan.price) || 0;
     
     if (newPrice > currentPrice) return "Upgrade";
     if (newPrice < currentPrice) return "Downgrade";
@@ -86,15 +65,15 @@ export const SubscriptionPlanCard = ({
       
       <CardHeader className="text-center">
         <Icon className="w-12 h-12 mx-auto text-blue-600 mb-2" />
-        <CardTitle>{plan.plan_name}</CardTitle>
+        <CardTitle>{plan.name}</CardTitle>
         <div className="text-3xl font-bold">
-          ${plan.price_monthly}
+          ${plan.price}
           <span className="text-lg font-normal text-gray-600">/month</span>
         </div>
         <div className="flex items-center justify-center space-x-1 text-sm text-gray-600">
           <Users className="w-4 h-4" />
           <span>
-            {plan.max_users === -1 ? 'Unlimited' : `Up to ${plan.max_users}`} members
+            {plan.maxUsers === -1 ? 'Unlimited' : `Up to ${plan.maxUsers}`} members
           </span>
         </div>
       </CardHeader>
@@ -114,8 +93,8 @@ export const SubscriptionPlanCard = ({
             <div className="flex items-start space-x-2">
               <AlertTriangle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
               <p className="text-xs text-red-700 text-left">
-                You have {memberCount} members, but this plan only allows {plan.max_users}. 
-                Remove {memberCount - plan.max_users} member(s) to downgrade.
+                You have {memberCount} members, but this plan only allows {plan.maxUsers}. 
+                Remove {memberCount - plan.maxUsers} member(s) to downgrade.
               </p>
             </div>
           </div>
@@ -130,7 +109,7 @@ export const SubscriptionPlanCard = ({
                 : 'bg-gray-300 text-gray-600'
           }`}
           disabled={!canSelect || isLoading}
-          onClick={() => canSelect && onPlanSelect(plan.plan_id)}
+          onClick={() => canSelect && onPlanSelect(plan.id)}
         >
           {isLoading ? 'Processing...' : getButtonText()}
         </Button>

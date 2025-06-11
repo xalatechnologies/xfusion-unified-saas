@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import type { SearchHistoryItem } from "@/types/SearchHistoryItem";
 
 interface RecentSearch {
   query: string;
@@ -17,7 +18,7 @@ export const useSearchHistory = () => {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
-        const searches = parsed.map((item: any) => ({
+        const searches = parsed.map((item: SearchHistoryItem) => ({
           ...item,
           timestamp: new Date(item.timestamp)
         }));

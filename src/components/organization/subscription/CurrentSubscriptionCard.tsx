@@ -1,9 +1,9 @@
 import React from "react";
-import type { Subscription } from "@/types/Subscription";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Users, Crown, Zap, Building } from "lucide-react";
+import { Subscription } from "@/types/Subscription";
 
 interface CurrentSubscriptionCardProps {
   orgSubscription: Subscription;
@@ -25,7 +25,7 @@ const getIconForPlan = (planId: string) => {
 
 export const CurrentSubscriptionCard = ({ orgSubscription, memberCount }: CurrentSubscriptionCardProps) => {
   // Add null checks for subscription data
-  if (!orgSubscription || !orgSubscription.subscriptions) {
+  if (!orgSubscription) {
     return (
       <Card>
         <CardContent className="p-6">
@@ -37,7 +37,7 @@ export const CurrentSubscriptionCard = ({ orgSubscription, memberCount }: Curren
     );
   }
 
-  const subscription = orgSubscription.subscriptions;
+  const subscription = orgSubscription;
   const Icon = getIconForPlan(subscription?.plan_id || 'basic');
 
   return (

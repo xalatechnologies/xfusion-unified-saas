@@ -90,7 +90,7 @@ export const subscriptionsApi = {
     return data;
   },
 
-  async updateOrganizationSubscription(id: string, updates: any) {
+  async updateOrganizationSubscription(id: string, updates: Record<string, unknown>) {
     const { data, error } = await supabase
       .from("organization_subscriptions")
       .update(updates)

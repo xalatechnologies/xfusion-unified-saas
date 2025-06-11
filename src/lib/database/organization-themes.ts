@@ -1,5 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import type { Json } from "@/types/Json";
 
 type Tables = Database["public"]["Tables"];
 type OrganizationTheme = Tables["organization_themes"]["Row"];
@@ -44,13 +45,14 @@ export const organizationThemesApi = {
     return data;
   },
 
-  async upsertOrganizationTheme(organizationId: string, themeOverrides: any) {
+  async upsertOrganizationTheme(organizationId: string, themeOverrides: Record<string, unknown>) {
     const { data, error } = await supabase
       .from("organization_themes")
       .upsert({
         organization_id: organizationId,
-        theme_overrides: themeOverrides,
-        is_active: true
+        theme_overrides: themeOverrides as unknown as Json,
+        is_active: true,
+        updated_at: new Date().toISOString(),
       })
       .select()
       .single();

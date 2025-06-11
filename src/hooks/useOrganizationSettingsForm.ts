@@ -34,7 +34,7 @@ export const useOrganizationSettingsForm = (organizationId: string) => {
       console.log("Loading organization data:", currentOrganization);
       
       // Extract contact info from the contact JSON field if it exists
-      const contactInfo = currentOrganization.contact as any || {};
+      const contactInfo = currentOrganization.contact as Record<string, unknown> || {};
       
       setFormData({
         name: currentOrganization.name || "",

@@ -40,14 +40,14 @@ export function Globe({
   className?: string
   config?: COBEOptions
 }) {
-  let phi = 0
-  let width = 0
+  const phi = useRef(0)
+  const width = useRef(0)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const pointerInteracting = useRef<null | number>(null)
   const pointerInteractionMovement = useRef<number>(0)
   const [r, setR] = useState<number>(0)
 
-  const updatePointerInteraction = (value: number | null) => {
+  const updatePointerInteraction = (value: number) => {
     pointerInteracting.current = value
     if (canvasRef.current) {
       canvasRef.current.style.cursor = value ? "grabbing" : "grab"
@@ -63,20 +63,20 @@ export function Globe({
   }
 
   const onRender = useCallback(
-    (state: Record<string, any>) => {
-      if (!pointerInteracting.current) phi += 0.005
-      state.phi = phi + r
-      state.width = width * 2
-      state.height = width * 2
+    (state: Record<string, number>) => {
+      if (!pointerInteracting.current) phi.current += 0.005
+      state.phi = phi.current + r
+      state.width = width.current * 2
+      state.height = width.current * 2
     },
-    [r],
+    [r]
   )
 
-  const onResize = () => {
+  const onResize = useCallback(() => {
     if (canvasRef.current) {
-      width = canvasRef.current.offsetWidth
+      width.current = canvasRef.current.offsetWidth
     }
-  }
+  }, [])
 
   useEffect(() => {
     window.addEventListener("resize", onResize)
@@ -84,14 +84,14 @@ export function Globe({
 
     const globe = createGlobe(canvasRef.current!, {
       ...config,
-      width: width * 2,
-      height: width * 2,
+      width: width.current * 2,
+      height: width.current * 2,
       onRender,
     })
 
     setTimeout(() => (canvasRef.current!.style.opacity = "1"))
     return () => globe.destroy()
-  }, [config, width, onRender])
+  }, [config, onRender, onResize])
 
   return (
     <div

@@ -21,4 +21,6 @@ export interface Subscription {
   billing_cycle?: string;
   current_period_start?: string;
   current_period_end?: string;
+  created_at?: string;
+  trial_end?: string;
 } 

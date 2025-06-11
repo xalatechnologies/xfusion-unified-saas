@@ -1,5 +1,4 @@
-
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { databaseApi } from '@/lib/database';
 
 export interface ThemeConfig {
@@ -130,11 +129,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     applyThemeToCSS(newTheme);
   };
 
-  const refreshTheme = async () => {
+  const refreshTheme = useCallback(async () => {
     try {
       setLoading(true);
       const activeTheme = await databaseApi.getActiveTheme();
-      
       if (activeTheme && activeTheme.theme_config) {
         // Safely parse the theme config with type assertion
         const themeConfig = activeTheme.theme_config as unknown as ThemeConfig;
@@ -148,11 +146,11 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     refreshTheme();
-  }, []);
+  }, [refreshTheme]);
 
   useEffect(() => {
     if (theme) {

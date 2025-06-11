@@ -33,7 +33,7 @@ export const useUpdateOrganizationSubscription = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: ({ id, updates }: { id: string; updates: any }) => 
+    mutationFn: ({ id, updates }: { id: string; updates: Record<string, unknown> }) => 
       databaseApi.updateOrganizationSubscription(id, updates),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["organization-subscription", data.organization_id] });

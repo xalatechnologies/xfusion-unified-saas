@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { useAuthState } from "@/hooks/useAuthState";
 import { useAuthActions } from "@/hooks/useAuthActions";
 import { databaseApi } from "@/lib/database";
 import { Loader2, CheckCircle, XCircle } from "lucide-react";
+import type { Invitation } from "@/types/Invitation";
 
 export default function InviteAccept() {
   const { token } = useParams<{ token: string }>();
@@ -17,7 +18,7 @@ export default function InviteAccept() {
   const { user, loading: authLoading } = useAuthState();
   const { signUp, signIn } = useAuthActions();
 
-  const [invitation, setInvitation] = useState<any>(null);
+  const [invitation, setInvitation] = useState<Invitation | null>(null);
   const [loading, setLoading] = useState(true);
   const [accepting, setAccepting] = useState(false);
   const [isSignUp, setIsSignUp] = useState(true);
@@ -27,20 +28,7 @@ export default function InviteAccept() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  useEffect(() => {
-    if (token) {
-      loadInvitation();
-    }
-  }, [token]);
-
-  useEffect(() => {
-    // If user is already logged in and we have a valid invitation, auto-accept
-    if (user && invitation && !accepting) {
-      handleAcceptInvitation();
-    }
-  }, [user, invitation]);
-
-  const loadInvitation = async () => {
+  const loadInvitation = useCallback(async () => {
     try {
       const invitationData = await databaseApi.getInvitationByToken(token!);
       if (invitationData) {
@@ -63,11 +51,10 @@ export default function InviteAccept() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
 
-  const handleAcceptInvitation = async () => {
+  const handleAcceptInvitation = useCallback(async () => {
     if (!user || !invitation) return;
-
     setAccepting(true);
     try {
       const success = await databaseApi.acceptInvitation(token!, user.id);
@@ -94,7 +81,20 @@ export default function InviteAccept() {
     } finally {
       setAccepting(false);
     }
-  };
+  }, [user, invitation, token, navigate, toast]);
+
+  useEffect(() => {
+    if (token) {
+      loadInvitation();
+    }
+  }, [token, loadInvitation]);
+
+  useEffect(() => {
+    // If user is already logged in and we have a valid invitation, auto-accept
+    if (user && invitation && !accepting) {
+      handleAcceptInvitation();
+    }
+  }, [user, invitation, accepting, handleAcceptInvitation]);
 
   const handleAuth = async () => {
     if (isSignUp) {

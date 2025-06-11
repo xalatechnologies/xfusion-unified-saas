@@ -1,9 +1,10 @@
 import { LayoutDashboard, FileText, ClipboardList } from "lucide-react";
+import React from "react";
 
 export interface AppMenuItem {
   title: string;
   url: string;
-  icon: any;
+  icon: React.ElementType;
 }
 
 export const appSidebarMenuItems = [

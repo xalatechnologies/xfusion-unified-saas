@@ -1,6 +1,6 @@
 import React from "react";
 
-export class ErrorBoundary extends React.Component<React.PropsWithChildren<{}>> {
+export class ErrorBoundary extends React.Component<React.PropsWithChildren<object>> {
   state = { hasError: false };
 
   static getDerivedStateFromError() {
