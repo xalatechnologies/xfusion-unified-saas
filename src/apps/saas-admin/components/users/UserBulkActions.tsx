@@ -92,10 +92,18 @@ export function UserBulkActions({ selectedCount, selectedUsers, onClearSelection
       setShowRoleDialog(false);
       onClearSelection();
       queryClient.invalidateQueries({ queryKey: ["users"] });
-    } catch (error: any) {
+    } catch (error: unknown) {
       let message = "Failed to assign role to selected users.";
-      if (error?.message?.toLowerCase().includes("user") && error?.message?.toLowerCase().includes("does not exist")) {
-        message = "One or more users do not exist or were deleted. Please refresh the user list.";
+      if (
+        typeof error === 'object' &&
+        error !== null &&
+        'message' in error &&
+        typeof (error as { message?: unknown }).message === 'string'
+      ) {
+        const msg = ((error as { message: string }).message).toLowerCase();
+        if (msg.includes("user") && msg.includes("does not exist")) {
+          message = "One or more users do not exist or were deleted. Please refresh the user list.";
+        }
       }
       toast({
         title: "Error",

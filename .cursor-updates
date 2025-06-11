@@ -17,3 +17,4 @@
 - Expanded Avatar stories to cover fallback icon, different sizes, and added accessibility documentation and notes. 
 - Fixed all 'any' type errors in EditUserDialog.tsx by using type guards and correct union types for Select handlers. No linter errors remain in this file. 
 - Replaced all 'any' usages for user in UserActions.tsx with a proper User type, updating props and function signatures accordingly. 
+- Removed 'any' from the catch block in handleBulkRole in UserBulkActions.tsx, using 'unknown' and a type guard for error.message. 
