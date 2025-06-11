@@ -57,10 +57,12 @@ src/
   - [ ] Show loading, empty, and error states with clear messaging
   - [x] Integrate `UserStatsCards` for summary metrics (active, pending, suspended, etc.)
   - [x] Ensure all table actions use shared UI components (buttons, badges, tooltips, etc.)
-  - [x] Add quick filters for status, role, organization, and date range
-  - [ ] Support keyboard navigation and screen reader accessibility
+  - [x] Add quick filters for status, role, organization, and date range (full-width, unified filter bar)
+  - [x] Support keyboard navigation and screen reader accessibility (toggleable via accessibility mode)
   - [x] Add bulk selection and bulk actions (activate, deactivate, delete, assign role)
   - [x] Ensure responsive design for all breakpoints
+
+> **Note:** Accessibility features (extra outlines, screen reader hints, etc.) are now conditionally rendered based on accessibility mode.
 
 ## 2. User Search & Filtering
 - [ ] Implement search bar for users (by name, email, ID)

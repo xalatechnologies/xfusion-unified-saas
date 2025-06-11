@@ -15,6 +15,7 @@ import { UserBulkActions } from "./UserBulkActions";
 import { UserExport } from "./UserExport";
 import type { User } from "@/types/User";
 import type { UserFilters as UserFiltersType } from "./UserFilters";
+import { useAccessibility } from "@/contexts/AccessibilityContext";
 
 export function UserManagement() {
   const [page, setPage] = useState(1);
@@ -33,6 +34,8 @@ export function UserManagement() {
     organization: "all",
     dateRange: "all"
   });
+
+  const { accessibilityMode, toggleAccessibility } = useAccessibility();
 
   const {
     data: usersData,
@@ -95,6 +98,10 @@ export function UserManagement() {
           <p className="text-gray-600 mt-1">Manage all users across your platform</p>
         </div>
         <div className="flex items-center gap-3">
+          {/* Temporary accessibility toggle for demo */}
+          <Button variant={accessibilityMode ? "secondary" : "outline"} onClick={toggleAccessibility}>
+            {accessibilityMode ? "Accessibility: On" : "Accessibility: Off"}
+          </Button>
           <UserExport users={users} selectedUsers={selectedUsers} />
           <Button onClick={() => setShowCreateDialog(true)}>
             <UserPlus className="w-4 h-4 mr-2" />
@@ -114,50 +121,47 @@ export function UserManagement() {
         <UserStatsCards users={users} />
       </section>
 
-      {/* Filters and Search */}
-      <Card className="shadow-md border-0 bg-white/90 mb-2">
-        <CardContent className="py-6 px-4 md:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div className="flex flex-1 items-center gap-3 w-full md:w-auto">
-            <form
-              onSubmit={e => e.preventDefault()}
-              className="relative w-full md:w-96"
-              role="search"
+      {/* Unified Filter/Search Bar */}
+      <section className="w-full mb-2">
+        <div className="flex flex-col md:flex-row md:items-center gap-4 w-full bg-gradient-to-r from-blue-50 via-white to-purple-50 rounded-2xl shadow px-4 py-4 md:px-8 md:py-6 border border-blue-100">
+          <form
+            onSubmit={e => e.preventDefault()}
+            className="relative flex-1 min-w-0"
+            role="search"
+            aria-label="Search users"
+          >
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Search users by name or email..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              className="pl-12 pr-12 py-3 rounded-full border border-gray-200 bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full text-base transition placeholder-gray-400 outline-none"
+              style={{ minWidth: 0 }}
               aria-label="Search users"
-            >
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search users by name or email..."
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                className="pl-12 pr-12 py-3 rounded-full border border-gray-200 bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full text-base transition placeholder-gray-400 outline-none"
-                style={{ minWidth: 0 }}
-                aria-label="Search users"
-              />
-              {searchTerm && (
-                <button
-                  type="button"
-                  onClick={() => setSearchTerm("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full p-1"
-                  aria-label="Clear search"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
-            </form>
-            <div className="flex-shrink-0">
-              <UserFilters filters={filters} onFiltersChange={setFilters} />
-            </div>
-          </div>
-          <div className="flex items-center gap-2 mt-2 md:mt-0">
+            />
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={() => setSearchTerm("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full p-1"
+                aria-label="Clear search"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </form>
+          <div className="flex-shrink-0 flex items-center gap-2">
+            <UserFilters filters={filters} onFiltersChange={setFilters} />
             <UserExport users={users} selectedUsers={selectedUsers} />
             <Button onClick={() => setShowCreateDialog(true)} className="rounded-full px-5 py-2 text-base font-semibold shadow-sm">
               <UserPlus className="w-5 h-5 mr-2" />
               Create User
             </Button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </section>
+
       {/* Bulk Actions */}
       {selectedUsers.length > 0 && (
         <UserBulkActions 
