@@ -58,8 +58,12 @@ This checklist breaks down the entire UI enhancement plan into atomic, one-story
 
 ## 2. Accessibility & Universal Design Foundation
 
-- [ ] Set base font size to at least 16px in global CSS
-- [ ] Ensure all text and UI elements meet or exceed WCAG 2.0 AA contrast
+- [x] Set base font size to at least 16px in global CSS
+  - **Summary:**
+    - Base font size is set to 18px in `body`, 16px for form elements and tables in `index.css`.
+    - All text meets or exceeds accessibility minimums for font size.
+    - **Next step:** Ensure all text and UI elements meet or exceed WCAG 2.0 AA contrast.
+- [ ] **IN PROGRESS:** Ensure all text and UI elements meet or exceed WCAG 2.0 AA contrast
 - [ ] Implement visible, high-contrast focus states for all interactive elements
 - [ ] Ensure all interactive elements are accessible via keyboard (Tab/Shift+Tab)
 - [ ] Add ARIA roles, labels, and descriptions where appropriate

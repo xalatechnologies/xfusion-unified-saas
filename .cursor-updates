@@ -1,2 +1,3 @@
 - Expanded color palette in tokens.ts and index.css with gradients and new color roles for accessibility and design system consistency. 
 - Documented all design tokens in dev-plan/design-tokens.md and completed the project setup & design tokens story. 
+- Verified base font size is set to 18px for body and 16px for form/table elements, meeting accessibility standards. 
