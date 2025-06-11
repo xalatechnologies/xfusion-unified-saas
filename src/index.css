@@ -79,6 +79,16 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --color-primary-gradient: linear-gradient(90deg, #2563eb 0%, #6366f1 100%);
+    --color-accent-gradient: linear-gradient(90deg, #f59e42 0%, #fbbf24 100%);
+    --color-destructive: #ef4444;
+    --color-card: #ffffff;
+    --color-card-border: #e5e7eb;
+    --color-card-shadow: rgba(0,0,0,0.04);
+    --color-popover: #ffffff;
+    --color-popover-border: #e5e7eb;
+    --color-popover-shadow: rgba(0,0,0,0.08);
   }
 
   .dark {
