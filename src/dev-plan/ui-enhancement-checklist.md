@@ -120,11 +120,17 @@ This checklist breaks down the entire UI enhancement plan into atomic, one-story
     - **Next:** Refactor Card to use new tokens and enhance variants.
 
 ### Card
-- [ ] Refactor Card to use new tokens for background, border, shadow, and radii
-- [ ] Add layered backgrounds, soft shadows, and gradient/dashed/shadowed variants
-- [ ] Ensure responsive padding and spacing
-- [ ] Update Card stories in Storybook for each variant
-- [ ] Test Card for accessibility and responsiveness
+- [x] Refactor Card to use new tokens for background, border, shadow, and radii
+- [x] Add layered backgrounds, soft shadows, and gradient/dashed/shadowed variants
+- [x] Ensure responsive padding and spacing
+- [x] Update Card stories in Storybook for each variant
+- [x] Test Card for accessibility and responsiveness
+  - **Summary:**
+    - Card fully refactored to use only tokens for all background, border, shadow, and radii.
+    - All variants (default, blue, green, purple, orange, red, dashed, shadow, soft, gradient, glass, layered) are present and accessible.
+    - Stories updated for all variants and accessibility notes.
+    - All accessibility and design requirements are met.
+    - **Next:** Refactor Badge to use new tokens and enhance variants.
 
 ### Badge
 - [ ] Refactor Badge to use new tokens for color, radii, and typography

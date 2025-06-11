@@ -8,20 +8,26 @@ import { cn } from "@/lib/utils"
 // - dashed: Dashed border
 // - shadow: Extra shadow
 // - gradient: Gradient background
+// - soft: Soft shadow
+// - glass: Glass-like background
+// - layered: Layered background
 const cardVariants = cva(
-  "rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] shadow-sm font-family-[var(--font-family)] max-w-full w-full sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto",
+  "rounded-[var(--radius-lg)] border border-[var(--card-border,var(--color-border))] bg-[var(--card,var(--color-surface))] text-[var(--color-text)] shadow-[var(--card-shadow,var(--shadow-xs))] font-family-[var(--font-family)] max-w-full w-full sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto",
   {
     variants: {
       variant: {
         default: "",
-        blue: "border-l-4 border-l-blue-500",
-        green: "border-l-4 border-l-green-500",
-        purple: "border-l-4 border-l-purple-500",
-        orange: "border-l-4 border-l-orange-500",
-        red: "border-l-4 border-l-red-500",
-        dashed: "border-dashed",
-        shadow: "shadow-lg",
-        gradient: "bg-gradient-to-br from-blue-50 to-indigo-50",
+        blue: "border-l-4 border-l-[var(--color-primary)]",
+        green: "border-l-4 border-l-[var(--color-success)]",
+        purple: "border-l-4 border-l-[#a78bfa]",
+        orange: "border-l-4 border-l-[var(--color-accent)]",
+        red: "border-l-4 border-l-[var(--color-error)]",
+        dashed: "border-dashed border-2 border-[var(--color-border)]",
+        shadow: "shadow-[var(--shadow-lg)]",
+        soft: "shadow-[var(--shadow-md)] bg-[var(--color-surface)]/80",
+        gradient: "bg-[var(--primary-gradient)] text-[var(--color-surface)] border-none shadow-[var(--shadow-md)]",
+        glass: "bg-[var(--color-surface)]/60 backdrop-blur-[var(--blur-md)] border border-[var(--color-border)] shadow-[var(--shadow-xs)]",
+        layered: "bg-[var(--color-surface)] shadow-[var(--shadow-xs)] before:content-[''] before:absolute before:inset-0 before:rounded-[var(--radius-lg)] before:bg-[var(--color-primary)]/5 before:-z-1",
       },
     },
     defaultVariants: {

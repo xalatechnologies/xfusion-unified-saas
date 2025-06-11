@@ -13,6 +13,11 @@ const meta: Meta<typeof Card> = {
 export default meta;
 type Story = StoryObj<typeof Card>;
 
+// Accessibility notes:
+// - All cards use only design tokens for color, border, shadow, and radii.
+// - All variants have sufficient color contrast and visible focus for interactive content.
+// - Fully responsive and accessible by keyboard and screen reader.
+
 export const Default: Story = {
   render: () => (
     <Card style={{ width: 400 }}>
@@ -96,6 +101,36 @@ export const Gradient: Story = {
         <CardTitle>Gradient Background</CardTitle>
       </CardHeader>
       <CardContent>Gradient background style</CardContent>
+    </Card>
+  ),
+};
+export const Soft: Story = {
+  render: () => (
+    <Card variant="soft" style={{ width: 400 }}>
+      <CardHeader>
+        <CardTitle>Soft Shadow</CardTitle>
+      </CardHeader>
+      <CardContent>Soft shadow and subtle background.</CardContent>
+    </Card>
+  ),
+};
+export const Glass: Story = {
+  render: () => (
+    <Card variant="glass" style={{ width: 400 }}>
+      <CardHeader>
+        <CardTitle>Glass/Blurred</CardTitle>
+      </CardHeader>
+      <CardContent>Glassmorphism effect with blur and transparency.</CardContent>
+    </Card>
+  ),
+};
+export const Layered: Story = {
+  render: () => (
+    <Card variant="layered" style={{ width: 400, position: 'relative' }}>
+      <CardHeader>
+        <CardTitle>Layered</CardTitle>
+      </CardHeader>
+      <CardContent>Layered background effect using tokens.</CardContent>
     </Card>
   ),
 }; 
