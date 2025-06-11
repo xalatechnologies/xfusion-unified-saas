@@ -10,14 +10,14 @@ import {
   DialogFooter,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/shared/Button";
+import { Input } from "@/components/shared/Input";
+import { Label } from "@/components/shared/Label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/shared/Select";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/shared/Badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/shared/Card";
 import { useToast } from "@/hooks/use-toast";
 import { usersApi } from "@/lib/database/users";
 import { userRolesApi } from "@/lib/database/user-roles";

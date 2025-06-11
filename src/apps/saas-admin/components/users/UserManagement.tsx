@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useUsers } from "@/hooks/useUsers";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/shared/Card";
+import { Button } from "@/components/shared/Button";
+import { Input } from "@/components/shared/Input";
 import { UserPlus, Search, X } from "lucide-react";
 import { UserStatsCards } from "./UserStatsCards";
 import { UserFilters } from "./UserFilters";

@@ -9,9 +9,9 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/shared/Button";
+import { Input } from "@/components/shared/Input";
+import { Label } from "@/components/shared/Label";
 import { useToast } from "@/hooks/use-toast";
 import { usersApi } from "@/lib/database/users";
 
