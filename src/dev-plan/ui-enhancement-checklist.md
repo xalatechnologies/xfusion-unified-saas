@@ -63,9 +63,16 @@ This checklist breaks down the entire UI enhancement plan into atomic, one-story
     - Base font size is set to 18px in `body`, 16px for form elements and tables in `index.css`.
     - All text meets or exceeds accessibility minimums for font size.
     - **Next step:** Ensure all text and UI elements meet or exceed WCAG 2.0 AA contrast.
-- [ ] **IN PROGRESS:** Ensure all text and UI elements meet or exceed WCAG 2.0 AA contrast
-- [ ] Implement visible, high-contrast focus states for all interactive elements
-- [ ] Ensure all interactive elements are accessible via keyboard (Tab/Shift+Tab)
+- [x] Ensure all text and UI elements meet or exceed WCAG 2.0 AA contrast
+  - **Summary:**
+    - All text and UI color pairs previously checked and documented.
+    - All meet or exceed WCAG 2.0 AA contrast except accent, which is now restricted to non-text or uses accentText.
+    - **Next step:** Implement visible, high-contrast focus states for all interactive elements.
+- [x] Implement visible, high-contrast focus states for all interactive elements
+  - **Summary:**
+    - Added universal high-contrast focus style for all interactive elements using :focus-visible, 2px outline in primary/accent.
+    - **Next step:** Ensure all interactive elements are accessible via keyboard (Tab/Shift+Tab).
+- [ ] **IN PROGRESS:** Ensure all interactive elements are accessible via keyboard (Tab/Shift+Tab)
 - [ ] Add ARIA roles, labels, and descriptions where appropriate
 - [ ] Ensure all controls and states are announced by screen readers
 - [ ] Ensure all clickable elements have a minimum touch target of 44x44px
