@@ -3,14 +3,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Filter, X } from "lucide-react";
 import { FilterPopover } from "@/components/shared/FilterPopover";
 
+export type UserFilters = {
+  status: string;
+  role: string;
+  organization: string;
+  dateRange: string;
+};
+
 interface UserFiltersProps {
-  filters: {
-    status: string;
-    role: string;
-    organization: string;
-    dateRange: string;
-  };
-  onFiltersChange: (filters: any) => void;
+  filters: UserFilters;
+  onFiltersChange: (filters: UserFilters) => void;
 }
 
 export function UserFilters({ filters, onFiltersChange }: UserFiltersProps) {

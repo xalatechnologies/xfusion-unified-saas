@@ -19,3 +19,4 @@
 - Replaced all 'any' usages for user in UserActions.tsx with a proper User type, updating props and function signatures accordingly. 
 - Removed 'any' from the catch block in handleBulkRole in UserBulkActions.tsx, using 'unknown' and a type guard for error.message. 
 - Replaced all 'any' usages for users in UserExport.tsx with the User interface, updating props and function signatures accordingly. 
+- Replaced 'any' in UserFilters.tsx with a UserFilters type for the filters prop and onFiltersChange argument. 
