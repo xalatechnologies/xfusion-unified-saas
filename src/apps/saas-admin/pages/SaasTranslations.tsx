@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useGlobalTranslations } from "@/hooks/useGlobalTranslations";
+import type { Translation } from "@/hooks/useGlobalTranslations";
 import { databaseApi } from "@/lib/database";
 import { useToast } from "@/hooks/use-toast";
 import { Languages, Plus, Edit, Trash2, Search } from "lucide-react";
@@ -20,7 +20,7 @@ const SaasTranslations = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [editingTranslation, setEditingTranslation] = useState<any>(null);
+  const [editingTranslation, setEditingTranslation] = useState<Translation | null>(null);
   
   const [newTranslation, setNewTranslation] = useState({
     translation_key: '',

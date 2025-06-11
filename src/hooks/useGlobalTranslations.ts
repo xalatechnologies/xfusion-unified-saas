@@ -1,8 +1,7 @@
-
 import { useState, useEffect } from 'react';
 import { databaseApi } from '@/lib/database';
 
-interface Translation {
+export interface Translation {
   id: string;
   translation_key: string;
   language: string;
