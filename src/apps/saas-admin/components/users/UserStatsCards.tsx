@@ -1,8 +1,9 @@
 import { Card, CardContent } from "@/components/shared/Card";
+import type { User } from "@/types/User";
 import { Users, UserCheck, UserX, Clock, Shield, AlertTriangle } from "lucide-react";
 
 interface UserStatsCardsProps {
-  users: any[];
+  users: User[];
 }
 
 export function UserStatsCards({ users }: UserStatsCardsProps) {

@@ -8,15 +8,16 @@ import { Info, User as UserIcon, Shield, UserCheck, UserX, Filter } from "lucide
 import { format } from "date-fns";
 import { UserActions } from "./UserActions";
 import React from "react";
+import type { User } from "@/types/User";
 
 interface UsersTableProps {
-  users: any[];
+  users: User[];
   selectedUsers: string[];
   onUserSelect: (userId: string, selected: boolean) => void;
   onSelectAll: (selected: boolean) => void;
-  onEditUser: (user: any) => void;
-  onChangePassword: (user: any) => void;
-  onChangeAvatar: (user: any) => void;
+  onEditUser: (user: User) => void;
+  onChangePassword: (user: User) => void;
+  onChangeAvatar: (user: User) => void;
   loading?: boolean;
   filters?: { status: string; role: string; organization: string; dateRange: string };
   onFilterChange?: (filters: { status: string; role: string; organization: string; dateRange: string }) => void;
@@ -64,14 +65,14 @@ export function UsersTable({
   const allSelected = users.length > 0 && selectedUsers.length === users.length;
   const someSelected = selectedUsers.length > 0 && selectedUsers.length < users.length;
 
-  const getUserInitials = (user: any) => {
+  const getUserInitials = (user: User) => {
     if (user.first_name && user.last_name) {
       return `${user.first_name.charAt(0)}${user.last_name.charAt(0)}`.toUpperCase();
     }
     return user.email.charAt(0).toUpperCase();
   };
 
-  const getUserDisplayName = (user: any) => {
+  const getUserDisplayName = (user: User) => {
     if (user.first_name || user.last_name) {
       return `${user.first_name || ""} ${user.last_name || ""}`.trim();
     }
@@ -348,7 +349,7 @@ export function UsersTable({
                   </div>
                 </div>
               </td>
-              <td className="py-4 px-6 align-middle">{getRoleBadge(user.systemRole)}</td>
+              <td className="py-4 px-6 align-middle">{getRoleBadge(user.system_role)}</td>
               <td className="py-4 px-6 align-middle">{getStatusBadge(user.status)}</td>
               <td className="py-4 px-6 align-middle">
                 <span className="text-base text-gray-700">—</span>

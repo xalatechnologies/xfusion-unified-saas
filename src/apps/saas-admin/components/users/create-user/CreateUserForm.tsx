@@ -1,4 +1,3 @@
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
@@ -73,7 +72,7 @@ export function CreateUserForm({ onSubmit, isSubmitting, onCancel }: CreateUserF
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label>System Role</Label>
-          <Select value={form.watch("systemRole")} onValueChange={(value: any) => form.setValue("systemRole", value)}>
+          <Select value={form.watch("systemRole")} onValueChange={(value: CreateUserFormType["systemRole"]) => form.setValue("systemRole", value)}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>

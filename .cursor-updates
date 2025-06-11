@@ -21,3 +21,4 @@
 - Replaced all 'any' usages for users in UserExport.tsx with the User interface, updating props and function signatures accordingly. 
 - Replaced 'any' in UserFilters.tsx with a UserFilters type for the filters prop and onFiltersChange argument. 
 - Unified all user-related types to use a shared User interface, updated Supabase query typing, and removed all 'any' usages from user management files. Fixed linter errors in users.ts and related files. 
+- Removed all 'any' usages from UserStatsCards.tsx, UsersOverview.tsx, UsersTable.tsx, and CreateUserForm.tsx by using the shared User type and correct union types. All user-related linter errors are resolved. 

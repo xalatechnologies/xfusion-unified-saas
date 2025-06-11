@@ -7,16 +7,16 @@ import { DataTable } from "@/components/shared/Table/DataTable";
 import { Badge } from "@/components/shared/Badge";
 import { Search, Plus, Users, UserCheck, UserX, Clock } from "lucide-react";
 import { format } from "date-fns";
+import type { User } from "@/types/User";
 
 export function UsersOverview() {
   const { data: users, isLoading } = useUsers();
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredUsers = Array.isArray(users)
-    ? users.filter((user: any) => {
-        if (!user || typeof user !== 'object' || !('email' in user)) return false;
-        return (user.email as string).toLowerCase().includes(searchTerm.toLowerCase());
-      })
+    ? (users as User[]).filter((user) =>
+        user && typeof user.email === 'string' && user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      )
     : [];
 
   if (isLoading) {
@@ -41,9 +41,9 @@ export function UsersOverview() {
 
   const totalUsers = Array.isArray(users) ? users.length : 0;
   const recentUsers = Array.isArray(users)
-    ? users.filter((user: any) => {
-        if (!user || typeof user !== 'object' || !('created_at' in user)) return false;
-        const createdDate = new Date(user.created_at as string);
+    ? (users as User[]).filter((user) => {
+        if (!user.created_at) return false;
+        const createdDate = new Date(user.created_at);
         const weekAgo = new Date();
         weekAgo.setDate(weekAgo.getDate() - 7);
         return createdDate > weekAgo;
@@ -147,15 +147,15 @@ export function UsersOverview() {
             }
           >
             {filteredUsers
-              .filter((user: any) => user && typeof user === 'object' && 'id' in user && 'email' in user && 'created_at' in user)
-              .map((user: any) => (
+              .filter((user) => user && user.id && user.email && user.created_at)
+              .map((user: User) => (
                 <tr key={user.id}>
                   <td className="font-medium">{user.email}</td>
                   <td>-</td>
                   <td>
                     <Badge variant="default">Active</Badge>
                   </td>
-                  <td>{format(new Date(user.created_at), 'MMM dd, yyyy')}</td>
+                  <td>{format(new Date(user.created_at!), 'MMM dd, yyyy')}</td>
                   <td>-</td>
                   <td>
                     <Button variant="ghost" size="sm">
