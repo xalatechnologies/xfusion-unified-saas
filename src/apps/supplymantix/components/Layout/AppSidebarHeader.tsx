@@ -1,4 +1,3 @@
-
 import {
   SidebarHeader,
   SidebarMenu,
@@ -7,7 +6,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Crown } from "lucide-react";
 
-export function SaasSidebarHeader() {
+export function AppSidebarHeader() {
   return (
     <SidebarHeader className="border-b border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50 px-4 py-4">
       <SidebarMenu>

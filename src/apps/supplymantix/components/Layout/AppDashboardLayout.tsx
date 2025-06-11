@@ -1,17 +1,17 @@
 import React from "react";
 import { SidebarProvider } from "@/components/shared/Sidebar";
 import { TopBar } from "@/components/shared/Layout/TopBar";
-import { SaasSidebar } from "./SaasSidebar";
+import { AppSidebar } from './AppSidebar';
 
-interface SaasDashboardLayoutProps {
+interface AppDashboardLayoutProps {
   children: React.ReactNode;
 }
 
-export const SaasDashboardLayout = ({ children }: SaasDashboardLayoutProps) => {
+const AppDashboardLayout = ({ children }: AppDashboardLayoutProps) => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gray-50">
-        <SaasSidebar />
+        <AppSidebar />
         <div className="flex-1 flex flex-col overflow-hidden">
           <TopBar />
           <main className="flex-1 overflow-y-auto p-6">
@@ -22,3 +22,5 @@ export const SaasDashboardLayout = ({ children }: SaasDashboardLayoutProps) => {
     </SidebarProvider>
   );
 };
+
+export { AppDashboardLayout };

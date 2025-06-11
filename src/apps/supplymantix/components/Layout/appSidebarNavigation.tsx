@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from "react-router-dom";
 import {
   SidebarContent,
@@ -9,14 +8,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { saasMenuItems, saasgroupedItems } from "./saasSidebarMenuItems";
+import { appMenuItems, appgroupedItems } from './appSidebarMenuItems';
 
-export function SaasSidebarNavigation() {
+export function AppSidebarNavigation() {
   const location = useLocation();
 
   return (
     <SidebarContent className="px-3 py-2 bg-white">
-      {Object.entries(saasgroupedItems).map(([group, items]) => (
+      {Object.entries(appgroupedItems).map(([group, items]) => (
         <SidebarGroup key={group} className="mb-0.5">
           <SidebarGroupLabel className="text-gray-500 uppercase text-xs font-bold tracking-widest mb-1 px-2">
             {group}

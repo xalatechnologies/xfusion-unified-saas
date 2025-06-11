@@ -1,14 +1,17 @@
-import { Sidebar } from "@/components/shared/Sidebar";
-import { SaasSidebarHeader } from "./SaasSidebarHeader";
-import { SaasSidebarNavigation } from "./SaasSidebarNavigation";
+import { Sidebar } from "@/components/ui/sidebar";
+import { AppSidebarHeader } from './AppSidebarHeader';
+import { appSidebarMenuItems } from './appSidebarMenuItems';
 import { AppSidebarFooter } from "@/components/shared/Layout/SidebarFooter";
+import { AppSidebarNavigation } from "./AppSidebarNavigation";
 
-export function AppSidebar() {
+const AppSidebar = () => {
   return (
     <Sidebar className="border-r-0 bg-white shadow-lg">
-      <SaasSidebarHeader />
-      <SaasSidebarNavigation />
+      <AppSidebarHeader />
+      <AppSidebarNavigation />
       <AppSidebarFooter />
     </Sidebar>
   );
-}
+};
+
+export { AppSidebar };

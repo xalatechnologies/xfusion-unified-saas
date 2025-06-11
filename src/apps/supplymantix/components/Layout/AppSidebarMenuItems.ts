@@ -1,4 +1,3 @@
-
 import { 
   LayoutDashboard, 
   Users, 
@@ -12,13 +11,13 @@ import {
   Settings 
 } from "lucide-react";
 
-export interface SaasMenuItem {
+export interface AppMenuItem {
   title: string;
   url: string;
   icon: any;
 }
 
-export const saasSidebarMenuItems = [
+export const appSidebarMenuItems = [
   {
     title: "Dashboard",
     url: "/saas-admin",
@@ -72,10 +71,10 @@ export const saasSidebarMenuItems = [
 ];
 
 // Export flat menu items for easy access
-export const saasMenuItems = saasSidebarMenuItems;
+export const appMenuItems = appSidebarMenuItems;
 
 // Group menu items by category for organized sidebar display
-export const saasgroupedItems = {
+export const appgroupedItems = {
   "Platform": [
     {
       title: "Dashboard",
