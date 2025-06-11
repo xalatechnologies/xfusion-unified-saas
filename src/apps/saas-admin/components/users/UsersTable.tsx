@@ -4,13 +4,15 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Info, User as UserIcon, Shield, UserCheck, UserX, Filter } from "lucide-react";
+import { Info, User as UserIcon, Shield, UserCheck, UserX, Filter, AlertCircle } from "lucide-react";
 import { format } from "date-fns";
 import { UserActions } from "./UserActions";
 import React from "react";
 import type { User } from "@/types/User";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/Spinner";
+import { useAccessibility } from "@/contexts/AccessibilityContext";
 
 interface UsersTableProps {
   users: User[];
@@ -31,6 +33,7 @@ interface UsersTableProps {
   onPageChange?: (page: number) => void;
   onPageSizeChange?: (size: number) => void;
   onSortChange?: (column: string) => void;
+  error?: string;
 }
 
 const statusIcons = {
@@ -69,6 +72,7 @@ export function UsersTable({
   onChangePassword,
   onChangeAvatar,
   loading = false,
+  error,
   filters = { status: "all", role: "all", organization: "all", dateRange: "all" },
   onFilterChange,
   total = 0,
@@ -80,6 +84,7 @@ export function UsersTable({
   onPageSizeChange,
   onSortChange,
 }: UsersTableProps) {
+  const { accessibilityMode } = useAccessibility();
   const allSelected = users.length > 0 && selectedUsers.length === users.length;
   const someSelected = selectedUsers.length > 0 && selectedUsers.length < users.length;
 
@@ -161,120 +166,34 @@ export function UsersTable({
     </th>
   );
 
-  // Skeleton loader rows
   if (loading) {
     return (
-      <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
-        <DataTableToolbar>
-          <div className="flex flex-wrap gap-2" aria-label="Quick filters">
-            <div className="flex items-center gap-1">
-              <Filter className="w-4 h-4 text-blue-700" aria-hidden="true" />
-              <span className="text-base font-semibold text-gray-900">Filters:</span>
-            </div>
-            {statusOptions.map((opt) => (
-              <button
-                key={opt.value}
-                className={`px-3 py-1 rounded-full border text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition
-                  ${filters.status === opt.value ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-700 border-gray-300 hover:bg-blue-50"}`}
-                onClick={() => onFilterChange && onFilterChange({ ...filters, status: opt.value })}
-                aria-pressed={filters.status === opt.value}
-              >
-                {opt.label}
-              </button>
-            ))}
-            {roleOptions.map((opt) => (
-              <button
-                key={opt.value}
-                className={`px-3 py-1 rounded-full border text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition
-                  ${filters.role === opt.value ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-700 border-gray-300 hover:bg-blue-50"}`}
-                onClick={() => onFilterChange && onFilterChange({ ...filters, role: opt.value })}
-                aria-pressed={filters.role === opt.value}
-              >
-                {opt.label}
-              </button>
-            ))}
-          </div>
-        </DataTableToolbar>
-        <DataTable
-          columns={
-            <tr>
-              {[...Array(8)].map((_, i) => (
-                <th key={i} className="py-4 px-6">
-                  <div className="h-5 bg-gray-200 rounded w-3/4 animate-pulse"></div>
-                </th>
-              ))}
-            </tr>
-          }
-        >
-          {[...Array(6)].map((_, i) => (
-            <tr key={i} className="border-b border-gray-100">
-              {[...Array(8)].map((_, j) => (
-                <td key={j} className="py-5 px-6">
-                  <div className="h-5 bg-gray-100 rounded animate-pulse"></div>
-                </td>
-              ))}
-            </tr>
-          ))}
-        </DataTable>
+      <div className="flex flex-col items-center justify-center py-16">
+        <Spinner className="w-8 h-8 mb-4 text-blue-500" />
+        <span className="text-gray-700 text-lg font-medium">Loading users...</span>
+        {accessibilityMode && <span className="sr-only">User data is loading, please wait.</span>}
       </div>
     );
   }
 
-  // Empty state
-  if (!users.length) {
+  if (error) {
     return (
-      <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
-        <DataTableToolbar>
-          <div className="flex flex-wrap gap-2" aria-label="Quick filters">
-            <div className="flex items-center gap-1">
-              <Filter className="w-4 h-4 text-blue-700" aria-hidden="true" />
-              <span className="text-base font-semibold text-gray-900">Filters:</span>
-            </div>
-            {statusOptions.map((opt) => (
-              <button
-                key={opt.value}
-                className={`px-3 py-1 rounded-full border text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition
-                  ${filters.status === opt.value ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-700 border-gray-300 hover:bg-blue-50"}`}
-                onClick={() => onFilterChange && onFilterChange({ ...filters, status: opt.value })}
-                aria-pressed={filters.status === opt.value}
-              >
-                {opt.label}
-              </button>
-            ))}
-            {roleOptions.map((opt) => (
-              <button
-                key={opt.value}
-                className={`px-3 py-1 rounded-full border text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition
-                  ${filters.role === opt.value ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-700 border-gray-300 hover:bg-blue-50"}`}
-                onClick={() => onFilterChange && onFilterChange({ ...filters, role: opt.value })}
-                aria-pressed={filters.role === opt.value}
-              >
-                {opt.label}
-              </button>
-            ))}
-          </div>
-        </DataTableToolbar>
-        <DataTable
-          columns={
-            <tr>
-              {[...Array(8)].map((_, i) => (
-                <th key={i} className="py-4 px-6">
-                  <div className="h-5 bg-gray-200 rounded w-3/4 animate-pulse"></div>
-                </th>
-              ))}
-            </tr>
-          }
-        >
-          {[...Array(6)].map((_, i) => (
-            <tr key={i} className="border-b border-gray-100">
-              {[...Array(8)].map((_, j) => (
-                <td key={j} className="py-5 px-6">
-                  <div className="h-5 bg-gray-100 rounded animate-pulse"></div>
-                </td>
-              ))}
-            </tr>
-          ))}
-        </DataTable>
+      <div className="flex flex-col items-center justify-center py-16">
+        <AlertCircle className="w-8 h-8 mb-4 text-red-500" />
+        <span className="text-red-700 text-lg font-medium">Failed to load users.</span>
+        <span className="text-gray-500">{error}</span>
+        {accessibilityMode && <span className="sr-only">There was an error loading user data. Please try again later.</span>}
+      </div>
+    );
+  }
+
+  if (!users || users.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16">
+        <UserX className="w-10 h-10 mb-4 text-gray-400" />
+        <span className="text-gray-700 text-lg font-medium">No users found</span>
+        <span className="text-gray-500">Try adjusting your filters or search criteria.</span>
+        {accessibilityMode && <span className="sr-only">No users matched your search or filters.</span>}
       </div>
     );
   }
