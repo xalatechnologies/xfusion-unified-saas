@@ -1,9 +1,9 @@
 import { SaasAdminLayout } from "@/apps/saas-admin/layout/SaasAdminLayout";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/shared/Card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/page-header";
-import { Button } from "@/components/shared/Button";
-import { Input } from "@/components/shared/Input";
-import { Badge } from "@/components/shared/Badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/shared/Table/DataTable";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Building2, Users, CreditCard, Calendar, Search, Plus, MoreHorizontal, TrendingUp } from "lucide-react";

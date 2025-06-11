@@ -1,8 +1,7 @@
 import { SaasAdminLayout } from "@/apps/saas-admin/layout/SaasAdminLayout";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/shared/Card";
-import { PageHeader } from "@/components/shared/PageHeader";
-import { Button } from "@/components/shared/Button";
-import { Badge } from "@/components/shared/Badge";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { BarChart3, TrendingUp, Users, DollarSign, Activity, Download, Calendar, Target } from "lucide-react";
 
 export default function SaasAnalytics() {

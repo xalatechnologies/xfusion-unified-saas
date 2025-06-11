@@ -1,11 +1,11 @@
 import { SaasAdminLayout } from "@/apps/saas-admin/layout/SaasAdminLayout";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/shared/Card";
-import { PageHeader } from "@/components/shared/PageHeader";
-import { Button } from "@/components/shared/Button";
-import { Input } from "@/components/shared/Input";
-import { Label } from "@/components/shared/Label";
-import { Switch } from "@/components/shared/Switch";
-import { Separator } from "@/components/shared/Separator";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { PageHeader } from '@/components/ui/page-header';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Separator } from "@/components/ui/separator";
 import { Settings, Shield, Database, Mail, Globe, Bell, Zap } from "lucide-react";
 
 export default function SaasSettings() {

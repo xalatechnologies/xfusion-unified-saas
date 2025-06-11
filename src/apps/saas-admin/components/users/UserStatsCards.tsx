@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/shared/Card";
+import { Card, CardContent } from '@/components/ui/card';
 import type { User } from "@/types/User";
 import { Users, UserCheck, UserX, Clock, Shield, AlertTriangle } from "lucide-react";
 

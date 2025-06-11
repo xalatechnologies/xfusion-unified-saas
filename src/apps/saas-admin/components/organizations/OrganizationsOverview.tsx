@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useOrganizations } from "@/hooks/useOrganizations";
-import { Button } from "@/components/shared/Button";
-import { Input } from "@/components/shared/Input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/shared/Card";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DataTable } from "@/components/shared/Table/DataTable";
-import { Badge } from "@/components/shared/Badge";
+import { Badge } from '@/components/ui/badge';
 import { Search, Plus, Building2, Users, Calendar, CreditCard, MoreHorizontal } from "lucide-react";
 import { format } from "date-fns";
 import type { Database } from "@/integrations/supabase/types";

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useUsers } from "@/hooks/useUsers";
-import { Button } from "@/components/shared/Button";
-import { Input } from "@/components/shared/Input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/shared/Card";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DataTable } from "@/components/shared/Table/DataTable";
-import { Badge } from "@/components/shared/Badge";
+import { Badge } from '@/components/ui/badge';
 import { Search, Plus, Users, UserCheck, UserX, Clock } from "lucide-react";
 import { format } from "date-fns";
 import type { User } from "@/types/User";

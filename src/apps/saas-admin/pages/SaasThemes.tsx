@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/shared/Button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/shared/Card";
-import { Input } from "@/components/shared/Input";
-import { Label } from "@/components/shared/Label";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { SaasAdminLayout } from "@/apps/saas-admin/layout/SaasAdminLayout";
 import { databaseApi } from "@/lib/database";
 import { useTheme, type ThemeConfig } from "@/contexts/ThemeContext";

@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/shared/Card";
-import { Button } from "@/components/shared/Button";
-import { Badge } from "@/components/shared/Badge";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Settings, Database, Shield, Globe, Plus, Server, Activity } from "lucide-react";
 
 export function SystemOverview() {

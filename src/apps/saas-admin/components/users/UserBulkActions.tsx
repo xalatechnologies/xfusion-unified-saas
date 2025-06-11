@@ -1,5 +1,5 @@
-import { Button } from "@/components/shared/Button";
-import { Badge } from "@/components/shared/Badge";
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { UserCheck, UserX, Trash2, Mail, Shield, X } from "lucide-react";
 import {
   DropdownMenu,
@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuItem,
   DropdownMenuSeparator
-} from "@/components/shared/Menu";
+} from '@/components/ui/dropdown-menu';
 import { useQueryClient } from "@tanstack/react-query";
 import { usersApi } from "@/lib/database/users";
 import { userRolesApi } from "@/lib/database/user-roles";

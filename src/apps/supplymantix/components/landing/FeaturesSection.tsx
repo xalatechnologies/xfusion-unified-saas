@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/shared/Card";
+import { Card, CardContent } from '@/components/ui/card';
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 

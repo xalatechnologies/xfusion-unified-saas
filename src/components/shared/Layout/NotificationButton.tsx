@@ -1,11 +1,10 @@
-import { Button } from "@/components/shared/Button";
+import { Button } from '@/components/ui/button';
 import { Bell } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
-} from "@/components/shared/Tooltip";
+} from "@/components/ui/tooltip";
 
 export const NotificationButton = () => {
   return (

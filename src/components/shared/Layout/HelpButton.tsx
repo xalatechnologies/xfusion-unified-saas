@@ -1,11 +1,6 @@
-import { Button } from "@/components/shared/Button";
+import { Button } from '@/components/ui/button';
 import { HelpCircle } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/shared/Tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 export const HelpButton = () => {
   return (

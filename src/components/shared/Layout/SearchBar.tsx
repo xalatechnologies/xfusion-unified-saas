@@ -1,6 +1,6 @@
 import { Search, Command } from "lucide-react";
-import { Input } from "@/components/shared/Input";
-import { Badge } from "@/components/shared/Badge";
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import { SearchResults } from "@/components/search/SearchResults";
 import { SearchFilters } from "@/components/search/SearchFilters";
 import { useGlobalSearch } from "@/hooks/useGlobalSearch";

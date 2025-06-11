@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@/components/shared/Button";
+import { Button } from '@/components/ui/button';
 import { useToast } from "@/hooks/use-toast";
 import {
   DropdownMenu,
@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuItem,
   DropdownMenuSeparator
-} from "@/components/shared/Menu";
+} from '@/components/ui/dropdown-menu';
 import { MoreHorizontal, Edit, Trash2, Shield, UserX, UserCheck, Key, Image } from "lucide-react";
 import { usersApi } from "@/lib/database/users";
 import { useQueryClient } from "@tanstack/react-query";

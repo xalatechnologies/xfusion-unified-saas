@@ -1,5 +1,5 @@
-import { Button } from "@/components/shared/Button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/shared/Select";
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Filter, X } from "lucide-react";
 import { FilterPopover } from "@/components/shared/FilterPopover";
 

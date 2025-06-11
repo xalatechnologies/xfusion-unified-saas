@@ -1,8 +1,8 @@
 import { DataTable } from "@/components/shared/Table/DataTable";
 import { DataTableToolbar } from "@/components/shared/Table/DataTableToolbar";
-import { Checkbox } from "@/components/shared/Checkbox";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/shared/Avatar";
-import { Badge } from "@/components/shared/Badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Info, User as UserIcon, Shield, UserCheck, UserX, Filter } from "lucide-react";
 import { format } from "date-fns";

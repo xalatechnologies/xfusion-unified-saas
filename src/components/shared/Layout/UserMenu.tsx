@@ -1,6 +1,6 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/shared/Avatar";
-import { Badge } from "@/components/shared/Badge";
-import { Button } from "@/components/shared/Button";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { User, LogOut, Settings } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAuthActions } from "@/hooks/useAuthActions";
@@ -10,8 +10,8 @@ import {
   DropdownMenuTrigger,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuLabel,
-} from "@/components/shared/Menu";
+  DropdownMenuLabel
+} from '@/components/ui/dropdown-menu';
 
 export const UserMenu = () => {
   const { user } = useAuth();
