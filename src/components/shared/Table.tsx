@@ -1,1 +1,1 @@
-export * from '../ui/table'; 
+export { Table } from '../ui/table'; 
