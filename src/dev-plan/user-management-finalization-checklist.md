@@ -65,15 +65,15 @@ src/
 > **Note:** Accessibility features (extra outlines, screen reader hints, etc.) are now conditionally rendered based on accessibility mode.
 
 ## 2. User Search & Filtering
-- [ ] Implement search bar for users (by name, email, ID)
-  - [ ] Debounce search input and show loading indicator
-  - [ ] Integrate with backend search API
-  - [ ] Display no-results state with helpful suggestions
-  - [ ] Ensure search is accessible and keyboard-friendly
-- [ ] Implement advanced filters (status, role, organization, date range)
-  - [ ] Use shared `UserFilters` component
-  - [ ] Persist filter state in URL/query params
-  - [ ] Add clear/reset filters button
+- [x] Implement search bar for users (by name, email, ID)
+  - [x] Debounce search input and show loading indicator
+  - [x] Integrate with backend search API
+  - [x] Display no-results state with helpful suggestions
+  - [x] Ensure search is accessible and keyboard-friendly
+- [x] Implement advanced filters (status, role, organization, date range)
+  - [x] Use shared `UserFilters` component
+  - [x] Persist filter state in URL/query params
+  - [x] Add clear/reset filters button
 
 ## 3. User Creation (Invite & Manual)
 - [ ] Implement "Create User" button using shared `Button` component

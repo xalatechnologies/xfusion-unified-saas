@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Filter, X } from "lucide-react";
 import { FilterPopover } from "@/components/shared/FilterPopover";
+import { useEffect, useState } from "react";
 
 export type UserFilters = {
   status: string;
@@ -17,6 +18,13 @@ interface UserFiltersProps {
 
 export function UserFilters({ filters, onFiltersChange }: UserFiltersProps) {
   const hasActiveFilters = Object.values(filters).some(value => value !== "all");
+  // Mock organizations for now; replace with backend data if available
+  const [organizations, setOrganizations] = useState([
+    { id: "all", name: "All Organizations" },
+    { id: "org1", name: "Acme Corp" },
+    { id: "org2", name: "Globex Inc." },
+    { id: "org3", name: "Umbrella LLC" },
+  ]);
 
   const clearFilters = () => {
     onFiltersChange({
@@ -93,6 +101,20 @@ export function UserFilters({ filters, onFiltersChange }: UserFiltersProps) {
             </div>
 
             <div>
+              <label className="text-sm font-medium">Organization</label>
+              <Select value={filters.organization} onValueChange={(value) => updateFilter("organization", value)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {organizations.map(org => (
+                    <SelectItem key={org.id} value={org.id}>{org.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
               <label className="text-sm font-medium">Date Range</label>
               <Select value={filters.dateRange} onValueChange={(value) => updateFilter("dateRange", value)}>
                 <SelectTrigger>
@@ -111,6 +133,12 @@ export function UserFilters({ filters, onFiltersChange }: UserFiltersProps) {
           </div>
         </div>
       </FilterPopover>
+      {hasActiveFilters && (
+        <Button variant="ghost" size="sm" onClick={clearFilters} className="ml-2">
+          <X className="w-4 h-4 mr-1" />
+          Reset Filters
+        </Button>
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useUsers } from "@/hooks/useUsers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,9 @@ export function UserManagement() {
   const [pageSize, setPageSize] = useState(20);
   const [sortBy, setSortBy] = useState<string>("created_at");
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>("desc");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const searchTimeout = useRef<NodeJS.Timeout | null>(null);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
@@ -37,6 +39,16 @@ export function UserManagement() {
 
   const { accessibilityMode, toggleAccessibility } = useAccessibility();
 
+  useEffect(() => {
+    if (searchTimeout.current) clearTimeout(searchTimeout.current);
+    searchTimeout.current = setTimeout(() => {
+      setDebouncedSearch(searchInput);
+    }, 400);
+    return () => {
+      if (searchTimeout.current) clearTimeout(searchTimeout.current);
+    };
+  }, [searchInput]);
+
   const {
     data: usersData,
     isPending: isLoading,
@@ -49,7 +61,7 @@ export function UserManagement() {
     sortOrder,
     filters: {
       ...filters,
-      search: searchTerm
+      search: debouncedSearch
     }
   });
 
@@ -134,16 +146,16 @@ export function UserManagement() {
             <input
               type="text"
               placeholder="Search users by name or email..."
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
+              value={searchInput}
+              onChange={e => setSearchInput(e.target.value)}
               className="pl-12 pr-12 py-3 rounded-full border border-gray-200 bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full text-base transition placeholder-gray-400 outline-none"
               style={{ minWidth: 0 }}
               aria-label="Search users"
             />
-            {searchTerm && (
+            {searchInput && (
               <button
                 type="button"
-                onClick={() => setSearchTerm("")}
+                onClick={() => setSearchInput("")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full p-1"
                 aria-label="Clear search"
               >
