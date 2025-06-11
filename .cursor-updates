@@ -16,3 +16,4 @@
 - Expanded Table stories to cover zebra striping, sticky header, responsive layout, and added accessibility documentation and notes. 
 - Expanded Avatar stories to cover fallback icon, different sizes, and added accessibility documentation and notes. 
 - Fixed all 'any' type errors in EditUserDialog.tsx by using type guards and correct union types for Select handlers. No linter errors remain in this file. 
+- Replaced all 'any' usages for user in UserActions.tsx with a proper User type, updating props and function signatures accordingly. 

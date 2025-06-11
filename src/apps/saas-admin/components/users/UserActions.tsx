@@ -22,11 +22,22 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+export interface User {
+  id: string;
+  email: string;
+  first_name?: string | null;
+  last_name?: string | null;
+  avatar_url?: string | null;
+  created_at?: string | null;
+  status?: string;
+  system_role?: string;
+}
+
 interface UserActionsProps {
-  user: any;
-  onEditUser: (user: any) => void;
-  onChangePassword: (user: any) => void;
-  onChangeAvatar: (user: any) => void;
+  user: User;
+  onEditUser: (user: User) => void;
+  onChangePassword: (user: User) => void;
+  onChangeAvatar: (user: User) => void;
 }
 
 export function UserActions({ user, onEditUser, onChangePassword, onChangeAvatar }: UserActionsProps) {
@@ -35,7 +46,7 @@ export function UserActions({ user, onEditUser, onChangePassword, onChangeAvatar
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const getUserDisplayName = (user: any) => {
+  const getUserDisplayName = (user: User) => {
     if (user?.first_name || user?.last_name) {
       return `${user.first_name || ''} ${user.last_name || ''}`.trim();
     }
