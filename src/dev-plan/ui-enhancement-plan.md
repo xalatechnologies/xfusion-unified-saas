@@ -65,9 +65,40 @@
 4. **Review with accessibility tools** (axe, Lighthouse, etc.)
 5. **Iterate based on feedback**
 
+## Plan for Fixing All Remaining Lint Errors and Warnings
+
+### 1. Prioritize and Group Issues
+- **Step 1: Syntax Errors**
+  - Immediately fix any parsing or syntax errors that break builds or Storybook (e.g., Switch.stories.ts parsing error at line 31).
+- **Step 2: Type Errors (`any` usage)**
+  - Group by file and address all `@typescript-eslint/no-explicit-any` errors.
+  - Start with shared components, then hooks, then pages, then app-specific components.
+  - Replace `any` with the most specific type possible, or use `unknown` if the type cannot be determined.
+- **Step 3: Empty Object Type/Interface Issues**
+  - Fix `@typescript-eslint/no-empty-object-type` by using `object`, `unknown`, or a more specific type as appropriate.
+- **Step 4: Warnings**
+  - Address `react-refresh/only-export-components` by moving non-component exports to separate files.
+  - Fix `react-hooks/exhaustive-deps` by updating dependency arrays or refactoring hooks as needed.
+  - Address any other warnings (e.g., `@typescript-eslint/no-require-imports`).
+
+### 2. Process for Each File
+- Open the file and locate all lint errors/warnings.
+- Fix all issues in the file, preferring type safety and code clarity.
+- Run `npm run lint` after each batch of fixes to verify progress and catch new issues.
+- If a fix is unclear, add a `TODO` comment and document the uncertainty in this plan.
+
+### 3. Verification
+- After all errors and warnings are fixed, run `npm run lint` and `npm run build` to ensure a clean codebase.
+- Review all changes and update documentation if any public APIs or types are changed.
+- Commit changes with clear messages referencing the lint error types addressed.
+
+### 4. Tracking Progress
+- Check off each file and error type as it is resolved.
+- Update this plan with any blockers, questions, or follow-up actions needed.
+
 ---
 
-**All future dev plans should be written as markdown files in this `dev-plan` folder, following this structure.**
+**This plan ensures a systematic, safe, and maintainable approach to achieving a lint-error-free codebase.**
 
 ---
 

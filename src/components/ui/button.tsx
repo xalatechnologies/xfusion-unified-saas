@@ -58,7 +58,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size === "icon" &&
       !props["aria-label"]
     ) {
-      // eslint-disable-next-line no-console
+       
       console.warn(
         "[Button] Icon-only buttons must have an aria-label for accessibility."
       )

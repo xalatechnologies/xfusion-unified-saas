@@ -15,7 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import { usersApi } from "@/lib/database/users";
 
 interface ChangeAvatarDialogProps {
-  user: any;
+  user: { id: string; email: string; first_name?: string; last_name?: string; status?: string; systemRole?: string; avatar_url?: string };
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
@@ -25,14 +25,14 @@ export function ChangeAvatarDialog({ user, open, onOpenChange }: ChangeAvatarDia
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar_url || "");
   const { toast } = useToast();
 
-  const getUserInitials = (user: any) => {
+  const getUserInitials = (user: { id: string; email: string; first_name?: string; last_name?: string; status?: string; systemRole?: string; avatar_url?: string }) => {
     if (user?.first_name && user?.last_name) {
       return `${user.first_name.charAt(0)}${user.last_name.charAt(0)}`.toUpperCase();
     }
     return user?.email?.charAt(0).toUpperCase() || "U";
   };
 
-  const getUserDisplayName = (user: any) => {
+  const getUserDisplayName = (user: { id: string; email: string; first_name?: string; last_name?: string; status?: string; systemRole?: string; avatar_url?: string }) => {
     if (user?.first_name || user?.last_name) {
       return `${user.first_name || ''} ${user.last_name || ''}`.trim();
     }

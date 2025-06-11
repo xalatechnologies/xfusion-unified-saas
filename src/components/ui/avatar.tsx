@@ -30,7 +30,7 @@ const AvatarImage = React.forwardRef<
     process.env.NODE_ENV === "development" &&
     (!('alt' in props) || !props.alt)
   ) {
-    // eslint-disable-next-line no-console
+     
     console.warn(
       "[AvatarImage] AvatarImage should have an alt attribute for accessibility."
     );

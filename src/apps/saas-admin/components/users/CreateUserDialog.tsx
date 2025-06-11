@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import { CreateUserForm } from "./create-user/CreateUserForm";
 import { useCreateUserLogic } from "./create-user/useCreateUserLogic";
+import type { CreateUserForm as CreateUserFormType } from "./create-user/createUserSchema";
 
 interface CreateUserDialogProps {
   open: boolean;
@@ -15,7 +16,7 @@ interface CreateUserDialogProps {
 export function CreateUserDialog({ open, onOpenChange }: CreateUserDialogProps) {
   const { handleSubmit, isSubmitting } = useCreateUserLogic();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: CreateUserFormType) => {
     const success = await handleSubmit(data);
     if (success) {
       onOpenChange(false);

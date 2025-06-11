@@ -86,11 +86,19 @@ export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps
         description: "The user information has been updated."
       });
       onOpenChange(false);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error updating user:", error);
       let message = "There was an error updating the user. Please try again.";
-      if (error?.message?.toLowerCase().includes("user") && error?.message?.toLowerCase().includes("does not exist")) {
-        message = "The user does not exist or was deleted. Please refresh the user list.";
+      if (
+        typeof error === 'object' &&
+        error !== null &&
+        'message' in error &&
+        typeof (error as { message?: unknown }).message === 'string'
+      ) {
+        const msg = ((error as { message: string }).message).toLowerCase();
+        if (msg.includes("user") && msg.includes("does not exist")) {
+          message = "The user does not exist or was deleted. Please refresh the user list.";
+        }
       }
       toast({
         title: "Error updating user",
@@ -167,7 +175,7 @@ export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Status</Label>
-                  <Select value={form.watch("status")} onValueChange={(value: any) => form.setValue("status", value)}>
+                  <Select value={form.watch("status")} onValueChange={(value: string) => form.setValue("status", value as EditUserForm['status'])}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -182,7 +190,7 @@ export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps
 
                 <div className="space-y-2">
                   <Label>System Role</Label>
-                  <Select value={form.watch("systemRole")} onValueChange={(value: any) => form.setValue("systemRole", value)}>
+                  <Select value={form.watch("systemRole")} onValueChange={(value: string) => form.setValue("systemRole", value as EditUserForm['systemRole'])}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>

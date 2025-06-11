@@ -45,7 +45,7 @@ function Badge({ className, variant, shape, role = 'status', ...props }: BadgePr
   ) {
     const classStr = className || '';
     if (!classStr.includes('min-w-[44px]') || !classStr.includes('min-h-[44px]')) {
-      // eslint-disable-next-line no-console
+       
       console.warn(
         '[Badge] Interactive badges (button or link) must have min-w-[44px] min-h-[44px] for accessibility.'
       );

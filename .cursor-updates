@@ -15,3 +15,4 @@
 - Expanded Separator stories to cover horizontal and vertical on light and dark backgrounds, and added accessibility documentation and notes. 
 - Expanded Table stories to cover zebra striping, sticky header, responsive layout, and added accessibility documentation and notes. 
 - Expanded Avatar stories to cover fallback icon, different sizes, and added accessibility documentation and notes. 
+- Fixed all 'any' type errors in EditUserDialog.tsx by using type guards and correct union types for Select handlers. No linter errors remain in this file. 
