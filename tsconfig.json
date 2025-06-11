@@ -7,7 +7,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/apps/organization-admin/components/*": ["./src/apps/organization-admin/components/*"],
+      "@/apps/saas-admin/components/*": ["./src/apps/saas-admin/components/*"],
+      "@/apps/supplymantix/components/*": ["./src/apps/supplymantix/components/*"]
     },
     "noImplicitAny": false,
     "noUnusedParameters": false,

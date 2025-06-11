@@ -3,7 +3,7 @@ import { useUsers } from "@/hooks/useUsers";
 import { Button } from "@/components/shared/Button";
 import { Input } from "@/components/shared/Input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/shared/Card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { DataTable } from "@/components/shared/Table/DataTable";
 import { Badge } from "@/components/shared/Badge";
 import { Search, Plus, Users, UserCheck, UserX, Clock } from "lucide-react";
 import { format } from "date-fns";
@@ -134,38 +134,37 @@ export function UsersOverview() {
           <CardTitle>All Users</CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Email</TableHead>
-                <TableHead>Organization</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead>Last Login</TableHead>
-                <TableHead className="w-[70px]">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredUsers
-                .filter((user: any) => user && typeof user === 'object' && 'id' in user && 'email' in user && 'created_at' in user)
-                .map((user: any) => (
-                  <TableRow key={user.id}>
-                    <TableCell className="font-medium">{user.email}</TableCell>
-                    <TableCell>-</TableCell>
-                    <TableCell>
-                      <Badge variant="default">Active</Badge>
-                    </TableCell>
-                    <TableCell>{format(new Date(user.created_at), 'MMM dd, yyyy')}</TableCell>
-                    <TableCell>-</TableCell>
-                    <TableCell>
-                      <Button variant="ghost" size="sm">
-                        View
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
+          <DataTable
+            columns={
+              <tr>
+                <th>Email</th>
+                <th>Organization</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Last Login</th>
+                <th className="w-[70px]">Actions</th>
+              </tr>
+            }
+          >
+            {filteredUsers
+              .filter((user: any) => user && typeof user === 'object' && 'id' in user && 'email' in user && 'created_at' in user)
+              .map((user: any) => (
+                <tr key={user.id}>
+                  <td className="font-medium">{user.email}</td>
+                  <td>-</td>
+                  <td>
+                    <Badge variant="default">Active</Badge>
+                  </td>
+                  <td>{format(new Date(user.created_at), 'MMM dd, yyyy')}</td>
+                  <td>-</td>
+                  <td>
+                    <Button variant="ghost" size="sm">
+                      View
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+          </DataTable>
         </CardContent>
       </Card>
     </div>

@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { useSubscriptionTemplates } from "@/hooks/useBilling";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/shared/Button";
+import { Input } from "@/components/shared/Input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/shared/Card";
+import { DataTable } from "@/components/shared/Table/DataTable";
+import { Badge } from "@/components/shared/Badge";
 import { Search, Plus, Package, DollarSign, TrendingUp, Calendar } from "lucide-react";
 
 export function SubscriptionsOverview() {
@@ -123,38 +122,37 @@ export function SubscriptionsOverview() {
           <CardTitle>Subscription Plans</CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Plan Name</TableHead>
-                <TableHead>Monthly Price</TableHead>
-                <TableHead>Yearly Price</TableHead>
-                <TableHead>Max Users</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="w-[70px]">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredTemplates.map((plan) => (
-                <TableRow key={plan.id}>
-                  <TableCell className="font-medium">{plan.plan_name}</TableCell>
-                  <TableCell>${plan.price_monthly || 0}</TableCell>
-                  <TableCell>${plan.price_yearly || 0}</TableCell>
-                  <TableCell>{plan.max_users === -1 ? 'Unlimited' : plan.max_users}</TableCell>
-                  <TableCell>
-                    <Badge variant={plan.status === 'template' ? 'default' : 'secondary'}>
-                      {plan.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="sm">
-                      Edit
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <DataTable
+            columns={
+              <tr>
+                <th>Plan Name</th>
+                <th>Monthly Price</th>
+                <th>Yearly Price</th>
+                <th>Max Users</th>
+                <th>Status</th>
+                <th className="w-[70px]">Actions</th>
+              </tr>
+            }
+          >
+            {filteredTemplates.map((plan) => (
+              <tr key={plan.id}>
+                <td className="font-medium">{plan.plan_name}</td>
+                <td>${plan.price_monthly || 0}</td>
+                <td>${plan.price_yearly || 0}</td>
+                <td>{plan.max_users === -1 ? 'Unlimited' : plan.max_users}</td>
+                <td>
+                  <Badge variant={plan.status === 'template' ? 'default' : 'secondary'}>
+                    {plan.status}
+                  </Badge>
+                </td>
+                <td>
+                  <Button variant="ghost" size="sm">
+                    Edit
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </DataTable>
         </CardContent>
       </Card>
     </div>

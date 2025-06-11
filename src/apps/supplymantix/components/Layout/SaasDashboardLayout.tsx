@@ -1,13 +1,13 @@
 import React from "react";
+import { SidebarProvider } from "@/components/shared/Sidebar";
 import { TopBar } from "@/components/shared/Layout/TopBar";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { SaasSidebar } from "@/apps/supplymantix/components/Layout/SaasSidebar";
+import { SaasSidebar } from "./SaasSidebar";
 
-interface SaasAdminLayoutProps {
+interface SaasDashboardLayoutProps {
   children: React.ReactNode;
 }
 
-export const SaasAdminLayout = ({ children }: SaasAdminLayoutProps) => {
+export const SaasDashboardLayout = ({ children }: SaasDashboardLayoutProps) => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gray-50">

@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/components/Layout/DashboardLayout";
+import { DashboardLayout } from "@/apps/supplymantix/components/Layout/DashboardLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { OrganizationSettings } from "@/components/organization/OrganizationSettings";

@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { searchApi } from '../lib/database/search';
+import { searchApi, SearchResult } from '../lib/database/search';
 
-function sortResults(results: any[], sort: string) {
+function sortResults(results: SearchResult[], sort: string) {
   switch (sort) {
     case 'date':
       return results.slice().sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
@@ -47,7 +47,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         total: allResults.length,
       },
     });
-  } catch (error: any) {
-    res.status(500).json({ error: error.message || 'Search failed' });
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'message' in error) {
+      res.status(500).json({ error: (error as { message?: string }).message || 'Search failed' });
+    } else {
+      res.status(500).json({ error: 'Search failed' });
+    }
   }
 } 

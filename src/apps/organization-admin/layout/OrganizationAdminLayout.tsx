@@ -1,8 +1,7 @@
-
 import React from "react";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { OrganizationAdminSidebar } from "@/components/Layout/OrganizationAdminSidebar";
-import { TopBar } from "@/components/Layout/TopBar";
+import { SidebarProvider } from "@/components/shared/Sidebar";
+import { OrganizationAdminSidebar } from "@/apps/organization-admin/components/Layout/OrganizationAdminSidebar";
+import { TopBar } from "@/components/shared/Layout/TopBar";
 
 interface OrganizationAdminLayoutProps {
   children: React.ReactNode;

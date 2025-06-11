@@ -1,24 +1,26 @@
-
 import { useState } from "react";
 import { useOrganizations } from "@/hooks/useOrganizations";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/shared/Button";
+import { Input } from "@/components/shared/Input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/shared/Card";
+import { DataTable } from "@/components/shared/Table/DataTable";
+import { Badge } from "@/components/shared/Badge";
 import { Search, Plus, Building2, Users, Calendar, CreditCard, MoreHorizontal } from "lucide-react";
 import { format } from "date-fns";
+import type { Database } from "@/integrations/supabase/types";
+
+type Organization = Database["public"]["Tables"]["organizations"]["Row"];
 
 export function OrganizationsOverview() {
   const { data: organizations, isLoading } = useOrganizations();
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredOrganizations = organizations?.filter(org =>
+  const filteredOrganizations = organizations?.filter((org: Organization) =>
     org.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     org.contact_email?.toLowerCase().includes(searchTerm.toLowerCase())
   ) || [];
 
-  const getStatusBadge = (org: any) => {
+  const getStatusBadge = (org: Organization) => {
     if (org.current_subscription_id) {
       return <Badge variant="default">Active</Badge>;
     }
@@ -46,7 +48,7 @@ export function OrganizationsOverview() {
   }
 
   const totalOrgs = organizations?.length || 0;
-  const activeOrgs = organizations?.filter(org => org.current_subscription_id)?.length || 0;
+  const activeOrgs = organizations?.filter((org: Organization) => org.current_subscription_id)?.length || 0;
   const trialOrgs = totalOrgs - activeOrgs;
 
   return (
@@ -135,41 +137,27 @@ export function OrganizationsOverview() {
           <CardTitle>All Organizations</CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Organization</TableHead>
-                <TableHead>Contact Email</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead>Members</TableHead>
-                <TableHead className="w-[70px]">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredOrganizations.map((org) => (
-                <TableRow key={org.id}>
-                  <TableCell>
-                    <div>
-                      <div className="font-medium">{org.name}</div>
-                      {org.website && (
-                        <div className="text-sm text-gray-500">{org.website}</div>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell>{org.contact_email || '-'}</TableCell>
-                  <TableCell>{getStatusBadge(org)}</TableCell>
-                  <TableCell>{format(new Date(org.created_at), 'MMM dd, yyyy')}</TableCell>
-                  <TableCell>-</TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="sm">
-                      <MoreHorizontal className="w-4 h-4" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <DataTable
+            columns={
+              <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            }
+          >
+            {filteredOrganizations.map((org: Organization) => (
+              <tr key={org.id}>
+                <td>{org.name}</td>
+                <td>{getStatusBadge(org)}</td>
+                <td>{org.created_at ? format(new Date(org.created_at), 'MMM dd, yyyy') : ''}</td>
+                <td>
+                  <Button variant="ghost" size="sm">View</Button>
+                </td>
+              </tr>
+            ))}
+          </DataTable>
         </CardContent>
       </Card>
     </div>

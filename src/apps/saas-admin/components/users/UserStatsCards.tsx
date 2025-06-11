@@ -1,5 +1,4 @@
-
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/shared/Card";
 import { Users, UserCheck, UserX, Clock, Shield, AlertTriangle } from "lucide-react";
 
 interface UserStatsCardsProps {

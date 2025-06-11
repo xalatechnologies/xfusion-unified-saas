@@ -1,34 +1,33 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
-import Index from "./pages/Index";
+import Index from "./apps/supplymantix/pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
-import WorkOrders from "./pages/WorkOrders";
-import Procedures from "./pages/Procedures";
+import Dashboard from "./apps/supplymantix/pages/Dashboard";
+import WorkOrders from "./apps/supplymantix/pages/WorkOrders";
+import Procedures from "./apps/supplymantix/pages/Procedures";
 import Organization from "./pages/Organization";
-import OrganizationAdmin from "./pages/OrganizationAdmin";
-import OrganizationAdminSettings from "./pages/OrganizationAdminSettings";
-import OrganizationAdminMembers from "./pages/OrganizationAdminMembers";
-import OrganizationAdminSubscription from "./pages/OrganizationAdminSubscription";
-import OrganizationAdminBranding from "./pages/OrganizationAdminBranding";
-import SaasDashboard from "./pages/SaasDashboard";
-import SaasUsers from "./pages/SaasUsers";
-import SaasOrganizations from "./pages/SaasOrganizations";
-import SaasSubscriptions from "./pages/SaasSubscriptions";
-import SaasBilling from "./pages/SaasBilling";
-import SaasAnalytics from "./pages/SaasAnalytics";
-import SaasSettings from "./pages/SaasSettings";
-import SaasThemes from "./pages/SaasThemes";
-import SaasTranslations from "./pages/SaasTranslations";
-import SaasDocumentation from "./pages/SaasDocumentation";
+import OrganizationAdmin from "./apps/organization-admin/pages/OrganizationAdmin";
+import OrganizationAdminSettings from "./apps/organization-admin/pages/OrganizationAdminSettings";
+import OrganizationAdminMembers from "./apps/organization-admin/pages/OrganizationAdminMembers";
+import OrganizationAdminSubscription from "./apps/organization-admin/pages/OrganizationAdminSubscription";
+import OrganizationAdminBranding from "./apps/organization-admin/pages/OrganizationAdminBranding";
+import SaasDashboard from "./apps/saas-admin/pages/SaasDashboard";
+import SaasUsers from "./apps/saas-admin/pages/SaasUsers";
+import SaasOrganizations from "./apps/saas-admin/pages/SaasOrganizations";
+import SaasSubscriptions from "./apps/saas-admin/pages/SaasSubscriptions";
+import SaasBilling from "./apps/saas-admin/pages/SaasBilling";
+import SaasAnalytics from "./apps/saas-admin/pages/SaasAnalytics";
+import SaasSettings from "./apps/saas-admin/pages/SaasSettings";
+import SaasThemes from "./apps/saas-admin/pages/SaasThemes";
+import SaasTranslations from "./apps/saas-admin/pages/SaasTranslations";
+import SaasDocumentation from "./apps/saas-admin/pages/SaasDocumentation";
 import TranslationManagement from "./pages/TranslationManagement";
 import InviteAccept from "./pages/InviteAccept";
 import NotFound from "./pages/NotFound";
@@ -51,11 +50,12 @@ const App = () => (
                   <Route path="/invite/:token" element={<InviteAccept />} />
                   
                   {/* Protected Routes */}
-                  <Route path="/dashboard" element={
+                  <Route path="/supplymantix" element={
                     <ProtectedRoute>
                       <Dashboard />
                     </ProtectedRoute>
                   } />
+                  <Route path="/dashboard" element={<Navigate to="/supplymantix" replace />} />
                   <Route path="/work-orders" element={
                     <ProtectedRoute>
                       <WorkOrders />

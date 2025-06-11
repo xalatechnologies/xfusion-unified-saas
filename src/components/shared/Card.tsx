@@ -1,1 +1,1 @@
-export { Card, CardContent, CardHeader, CardTitle, CardFooter } from '../ui/card'; 
+export { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from '../ui/card'; 

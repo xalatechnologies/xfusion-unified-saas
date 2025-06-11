@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
@@ -20,7 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Aggregate popular queries in-memory
     const counts: Record<string, number> = {};
-    for (const row of data || []) {
+    for (const row of (data || []) as Database['public']['Tables']['search_analytics']['Row'][]) {
       if (!row.search_query) continue;
       counts[row.search_query] = (counts[row.search_query] || 0) + 1;
     }
@@ -30,7 +31,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .map(([query, count]) => ({ query, count }));
 
     res.status(200).json({ popularQueries });
-  } catch (error: any) {
-    res.status(500).json({ error: error.message || 'Failed to fetch analytics' });
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'message' in error) {
+      res.status(500).json({ error: (error as { message?: string }).message || 'Failed to fetch analytics' });
+    } else {
+      res.status(500).json({ error: 'Failed to fetch analytics' });
+    }
   }
 } 

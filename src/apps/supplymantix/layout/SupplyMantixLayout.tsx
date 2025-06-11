@@ -1,8 +1,7 @@
-
 import React from "react";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/Layout/AppSidebar";
-import { TopBar } from "@/components/Layout/TopBar";
+import { SidebarProvider } from "@/components/shared/Sidebar";
+import { AppSidebar } from "@/apps/supplymantix/components/Layout/AppSidebar";
+import { TopBar } from "@/components/shared/Layout/TopBar";
 
 interface SupplyMantixLayoutProps {
   children: React.ReactNode;
