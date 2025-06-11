@@ -1,10 +1,39 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
+    --color-primary: #2563eb;
+    --color-secondary: #6366f1;
+    --color-accent: #f59e42;
+    --color-background: #f9fafb;
+    --color-surface: #ffffff;
+    --color-border: #e5e7eb;
+    --color-text: #1e293b;
+    --color-muted: #64748b;
+    --color-success: #10b981;
+    --color-warning: #f59e42;
+    --color-error: #ef4444;
+    --color-info: #3b82f6;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-full: 9999px;
+    --font-family: Inter, system-ui, sans-serif;
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 20px;
+    --font-size-xl: 24px;
+    --font-size-2xl: 32px;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.7;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -53,6 +82,19 @@
   }
 
   .dark {
+    --color-primary: #3b82f6;
+    --color-secondary: #818cf8;
+    --color-accent: #fbbf24;
+    --color-background: #18181b;
+    --color-surface: #27272a;
+    --color-border: #3f3f46;
+    --color-text: #f4f4f5;
+    --color-muted: #a1a1aa;
+    --color-success: #34d399;
+    --color-warning: #fbbf24;
+    --color-error: #f87171;
+    --color-info: #60a5fa;
+
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 

@@ -8,7 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { appgroupedItems } from "./appSidebarMenuItems";
+import { appgroupedItems } from "./AppSidebarMenuItems";
 
 export function AppSidebarNavigation() {
   const location = useLocation();
