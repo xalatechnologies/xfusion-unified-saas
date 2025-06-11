@@ -8,7 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { appMenuItems, appgroupedItems } from './appSidebarMenuItems';
+import { appgroupedItems } from "./appSidebarMenuItems";
 
 export function AppSidebarNavigation() {
   const location = useLocation();
@@ -25,15 +25,14 @@ export function AppSidebarNavigation() {
               {items.map((item) => {
                 const isActive = location.pathname === item.url;
                 const Icon = item.icon;
-                
                 return (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton 
+                    <SidebarMenuButton
                       asChild
                       className={`
                         relative group h-9 px-3 rounded-lg transition-all duration-300 ease-out
-                        ${isActive 
-                          ? 'bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 text-blue-700 shadow-sm' 
+                        ${isActive
+                          ? 'bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 text-blue-700 shadow-sm'
                           : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'
                         }
                       `}
@@ -41,8 +40,8 @@ export function AppSidebarNavigation() {
                       <Link to={item.url} className="flex items-center space-x-3 w-full">
                         <div className={`
                           w-6 h-6 rounded-lg flex items-center justify-center transition-all duration-300
-                          ${isActive 
-                            ? 'bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-600 text-white shadow-md shadow-blue-500/30' 
+                          ${isActive
+                            ? 'bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-600 text-white shadow-md shadow-blue-500/30'
                             : 'bg-gray-100 text-gray-600 group-hover:bg-gray-200 group-hover:text-gray-700'
                           }
                         `}>
@@ -63,4 +62,4 @@ export function AppSidebarNavigation() {
       ))}
     </SidebarContent>
   );
-}
+} 

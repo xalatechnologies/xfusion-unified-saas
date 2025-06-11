@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/apps/supplymantix/components/Layout/DashboardLayout";
+import { AppDashboardLayout } from "@/apps/supplymantix/components/Layout/AppDashboardLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { OrganizationSettings } from "@/components/organization/OrganizationSettings";
@@ -19,29 +19,29 @@ export default function Organization() {
 
   if (isLoading) {
     return (
-      <DashboardLayout>
+      <AppDashboardLayout>
         <div className="flex items-center justify-center h-64">
           <div className="flex items-center space-x-2 text-muted-foreground">
             <Loader2 className="w-5 h-5 animate-spin" />
             <span className="text-lg">Loading organization...</span>
           </div>
         </div>
-      </DashboardLayout>
+      </AppDashboardLayout>
     );
   }
 
   if (!currentOrganization) {
     return (
-      <DashboardLayout>
+      <AppDashboardLayout>
         <div className="flex items-center justify-center h-64">
           <div className="text-lg text-muted-foreground">No organization found</div>
         </div>
-      </DashboardLayout>
+      </AppDashboardLayout>
     );
   }
 
   return (
-    <DashboardLayout>
+    <AppDashboardLayout>
       <div className="w-full space-y-6">
         {/* Header */}
         <div className="pb-4">
@@ -114,6 +114,6 @@ export default function Organization() {
           </div>
         </Tabs>
       </div>
-    </DashboardLayout>
+    </AppDashboardLayout>
   );
 }

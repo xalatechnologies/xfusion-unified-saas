@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/apps/supplymantix/components/Layout/DashboardLayout";
+import { AppDashboardLayout } from "@/apps/supplymantix/components/Layout/AppDashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -98,7 +98,7 @@ const Procedures = () => {
   };
 
   return (
-    <DashboardLayout>
+    <AppDashboardLayout>
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -255,7 +255,7 @@ const Procedures = () => {
           </CardContent>
         </Card>
       </div>
-    </DashboardLayout>
+    </AppDashboardLayout>
   );
 };
 

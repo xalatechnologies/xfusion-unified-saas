@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/apps/supplymantix/components/Layout/DashboardLayout";
+import { AppDashboardLayout } from "@/apps/supplymantix/components/Layout/AppDashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -105,7 +105,7 @@ const Dashboard = () => {
   };
 
   return (
-    <DashboardLayout>
+    <AppDashboardLayout>
       <div className="space-y-8">
         {/* Header with consistent gradient */}
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 p-8 text-white">
@@ -259,7 +259,7 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
-    </DashboardLayout>
+    </AppDashboardLayout>
   );
 };
 

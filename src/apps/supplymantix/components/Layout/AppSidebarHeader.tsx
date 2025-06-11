@@ -20,7 +20,7 @@ export function AppSidebarHeader() {
                 XFusion
               </span>
               <span className="text-xs text-muted-foreground font-medium">
-                SAAS Admin
+                SupplyMantix
               </span>
             </div>
           </SidebarMenuButton>

@@ -1,7 +1,7 @@
 import { Sidebar } from "@/components/shared/Sidebar";
 import { OrganizationAdminSidebarHeader } from "./OrganizationAdminSidebarHeader";
-import { OrganizationAdminSidebarNavigation } from "./OrganizationAdminSidebarNavigation";
 import { AppSidebarFooter } from "@/components/shared/Layout/SidebarFooter";
+import { OrganizationAdminSidebarNavigation } from "./OrganizationAdminSidebarNavigation";
 
 export function OrganizationAdminSidebar() {
   return (

@@ -1,6 +1,5 @@
 import { Sidebar } from "@/components/ui/sidebar";
 import { AppSidebarHeader } from './AppSidebarHeader';
-import { appSidebarMenuItems } from './appSidebarMenuItems';
 import { AppSidebarFooter } from "@/components/shared/Layout/SidebarFooter";
 import { AppSidebarNavigation } from "./AppSidebarNavigation";
 

@@ -8,43 +8,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {
-  LayoutDashboard,
-  Users,
-  Settings,
-  Palette,
-  CreditCard,
-  BarChart3,
-  Plug,
-  Shield,
-  FileText,
-} from "lucide-react";
+import { saasAdminGroupedItems } from "./SaasAdminSidebarMenuItems";
 
-const organizationAdminMenuItems = [
-  { title: "Dashboard", url: "/org-admin", icon: LayoutDashboard },
-  { title: "Members", url: "/org-admin/members", icon: Users },
-  { title: "Settings", url: "/org-admin/settings", icon: Settings },
-  { title: "Branding", url: "/org-admin/branding", icon: Palette },
-  { title: "Subscription", url: "/org-admin/subscription", icon: CreditCard },
-  { title: "Analytics", url: "/org-admin/analytics", icon: BarChart3 },
-  { title: "Integrations", url: "/org-admin/integrations", icon: Plug },
-  { title: "Security", url: "/org-admin/security", icon: Shield },
-  { title: "Reports", url: "/org-admin/reports", icon: FileText },
-];
-
-const orgAdminGroupedItems = {
-  Overview: [organizationAdminMenuItems[0]],
-  Management: [organizationAdminMenuItems[1], organizationAdminMenuItems[2], organizationAdminMenuItems[3]],
-  Business: [organizationAdminMenuItems[4], organizationAdminMenuItems[5], organizationAdminMenuItems[8]],
-  System: [organizationAdminMenuItems[6], organizationAdminMenuItems[7]],
-};
-
-export function OrganizationAdminSidebarNavigation() {
+export function SaasAdminSidebarNavigation() {
   const location = useLocation();
 
   return (
     <SidebarContent className="px-3 py-2 bg-white">
-      {Object.entries(orgAdminGroupedItems).map(([group, items]) => (
+      {Object.entries(saasAdminGroupedItems).map(([group, items]) => (
         <SidebarGroup key={group} className="mb-0.5">
           <SidebarGroupLabel className="text-gray-500 uppercase text-xs font-bold tracking-widest mb-1 px-2">
             {group}
@@ -91,4 +62,4 @@ export function OrganizationAdminSidebarNavigation() {
       ))}
     </SidebarContent>
   );
-}
+} 

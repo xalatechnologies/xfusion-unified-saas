@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/apps/supplymantix/components/Layout/DashboardLayout";
+import { AppDashboardLayout } from "@/apps/supplymantix/components/Layout/AppDashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -11,7 +11,7 @@ interface ModulePlaceholderProps {
 
 export const ModulePlaceholder = ({ title, description, icon, features }: ModulePlaceholderProps) => {
   return (
-    <DashboardLayout>
+    <AppDashboardLayout>
       <div className="space-y-6">
         <div className="text-center py-12">
           <div className="text-6xl mb-4">{icon}</div>
@@ -41,6 +41,6 @@ export const ModulePlaceholder = ({ title, description, icon, features }: Module
           </Card>
         </div>
       </div>
-    </DashboardLayout>
+    </AppDashboardLayout>
   );
 };
