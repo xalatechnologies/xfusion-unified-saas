@@ -280,7 +280,7 @@ export function UsersTable({
   }
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+    <div className="rounded-2xl border border-gray-200 bg-white shadow-lg overflow-hidden">
       <DataTableToolbar>
         <div className="flex flex-wrap gap-2" aria-label="Quick filters">
           <div className="flex items-center gap-1">
@@ -313,7 +313,7 @@ export function UsersTable({
       </DataTableToolbar>
       <DataTable
         columns={
-          <tr>
+          <tr className="bg-gradient-to-r from-blue-50 via-white to-purple-50">
             <th className="w-14 text-base font-semibold text-gray-900" aria-label="Select all users">
               <Checkbox
                 checked={allSelected}
@@ -416,7 +416,7 @@ export function UsersTable({
         })}
       </DataTable>
       {/* Pagination Controls */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-4 border-t bg-gray-50">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-4 border-t bg-gradient-to-r from-blue-50 via-white to-purple-50">
         <div className="flex items-center gap-2">
           <span className="text-sm text-gray-700">Rows per page:</span>
           <Input
@@ -425,7 +425,7 @@ export function UsersTable({
             max={100}
             value={pageSize}
             onChange={e => onPageSizeChange && onPageSizeChange(Number(e.target.value))}
-            className="w-16 text-center"
+            className="w-16 text-center rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
             aria-label="Rows per page"
           />
         </div>
@@ -436,10 +436,11 @@ export function UsersTable({
             onClick={() => onPageChange && onPageChange(page - 1)}
             disabled={page <= 1}
             aria-label="Previous page"
+            className="rounded-full px-4 py-1 text-base font-medium shadow-sm transition hover:bg-blue-100"
           >
             Previous
           </Button>
-          <span className="text-sm text-gray-700">
+          <span className="text-sm text-gray-700 font-semibold">
             Page {page} of {Math.max(1, Math.ceil(total / pageSize))}
           </span>
           <Button
@@ -448,6 +449,7 @@ export function UsersTable({
             onClick={() => onPageChange && onPageChange(page + 1)}
             disabled={page >= Math.ceil(total / pageSize)}
             aria-label="Next page"
+            className="rounded-full px-4 py-1 text-base font-medium shadow-sm transition hover:bg-blue-100"
           >
             Next
           </Button>

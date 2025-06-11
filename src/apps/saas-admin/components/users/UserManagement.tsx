@@ -87,7 +87,7 @@ export function UserManagement() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -103,8 +103,16 @@ export function UserManagement() {
         </div>
       </div>
 
-      {/* Stats */}
-      <UserStatsCards users={users || []} />
+      {/* Enhanced Stats Section */}
+      <section className="rounded-2xl bg-gradient-to-tr from-blue-50 via-white to-purple-50 shadow-lg px-4 py-6 md:px-8 md:py-8 border border-blue-100">
+        <div className="mb-4 flex flex-col md:flex-row md:items-end md:justify-between gap-2">
+          <div>
+            <h2 className="text-xl font-semibold text-blue-900 tracking-tight">User Overview</h2>
+            <p className="text-gray-500 text-sm mt-1">Key metrics for user activity and roles</p>
+          </div>
+        </div>
+        <UserStatsCards users={users} />
+      </section>
 
       {/* Filters and Search */}
       <Card className="shadow-md border-0 bg-white/90 mb-2">

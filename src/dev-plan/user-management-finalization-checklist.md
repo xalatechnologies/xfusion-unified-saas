@@ -55,7 +55,7 @@ src/
   - [x] Fetch users from backend API with pagination, sorting, and filtering
   - [x] Display user avatars, names, emails, roles, statuses, and creation dates
   - [ ] Show loading, empty, and error states with clear messaging
-  - [ ] Integrate `UserStatsCards` for summary metrics (active, pending, suspended, etc.)
+  - [x] Integrate `UserStatsCards` for summary metrics (active, pending, suspended, etc.)
   - [x] Ensure all table actions use shared UI components (buttons, badges, tooltips, etc.)
   - [x] Add quick filters for status, role, organization, and date range
   - [ ] Support keyboard navigation and screen reader accessibility
