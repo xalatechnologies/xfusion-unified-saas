@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FiPlus } from 'react-icons/fi';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
-import { Button } from '../components/shared/Button';
+import { Button } from '../components/ui/button';
 
 const meta: Meta<typeof Button> = {
   title: 'Shared/Button',
