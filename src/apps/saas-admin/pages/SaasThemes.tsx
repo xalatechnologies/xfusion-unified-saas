@@ -7,12 +7,13 @@ import { SaasAdminLayout } from "@/apps/saas-admin/layout/SaasAdminLayout";
 import { databaseApi } from "@/lib/database";
 import { useTheme, type ThemeConfig } from "@/contexts/ThemeContext";
 import { useToast } from "@/hooks/use-toast";
+import type { Database } from "@/integrations/supabase/types";
 
 export default function SaasThemes() {
   const { theme, refreshTheme } = useTheme();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [activeTheme, setActiveTheme] = useState<any>(null);
+  const [activeTheme, setActiveTheme] = useState<Database["public"]["Tables"]["global_theme_settings"]["Row"] | null>(null);
 
   // Local state for theme editing
   const [editedTheme, setEditedTheme] = useState<ThemeConfig | null>(null);

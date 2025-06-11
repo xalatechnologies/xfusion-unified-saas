@@ -1,5 +1,5 @@
-
 import { useState, useEffect } from "react";
+import type { Database } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,14 +14,14 @@ import { useToast } from "@/hooks/use-toast";
 import { FileText, Plus, Edit, Eye, Download, Search } from "lucide-react";
 
 const SaasDocumentation = () => {
-  const [documentation, setDocumentation] = useState<any[]>([]);
+  const [documentation, setDocumentation] = useState<Database["public"]["Tables"]["documentation"]["Row"][]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [editingDoc, setEditingDoc] = useState<any>(null);
-  const [viewingDoc, setViewingDoc] = useState<any>(null);
+  const [editingDoc, setEditingDoc] = useState<Database["public"]["Tables"]["documentation"]["Row"] | null>(null);
+  const [viewingDoc, setViewingDoc] = useState<Database["public"]["Tables"]["documentation"]["Row"] | null>(null);
   
   const { toast } = useToast();
   
@@ -268,7 +268,7 @@ Generated on: ${new Date().toLocaleDateString()}
                   <Label htmlFor="access_level">Access Level</Label>
                   <Select 
                     value={newDoc.access_level}
-                    onValueChange={(value: any) => setNewDoc({
+                    onValueChange={(value: 'public' | 'admin' | 'super_admin') => setNewDoc({
                       ...newDoc,
                       access_level: value
                     })}
