@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shared/Button";
 import { useToast } from "@/hooks/use-toast";
 import {
   DropdownMenu,

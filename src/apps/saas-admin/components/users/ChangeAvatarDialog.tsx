@@ -7,10 +7,10 @@ import {
   DialogFooter,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/shared/Button";
+import { Label } from "@/components/shared/Label";
+import { Input } from "@/components/shared/Input";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/shared/Avatar";
 import { useToast } from "@/hooks/use-toast";
 import { usersApi } from "@/lib/database/users";
 

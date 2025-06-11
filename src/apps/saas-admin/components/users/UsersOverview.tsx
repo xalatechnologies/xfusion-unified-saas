@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { useUsers } from "@/hooks/useUsers";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/shared/Button";
+import { Input } from "@/components/shared/Input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/shared/Card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/shared/Badge";
 import { Search, Plus, Users, UserCheck, UserX, Clock } from "lucide-react";
 import { format } from "date-fns";
 
@@ -13,9 +12,12 @@ export function UsersOverview() {
   const { data: users, isLoading } = useUsers();
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredUsers = users?.filter(user =>
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  ) || [];
+  const filteredUsers = Array.isArray(users)
+    ? users.filter((user: any) => {
+        if (!user || typeof user !== 'object' || !('email' in user)) return false;
+        return (user.email as string).toLowerCase().includes(searchTerm.toLowerCase());
+      })
+    : [];
 
   if (isLoading) {
     return (
@@ -37,13 +39,16 @@ export function UsersOverview() {
     );
   }
 
-  const totalUsers = users?.length || 0;
-  const recentUsers = users?.filter(user => {
-    const createdDate = new Date(user.created_at);
-    const weekAgo = new Date();
-    weekAgo.setDate(weekAgo.getDate() - 7);
-    return createdDate > weekAgo;
-  })?.length || 0;
+  const totalUsers = Array.isArray(users) ? users.length : 0;
+  const recentUsers = Array.isArray(users)
+    ? users.filter((user: any) => {
+        if (!user || typeof user !== 'object' || !('created_at' in user)) return false;
+        const createdDate = new Date(user.created_at as string);
+        const weekAgo = new Date();
+        weekAgo.setDate(weekAgo.getDate() - 7);
+        return createdDate > weekAgo;
+      }).length
+    : 0;
 
   return (
     <div className="space-y-6">
@@ -141,22 +146,24 @@ export function UsersOverview() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredUsers.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell className="font-medium">{user.email}</TableCell>
-                  <TableCell>-</TableCell>
-                  <TableCell>
-                    <Badge variant="default">Active</Badge>
-                  </TableCell>
-                  <TableCell>{format(new Date(user.created_at), 'MMM dd, yyyy')}</TableCell>
-                  <TableCell>-</TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="sm">
-                      View
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {filteredUsers
+                .filter((user: any) => user && typeof user === 'object' && 'id' in user && 'email' in user && 'created_at' in user)
+                .map((user: any) => (
+                  <TableRow key={user.id}>
+                    <TableCell className="font-medium">{user.email}</TableCell>
+                    <TableCell>-</TableCell>
+                    <TableCell>
+                      <Badge variant="default">Active</Badge>
+                    </TableCell>
+                    <TableCell>{format(new Date(user.created_at), 'MMM dd, yyyy')}</TableCell>
+                    <TableCell>-</TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="sm">
+                        View
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </CardContent>
