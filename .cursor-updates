@@ -13,3 +13,4 @@
 - Expanded Textarea stories to cover label association, help/error text with aria-describedby, responsive and focus states, and added accessibility documentation and notes. 
 - Expanded Switch stories to cover label association, focus state, large clickable area, and added accessibility documentation and notes. 
 - Expanded Separator stories to cover horizontal and vertical on light and dark backgrounds, and added accessibility documentation and notes. 
+- Expanded Table stories to cover zebra striping, sticky header, responsive layout, and added accessibility documentation and notes. 
