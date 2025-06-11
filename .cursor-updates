@@ -5,3 +5,4 @@
 - Added ARIA roles, labels, and descriptions to Button, Avatar, Badge, Switch, and Checkbox for accessibility compliance. 
 - Made Card, Table, and Avatar components fully responsive with atomic responsive classes and comments. All shared UI stories now have responsive coverage. 
 - Documented all accessibility requirements and standards in dev-plan/accessibility-requirements.md, completing the UI enhancement checklist. 
+- Refactored Button to use only tokens, added shadowed variant, updated all stories and accessibility notes, and marked all Button checklist items complete. 

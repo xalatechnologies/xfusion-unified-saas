@@ -56,3 +56,10 @@ export const Icon: Story = {
   },
 };
 export const Disabled: Story = { args: { disabled: true, children: 'Disabled' } };
+export const Shadowed: Story = { args: { variant: 'shadowed', children: 'Shadowed' } };
+
+// Accessibility notes:
+// - All buttons have a minimum touch target of 44x44px.
+// - Icon-only buttons require an aria-label for screen readers.
+// - All variants have visible, high-contrast focus ring and pass color contrast.
+// - Keyboard and screen reader accessible by default.
