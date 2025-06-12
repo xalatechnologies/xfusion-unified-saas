@@ -1,11 +1,10 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Upload, Palette, Image, FileImage, Save, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface OrganizationBrandingProps {
   organizationId: string;
@@ -19,12 +18,50 @@ export const OrganizationBranding = ({ organizationId }: OrganizationBrandingPro
     logoUrl: "",
     faviconUrl: "",
   });
+  const [enums, setEnums] = useState<{ font_size: string[]; color_token: string[] }>({ font_size: [], color_token: [] });
+
+  // Fetch theme and enums on mount
+  useEffect(() => {
+    const fetchThemeAndEnums = async () => {
+      setIsLoading(true);
+      try {
+        // Fetch theme
+        const themeRes = await fetch(`/functions/v1/theme-get-org?orgId=${organizationId}`);
+        const theme = await themeRes.json();
+        if (theme.primaryColor || theme.secondaryColor) {
+          setBrandData((prev) => ({
+            ...prev,
+            primaryColor: theme.primaryColor || prev.primaryColor,
+            secondaryColor: theme.secondaryColor || prev.secondaryColor,
+            logoUrl: theme.logoUrl || prev.logoUrl,
+            faviconUrl: theme.faviconUrl || prev.faviconUrl,
+          }));
+        }
+        // Fetch enums
+        const enumsRes = await fetch(`/functions/v1/theme-get-enums`);
+        const enumsData = await enumsRes.json();
+        setEnums(enumsData);
+      } catch (e) {
+        // handle error
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchThemeAndEnums();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [organizationId]);
 
   const handleSave = async () => {
     setIsLoading(true);
-    // Simulate save operation
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setIsLoading(false);
+    try {
+      await fetch(`/functions/v1/theme-update-org`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orgId: organizationId, theme_overrides: brandData }),
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
