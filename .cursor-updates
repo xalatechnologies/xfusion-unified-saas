@@ -37,3 +37,4 @@
 - Implemented accessibility context and toggle; accessibility features are now conditionally rendered; enhanced filter bar; checked off accessibility and filter tasks in the checklist. 
 - Implemented loading, empty, and error states with clear messaging in UsersTable; user list story is now fully complete and checked off in the checklist. 
 - Removed `UserActions.test.tsx` and `EditUserDialog.test.tsx` from `src/apps/saas-admin/components/users/` to skip tests for now. Verified successful build after removal. 
+- Added logic to prevent self-deletion in both row-level and bulk user deletion actions, with user feedback toasts. Verified successful build. 

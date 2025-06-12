@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface UserBulkActionsProps {
   selectedCount: number;
@@ -38,6 +39,7 @@ export function UserBulkActions({ selectedCount, selectedUsers, onClearSelection
   const [roleToAssign, setRoleToAssign] = useState<'super_admin' | 'organization_admin' | 'user'>('user');
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { user: currentUser } = useAuth();
 
   const handleBulkAction = (action: string) => {
     if (action === 'delete') {
@@ -116,6 +118,16 @@ export function UserBulkActions({ selectedCount, selectedUsers, onClearSelection
   };
 
   const handleBulkDelete = async () => {
+    if (!currentUser) return;
+    if (selectedUsers.includes(currentUser.id)) {
+      toast({
+        title: "Cannot delete yourself",
+        description: "You cannot delete your own user account in bulk actions.",
+        variant: "destructive"
+      });
+      setShowDeleteDialog(false);
+      return;
+    }
     setIsLoading(true);
     try {
       await Promise.all(selectedUsers.map(id => usersApi.deleteUser(id)));

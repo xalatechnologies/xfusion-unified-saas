@@ -99,6 +99,15 @@ export function UserActions({ user, onEditUser, onChangePassword, onChangeAvatar
   };
 
   const handleDeleteUser = async () => {
+    if (currentUser?.id === user.id) {
+      toast({
+        title: "Cannot delete yourself",
+        description: "You cannot delete your own user account.",
+        variant: "destructive"
+      });
+      setShowDeleteDialog(false);
+      return;
+    }
     setIsLoading(true);
     try {
       await usersApi.deleteUser(user.id);
