@@ -43,3 +43,4 @@
 - Excluded `dist/assets/` from linting in `.eslintignore` to prevent false positives from build artifacts.
 - Refactored `src/lib/database/users.ts` to use proper linter suppression for custom Supabase view queries, resolving type and lint errors.
 - Fixed a `no-unused-expressions` lint error in `UsersTable.tsx` by making the expression an explicit function call. 
+- Added `unified-saas-platform-overview.md` in `src/dev-plan` with a high-level vision, architecture, theming, UI/UX, component reuse, accessibility, and next steps for the new .NET Core + React SaaS platform. 
