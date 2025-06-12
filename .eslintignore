@@ -1,2 +1,5 @@
-dist/ 
-dist/assets/ 
+dist
+/dist
+/dist/**
+dist/assets
+dist/assets/** 
