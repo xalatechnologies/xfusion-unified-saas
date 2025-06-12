@@ -164,12 +164,7 @@ export function UserManagement() {
             )}
           </form>
           <div className="flex-shrink-0 flex items-center gap-2">
-            <UserFilters filters={filters} onFiltersChange={setFilters} />
-            <UserExport users={users} selectedUsers={selectedUsers} />
-            <Button onClick={() => setShowCreateDialog(true)} className="rounded-full px-5 py-2 text-base font-semibold shadow-sm">
-              <UserPlus className="w-5 h-5 mr-2" />
-              Create User
-            </Button>
+            <UserFilters filters={filters} onFiltersChange={setFilters} />nj
           </div>
         </div>
       </section>

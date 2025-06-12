@@ -76,17 +76,17 @@ src/
   - [x] Add clear/reset filters button
 
 ## 3. User Creation (Invite & Manual)
-- [ ] Implement "Create User" button using shared `Button` component
-- [ ] Show `CreateUserDialog` modal with form
-  - [ ] Use `CreateUserForm` and `createUserSchema` for validation
-  - [ ] Fields: Email, First Name, Last Name, System Role, Temporary Password, Notes, Send Welcome Email
-  - [ ] Validate all fields (email format, required fields, password strength)
-  - [ ] Show inline validation errors and summary error on submit
-  - [ ] Support keyboard navigation and accessibility for all fields
-  - [ ] Show loading state on submit
-  - [ ] On success, close dialog and refresh user list
-  - [ ] On error, show error message and keep form open
-  - [ ] Ensure all form elements use shared UI components (inputs, selects, switches, etc.)
+- [x] Implement "Create User" button using shared `Button` component
+- [x] Show `CreateUserDialog` modal with form
+  - [x] Use `CreateUserForm` and `createUserSchema` for validation
+  - [x] Fields: Email, First Name, Last Name, System Role, Temporary Password, Notes, Send Welcome Email
+  - [x] Validate all fields (email format, required fields, password strength)
+  - [x] Show inline validation errors and summary error on submit
+  - [x] Support keyboard navigation and accessibility for all fields
+  - [x] Show loading state on submit
+  - [x] On success, close dialog and refresh user list
+  - [x] On error, show error message and keep form open
+  - [x] Ensure all form elements use shared UI components (inputs, selects, switches, etc.)
   - [ ] Add tests for form validation and submission
 
 ## 4. User Editing
