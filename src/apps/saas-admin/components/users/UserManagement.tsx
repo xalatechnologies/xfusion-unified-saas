@@ -164,7 +164,7 @@ export function UserManagement() {
             )}
           </form>
           <div className="flex-shrink-0 flex items-center gap-2">
-            <UserFilters filters={filters} onFiltersChange={setFilters} />nj
+            <UserFilters filters={filters} onFiltersChange={setFilters} />
           </div>
         </div>
       </section>

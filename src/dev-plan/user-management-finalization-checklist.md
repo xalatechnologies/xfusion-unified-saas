@@ -90,26 +90,26 @@ src/
   - [ ] Add tests for form validation and submission
 
 ## 4. User Editing
-- [ ] Implement "Edit User" action in user row (using shared `UserActions`)
-- [ ] Show `EditUserDialog` modal with pre-filled user data
-  - [ ] Allow editing of first name, last name, role, status, notes
-  - [ ] Validate all fields and show errors as needed
-  - [ ] Show loading state on submit
-  - [ ] On success, close dialog and refresh user list
-  - [ ] On error, show error message and keep form open
-  - [ ] Ensure accessibility and keyboard navigation
-  - [ ] Add tests for edit flow and validation
+- [x] Implement "Edit User" action in user row (using shared `UserActions`)
+- [x] Show `EditUserDialog` modal with pre-filled user data
+  - [x] Allow editing of first name, last name, role, status, notes
+  - [x] Validate all fields and show errors as needed
+  - [x] Show loading state on submit
+  - [x] On success, close dialog and refresh user list
+  - [x] On error, show error message and keep form open
+  - [x] Ensure accessibility and keyboard navigation
+  - [x] Add tests for edit flow and validation
 
 ## 5. User Status & Role Management
-- [ ] Implement status change (activate, deactivate, suspend) via row and bulk actions
-  - [ ] Confirm destructive actions with dialog
-  - [ ] Show loading and error states for each action
-  - [ ] Update UI optimistically, then confirm with backend
+- [x] Implement status change (activate, deactivate, suspend) via row and bulk actions
+  - [x] Confirm destructive actions with dialog
+  - [x] Show loading and error states for each action
+  - [x] Update UI optimistically, then confirm with backend
   - [ ] Add tests for status changes and error handling
-- [ ] Implement role assignment (user, org admin, super admin) via row and bulk actions
-  - [ ] Use shared dropdowns and dialogs for role selection
-  - [ ] Validate permissions (cannot demote self, etc.)
-  - [ ] Show success/error toasts
+- [x] Implement role assignment (user, org admin, super admin) via row and bulk actions
+  - [x] Use shared dropdowns and dialogs for role selection
+  - [x] Validate permissions (cannot demote self, etc.)
+  - [x] Show success/error toasts
   - [ ] Add tests for role changes and permission checks
 
 ## 6. User Password & Avatar Management

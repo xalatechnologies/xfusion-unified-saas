@@ -21,6 +21,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useAuth } from "@/contexts/AuthContext";
+import { userRolesApi } from "@/lib/database/user-roles";
 
 export interface User {
   id: string;
@@ -43,8 +45,11 @@ interface UserActionsProps {
 export function UserActions({ user, onEditUser, onChangePassword, onChangeAvatar }: UserActionsProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showRoleDialog, setShowRoleDialog] = useState(false);
+  const [roleToAssign, setRoleToAssign] = useState<'super_admin' | 'organization_admin' | 'user'>((user.system_role as 'super_admin' | 'organization_admin' | 'user') || 'user');
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { user: currentUser } = useAuth();
 
   const getUserDisplayName = (user: User) => {
     if (user?.first_name || user?.last_name) {
@@ -114,6 +119,36 @@ export function UserActions({ user, onEditUser, onChangePassword, onChangeAvatar
     }
   };
 
+  const handleAssignRole = async () => {
+    setIsLoading(true);
+    try {
+      if (currentUser?.id === user.id && roleToAssign !== user.system_role) {
+        toast({
+          title: "Permission denied",
+          description: "You cannot change your own role.",
+          variant: "destructive"
+        });
+        setIsLoading(false);
+        return;
+      }
+      await userRolesApi.assignSystemRole(user.id, roleToAssign);
+      toast({
+        title: "Role updated",
+        description: `Assigned ${roleToAssign.replace('_', ' ')} role.`
+      });
+      setShowRoleDialog(false);
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to assign role.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <DropdownMenu>
@@ -135,7 +170,7 @@ export function UserActions({ user, onEditUser, onChangePassword, onChangeAvatar
             <Image className="w-4 h-4 mr-2" />
             Change Avatar
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setShowRoleDialog(true)}>
             <Shield className="w-4 h-4 mr-2" />
             Manage Roles
           </DropdownMenuItem>
@@ -167,6 +202,30 @@ export function UserActions({ user, onEditUser, onChangePassword, onChangeAvatar
             <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleDeleteUser} disabled={isLoading} className="bg-red-600 hover:bg-red-700">
               {isLoading ? "Deleting..." : "Delete User"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <AlertDialog open={showRoleDialog} onOpenChange={setShowRoleDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Assign System Role</AlertDialogTitle>
+            <AlertDialogDescription>
+              Select a new system role for <span className="font-semibold">{getUserDisplayName(user)}</span>.
+              {currentUser?.id === user.id && (
+                <div className="text-red-600 mt-2">You cannot change your own role.</div>
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="space-y-3 mt-4">
+            <Button variant={roleToAssign === 'user' ? 'default' : 'outline'} onClick={() => setRoleToAssign('user')} disabled={isLoading}>User</Button>
+            <Button variant={roleToAssign === 'organization_admin' ? 'default' : 'outline'} onClick={() => setRoleToAssign('organization_admin')} disabled={isLoading}>Org Admin</Button>
+            <Button variant={roleToAssign === 'super_admin' ? 'default' : 'outline'} onClick={() => setRoleToAssign('super_admin')} disabled={isLoading}>Super Admin</Button>
+          </div>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleAssignRole} disabled={isLoading || (currentUser?.id === user.id && roleToAssign !== user.system_role)}>
+              {isLoading ? "Assigning..." : "Assign Role"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
