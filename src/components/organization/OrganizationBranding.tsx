@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Upload, Palette, Image, FileImage, Save, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Select } from "@/components/ui/select";
 
 interface OrganizationBrandingProps {
   organizationId: string;
@@ -15,6 +16,17 @@ export const OrganizationBranding = ({ organizationId }: OrganizationBrandingPro
   const [brandData, setBrandData] = useState({
     primaryColor: "#2563eb",
     secondaryColor: "#64748b",
+    accentColor: "#f59e42",
+    backgroundColor: "#ffffff",
+    surfaceColor: "#f3f4f6",
+    errorColor: "#ef4444",
+    successColor: "#22c55e",
+    warningColor: "#facc15",
+    infoColor: "#3b82f6",
+    fontSize: "md",
+    fontFamily: "Inter, sans-serif",
+    borderRadius: "8px",
+    spacing: "16px",
     logoUrl: "",
     faviconUrl: "",
   });
@@ -116,73 +128,121 @@ export const OrganizationBranding = ({ organizationId }: OrganizationBrandingPro
         </CardContent>
       </Card>
 
-      {/* Color Scheme */}
+      {/* Color Tokens */}
       <Card className="shadow-sm border-0 bg-gray-50/30">
         <CardHeader className="pb-4 text-left">
           <CardTitle className="text-lg font-medium text-gray-900 flex items-center text-left">
             <Palette className="w-5 h-5 mr-2 text-blue-600" />
-            Color Scheme
+            Color Tokens
           </CardTitle>
           <p className="text-sm text-muted-foreground text-left">
-            Define your brand colors for a consistent visual identity
+            Edit all color tokens for your brand
+          </p>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              { key: "primaryColor", label: "Primary Color" },
+              { key: "secondaryColor", label: "Secondary Color" },
+              { key: "accentColor", label: "Accent Color" },
+              { key: "backgroundColor", label: "Background Color" },
+              { key: "surfaceColor", label: "Surface Color" },
+              { key: "errorColor", label: "Error Color" },
+              { key: "successColor", label: "Success Color" },
+              { key: "warningColor", label: "Warning Color" },
+              { key: "infoColor", label: "Info Color" },
+            ].map(({ key, label }) => (
+              <div className="space-y-3" key={key}>
+                <Label htmlFor={key} className="text-sm font-medium text-gray-700">
+                  {label}
+                </Label>
+                <div className="flex items-center space-x-3">
+                  <div
+                    className="w-12 h-10 rounded-md border border-gray-300 shadow-sm"
+                    style={{ backgroundColor: brandData[key as keyof typeof brandData] as string }}
+                  />
+                  <Input
+                    id={key}
+                    type="color"
+                    value={brandData[key as keyof typeof brandData] as string}
+                    onChange={(e) => setBrandData((prev) => ({ ...prev, [key]: e.target.value }))}
+                    className="w-16 h-10 p-1 cursor-pointer"
+                  />
+                  <Input
+                    value={brandData[key as keyof typeof brandData] as string}
+                    onChange={(e) => setBrandData((prev) => ({ ...prev, [key]: e.target.value }))}
+                    placeholder="#000000"
+                    className="flex-1"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Typography & Spacing */}
+      <Card className="shadow-sm border-0 bg-gray-50/30">
+        <CardHeader className="pb-4 text-left">
+          <CardTitle className="text-lg font-medium text-gray-900 flex items-center text-left">
+            Typography & Spacing
+          </CardTitle>
+          <p className="text-sm text-muted-foreground text-left">
+            Control font, size, border radius, and spacing
           </p>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
-              <Label htmlFor="primary-color" className="text-sm font-medium text-gray-700">
-                Primary Color
+              <Label htmlFor="fontSize" className="text-sm font-medium text-gray-700">
+                Font Size
               </Label>
-              <div className="flex items-center space-x-3">
-                <div 
-                  className="w-12 h-10 rounded-md border border-gray-300 shadow-sm"
-                  style={{ backgroundColor: brandData.primaryColor }}
-                />
-                <Input
-                  id="primary-color"
-                  type="color"
-                  value={brandData.primaryColor}
-                  onChange={(e) => setBrandData(prev => ({ ...prev, primaryColor: e.target.value }))}
-                  className="w-16 h-10 p-1 cursor-pointer"
-                />
-                <Input
-                  value={brandData.primaryColor}
-                  onChange={(e) => setBrandData(prev => ({ ...prev, primaryColor: e.target.value }))}
-                  placeholder="#2563eb"
-                  className="flex-1"
-                />
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Used for buttons, links, and primary UI elements
-              </p>
+              <Select
+                value={brandData.fontSize}
+                onValueChange={(value) => setBrandData((prev) => ({ ...prev, fontSize: value }))}
+              >
+                {enums.font_size.map((size) => (
+                  <option key={size} value={size}>{size}</option>
+                ))}
+              </Select>
             </div>
-            
             <div className="space-y-3">
-              <Label htmlFor="secondary-color" className="text-sm font-medium text-gray-700">
-                Secondary Color
+              <Label htmlFor="fontFamily" className="text-sm font-medium text-gray-700">
+                Font Family
               </Label>
-              <div className="flex items-center space-x-3">
-                <div 
-                  className="w-12 h-10 rounded-md border border-gray-300 shadow-sm"
-                  style={{ backgroundColor: brandData.secondaryColor }}
-                />
-                <Input
-                  id="secondary-color"
-                  type="color"
-                  value={brandData.secondaryColor}
-                  onChange={(e) => setBrandData(prev => ({ ...prev, secondaryColor: e.target.value }))}
-                  className="w-16 h-10 p-1 cursor-pointer"
-                />
-                <Input
-                  value={brandData.secondaryColor}
-                  onChange={(e) => setBrandData(prev => ({ ...prev, secondaryColor: e.target.value }))}
-                  placeholder="#64748b"
-                  className="flex-1"
-                />
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Used for secondary elements and accents
-              </p>
+              <Input
+                id="fontFamily"
+                value={brandData.fontFamily}
+                onChange={(e) => setBrandData((prev) => ({ ...prev, fontFamily: e.target.value }))}
+                placeholder="Inter, sans-serif"
+                className="flex-1"
+              />
+            </div>
+            <div className="space-y-3">
+              <Label htmlFor="borderRadius" className="text-sm font-medium text-gray-700">
+                Border Radius
+              </Label>
+              <Input
+                id="borderRadius"
+                type="text"
+                value={brandData.borderRadius}
+                onChange={(e) => setBrandData((prev) => ({ ...prev, borderRadius: e.target.value }))}
+                placeholder="8px"
+                className="flex-1"
+              />
+            </div>
+            <div className="space-y-3">
+              <Label htmlFor="spacing" className="text-sm font-medium text-gray-700">
+                Spacing (unit)
+              </Label>
+              <Input
+                id="spacing"
+                type="text"
+                value={brandData.spacing}
+                onChange={(e) => setBrandData((prev) => ({ ...prev, spacing: e.target.value }))}
+                placeholder="16px"
+                className="flex-1"
+              />
             </div>
           </div>
         </CardContent>
@@ -199,7 +259,15 @@ export const OrganizationBranding = ({ organizationId }: OrganizationBrandingPro
           </p>
         </CardHeader>
         <CardContent>
-          <div className="bg-white rounded-lg border p-6 space-y-4">
+          <div
+            className="bg-white rounded-lg border p-6 space-y-4"
+            style={{
+              fontFamily: brandData.fontFamily,
+              fontSize: brandData.fontSize === "md" ? "1rem" : brandData.fontSize,
+              borderRadius: brandData.borderRadius,
+              padding: brandData.spacing,
+            }}
+          >
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
                 <span className="text-xs font-bold text-gray-600">LOGO</span>
@@ -208,21 +276,36 @@ export const OrganizationBranding = ({ organizationId }: OrganizationBrandingPro
             </div>
             <Separator />
             <div className="flex space-x-3">
-              <Button 
-                style={{ backgroundColor: brandData.primaryColor }}
-                className="text-white hover:opacity-90"
+              <Button
+                style={{ backgroundColor: brandData.primaryColor, color: "#fff" }}
+                className="hover:opacity-90"
               >
                 Primary Button
               </Button>
-              <Button 
+              <Button
                 variant="outline"
-                style={{ 
+                style={{
                   borderColor: brandData.secondaryColor,
-                  color: brandData.secondaryColor 
+                  color: brandData.secondaryColor,
                 }}
               >
                 Secondary Button
               </Button>
+              <Button
+                variant="outline"
+                style={{
+                  borderColor: brandData.accentColor,
+                  color: brandData.accentColor,
+                }}
+              >
+                Accent Button
+              </Button>
+            </div>
+            <div className="flex space-x-3 mt-4">
+              <span style={{ color: brandData.errorColor }}>Error</span>
+              <span style={{ color: brandData.successColor }}>Success</span>
+              <span style={{ color: brandData.warningColor }}>Warning</span>
+              <span style={{ color: brandData.infoColor }}>Info</span>
             </div>
           </div>
         </CardContent>
