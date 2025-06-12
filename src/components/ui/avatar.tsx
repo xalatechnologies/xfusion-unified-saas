@@ -2,6 +2,7 @@ import * as React from "react"
 import * as AvatarPrimitive from "@radix-ui/react-avatar"
 
 import { cn } from "@/lib/utils"
+import { useAccessibility } from "@/contexts/AccessibilityContext"
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
@@ -25,12 +26,13 @@ const AvatarImage = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
 >(({ className, ...props }, ref) => {
   const [hasError, setHasError] = React.useState(false);
+  const { accessibilityMode } = useAccessibility();
   // Accessibility: Warn if AvatarImage is missing alt
   if (
+    accessibilityMode &&
     process.env.NODE_ENV === "development" &&
     (!('alt' in props) || !props.alt)
   ) {
-     
     console.warn(
       "[AvatarImage] AvatarImage should have an alt attribute for accessibility."
     );
@@ -41,6 +43,7 @@ const AvatarImage = React.forwardRef<
       ref={ref}
       className={cn("aspect-square h-full w-full", className)}
       onError={() => setHasError(true)}
+      {...(accessibilityMode ? { alt: props.alt } : { alt: undefined })}
       {...props}
     />
   );

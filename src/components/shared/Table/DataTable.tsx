@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useAccessibility } from "@/contexts/AccessibilityContext";
 
 interface DataTableProps {
   columns: React.ReactNode;
@@ -16,6 +17,7 @@ export const DataTable: React.FC<DataTableProps> = ({ columns, children, classNa
   // Sticky header shadow effect
   const tableRef = React.useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = React.useState(false);
+  const { accessibilityMode } = useAccessibility();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -36,8 +38,8 @@ export const DataTable: React.FC<DataTableProps> = ({ columns, children, classNa
     >
       <table
         className="min-w-full text-sm align-middle"
-        aria-label={ariaLabel || 'Data table'}
-        role="table"
+        aria-label={accessibilityMode ? (ariaLabel || 'Data table') : undefined}
+        role={accessibilityMode ? 'table' : undefined}
       >
         <thead
           className={`sticky top-0 z-10 bg-white/95 border-b border-gray-200 transition-shadow ${scrolled ? 'shadow-md' : ''}`}
@@ -48,10 +50,10 @@ export const DataTable: React.FC<DataTableProps> = ({ columns, children, classNa
           {React.Children.map(children, (row, i) =>
             React.isValidElement(row)
               ? React.cloneElement(row as React.ReactElement, {
-                  className: `transition group ${i % 2 === 1 ? 'bg-gray-50/80' : 'bg-white'} hover:bg-blue-50/60 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2` +
+                  className: `transition group ${i % 2 === 1 ? 'bg-gray-50/80' : 'bg-white'}${accessibilityMode ? ' hover:bg-blue-50/60 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2' : ''}` +
                     (row.props.className ? ' ' + row.props.className : ''),
-                  tabIndex: row.props.tabIndex ?? 0,
-                  role: row.props.role ?? 'row',
+                  tabIndex: accessibilityMode ? (row.props.tabIndex ?? 0) : undefined,
+                  role: accessibilityMode ? (row.props.role ?? 'row') : undefined,
                 })
               : row
           )}

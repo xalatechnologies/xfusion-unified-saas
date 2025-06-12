@@ -2,29 +2,36 @@ import * as React from "react"
 import * as SwitchPrimitives from "@radix-ui/react-switch"
 
 import { cn } from "@/lib/utils"
+import { useAccessibility } from "@/contexts/AccessibilityContext"
 
 const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>
->(({ className, checked, ...props }, ref) => (
-  // Accessibility: Ensure Switch is at least 44x44px for touch targets
-  <SwitchPrimitives.Root
-    className={cn(
-      "peer inline-flex h-6 w-11 min-w-[44px] min-h-[44px] shrink-0 cursor-pointer items-center rounded-[var(--radius-full)] border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-background)] disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-[var(--color-primary)] data-[state=unchecked]:bg-[var(--color-border)] font-family-[var(--font-family)]",
-      className
-    )}
-    role="switch"
-    aria-checked={checked}
-    {...props}
-    ref={ref}
-  >
-    <SwitchPrimitives.Thumb
+>(({ className, checked, ...props }, ref) => {
+  const { accessibilityMode } = useAccessibility()
+  const accessibilityClasses = accessibilityMode
+    ? "min-w-[44px] min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
+    : ""
+  return (
+    <SwitchPrimitives.Root
       className={cn(
-        "pointer-events-none block h-5 w-5 rounded-[var(--radius-full)] bg-[var(--color-surface)] shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
+        "peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-[var(--radius-full)] border-2 border-transparent transition-colors focus-visible:ring-offset-[var(--color-background)] disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-[var(--color-primary)] data-[state=unchecked]:bg-[var(--color-border)] font-family-[var(--font-family)]",
+        accessibilityClasses,
+        className
       )}
-    />
-  </SwitchPrimitives.Root>
-))
+      role={accessibilityMode ? "switch" : undefined}
+      aria-checked={accessibilityMode ? checked : undefined}
+      {...props}
+      ref={ref}
+    >
+      <SwitchPrimitives.Thumb
+        className={cn(
+          "pointer-events-none block h-5 w-5 rounded-[var(--radius-full)] bg-[var(--color-surface)] shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
+        )}
+      />
+    </SwitchPrimitives.Root>
+  )
+})
 Switch.displayName = SwitchPrimitives.Root.displayName
 
 export { Switch }

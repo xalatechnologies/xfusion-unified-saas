@@ -4,6 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "./button-variants"
+import { useAccessibility } from "@/contexts/AccessibilityContext"
 
 // Variants:
 // - default: Design system primary
@@ -21,6 +22,7 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
+    const { accessibilityMode } = useAccessibility()
     // Accessibility: Warn if icon-only button is missing aria-label
     if (
       process.env.NODE_ENV === "development" &&
@@ -32,10 +34,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         "[Button] Icon-only buttons must have an aria-label for accessibility."
       )
     }
+    // Conditionally add accessibility classes
+    const accessibilityClasses = accessibilityMode
+      ? "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 min-w-[44px] min-h-[44px]"
+      : ""
     return (
       <Comp
         className={cn(
           buttonVariants({ variant, size }),
+          accessibilityClasses,
           className
         )}
         ref={ref}
