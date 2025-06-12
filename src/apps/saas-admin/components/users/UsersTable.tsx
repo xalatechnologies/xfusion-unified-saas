@@ -151,7 +151,9 @@ export function UsersTable({
       tabIndex={0}
       onClick={() => onSortChange && onSortChange(column)}
       onKeyDown={e => {
-        if (e.key === "Enter" || e.key === " ") onSortChange && onSortChange(column);
+        if (e.key === "Enter" || e.key === " ") {
+          if (onSortChange) onSortChange(column);
+        }
       }}
       scope="col"
     >

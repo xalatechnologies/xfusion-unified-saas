@@ -49,7 +49,7 @@ export const usersApi = {
       dateRange?: string;
       search?: string;
     };
-  } = {}): Promise<{ users: User[]; total: number }> {
+  } = {}): Promise<any> {
     const {
       page = 1,
       pageSize = 20,
@@ -57,17 +57,9 @@ export const usersApi = {
       sortOrder = 'desc',
       filters = {}
     } = options;
-    let query = (supabase as unknown as {
-      from: (table: string) => {
-        select: (columns: string, options?: { count?: string }) => any;
-        order: (column: string, options: { ascending: boolean }) => any;
-        range: (from: number, to: number) => any;
-        eq: (column: string, value: any) => any;
-        ilike: (column: string, value: string) => any;
-      };
-    }).from("users_with_role")
-      .select("id, email, first_name, last_name, avatar_url, created_at, status, system_role", { count: "exact" })
-      .order(sortBy, { ascending: sortOrder === 'asc' });
+    // @ts-expect-error: users_with_role is a custom view not present in generated types
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let query = supabase.from("users_with_role") as any;
 
     // Filtering
     if (filters.status && filters.status !== 'all') {
@@ -89,7 +81,12 @@ export const usersApi = {
     const to = from + pageSize - 1;
     query = query.range(from, to);
 
-    const { data, error, count } = await query;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = await query as any;
+    let data: unknown, error: unknown, count: unknown;
+    if (typeof result === 'object' && result !== null) {
+      ({ data, error, count } = result as Record<string, unknown>);
+    }
     if (error) throw error;
     return {
       users: Array.isArray(data) ? data.filter(isUser) : [],

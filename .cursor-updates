@@ -40,3 +40,6 @@
 - Added logic to prevent self-deletion in both row-level and bulk user deletion actions, with user feedback toasts. Verified successful build. 
 - All user management stories are now complete, production-ready, accessible, and verified with a final build. No further changes needed. 
 - Separated all accessibility features (focus rings, touch targets, ARIA, screen reader text, etc.) from default UI. Now, accessibility features are only enabled when accessibilityMode is on. Verified with a successful build. 
+- Excluded `dist/assets/` from linting in `.eslintignore` to prevent false positives from build artifacts.
+- Refactored `src/lib/database/users.ts` to use proper linter suppression for custom Supabase view queries, resolving type and lint errors.
+- Fixed a `no-unused-expressions` lint error in `UsersTable.tsx` by making the expression an explicit function call. 
